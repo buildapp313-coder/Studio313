@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Studio313</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Styles for Policy Page */
+        .policy-container {
+            max-width: 900px;
+            margin: 40px auto 80px;
+            padding: 40px;
+            border-radius: 30px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 10;
+        }
+        .policy-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+            background: linear-gradient(to right, var(--text-color), var(--shape3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .policy-container h2 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            color: var(--text-color);
+        }
+        .policy-container p, .policy-container li {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .policy-container ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .last-updated {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Liquid Background Elements -->
+    <div class="liquid-shape shape-1"></div>
+    <div class="liquid-shape shape-2"></div>
+    <div class="liquid-shape shape-3"></div>
+
+    <!-- Glass Navbar -->
+    <nav class="navbar glass">
+        <div class="logo">Studio313</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="download.html">Apps</a></li>
+            <li><a href="app-tester.html">App-Tester</a></li>
+            <li><a href="policies.html">Policies</a></li>
+            <li>
+                <select class="theme-selector" onchange="changeTheme(this.value)">
+                    <option value="dark">🌙 Dark Liquid</option>
+                    <option value="light">☀️ Light Glass</option>
+                    <option value="vip">👑 VIP Gold</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Privacy Policy Content -->
+    <div class="policy-container glass">
+        <h1>Global Privacy Policy</h1>
+        <div class="last-updated">Last Updated: August 2026 | Applicable to: Gatepass Lite & Vip Notification</div>
+
+        <p>At <strong>Studio313</strong>, we take your privacy and data security seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our mobile applications and web services.</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>Our applications are designed to respect your privacy. Depending on the app you use, we may collect the following:</p>
+        <ul>
+            <li><strong>Device Information:</strong> Device model, OS version, and unique device identifiers to ensure app stability and push notification delivery (e.g., via Firebase Cloud Messaging for Vip Notification).</li>
+            <li><strong>Usage Data:</strong> Anonymous analytics to help us understand how features are used and to improve the app experience.</li>
+        </ul>
+
+        <h2>2. Third-Party Services (AdMob & Firebase)</h2>
+        <p>To provide a seamless experience and keep our apps free, we integrate with secure third-party services:</p>
+        <ul>
+            <li><strong>Google AdMob:</strong> We may display ads in our applications. Ad networks may use cookies and similar technologies to provide personalized ads based on your interests and location, strictly compliant with GDPR and US state privacy laws.</li>
+            <li><strong>Firebase:</strong> Used for secure cloud infrastructure, crash reporting, and real-time push notifications.</li>
+        </ul>
+
+        <h2>3. Data Security</h2>
+        <p>We implement advanced security measures to protect your personal information. Apps like <strong>Gatepass Lite</strong> use encrypted cloud protocols to ensure that any data transmitted between your device and our servers remains confidential.</p>
+
+        <h2>4. User Rights & Consent</h2>
+        <p>Users in applicable regions (e.g., EEA, UK, US) will be presented with a consent form upon first launching our apps. You have the right to withdraw your consent for personalized advertising at any time through the app settings.</p>
+
+        <h2>5. Contact Us</h2>
+        <p>If you have any questions or concerns regarding this Privacy Policy, please contact our support team. We are committed to resolving your queries promptly.</p>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="contact.html" class="action-btn" style="display: inline-block; width: auto; padding: 10px 30px; background: var(--text-color); color: var(--bg-color); text-decoration: none; border-radius: 10px; font-weight: 600;">Contact Support</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
+    </footer>
+
+    <!-- JS File Link -->
+    <script src="script.js"></script>
+
+</body>
+</html>
