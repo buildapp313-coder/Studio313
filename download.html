@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Apps | Studio313</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .download-card {
+            padding: 40px 30px;
+            border-radius: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.4s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .app-icon-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .download-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .download-card p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .store-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Liquid Background Elements -->
+    <div class="liquid-shape shape-1"></div>
+    <div class="liquid-shape shape-2"></div>
+    <div class="liquid-shape shape-3"></div>
+
+    <!-- Glass Navbar -->
+    <nav class="navbar glass">
+        <div class="logo">Studio313</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="download.html">Apps</a></li>
+            <li><a href="app-tester.html">App-Tester</a></li>
+            <li><a href="policies.html">Policies</a></li>
+            <li>
+                <select class="theme-selector glass-btn" onchange="changeTheme(this.value)">
+                    <option value="dark">🌙 Dark Liquid</option>
+                    <option value="light">☀️ Light Glass</option>
+                    <option value="vip">👑 VIP Gold</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="header-text">
+        <h1>Our Applications</h1>
+        <p>Download our secure, high-performance mobile utilities or access them instantly via the web.</p>
+    </div>
+
+    <!-- Download Cards -->
+    <div class="download-grid">
+        
+        <!-- Gatepass Lite -->
+        <div class="download-card glass">
+            <div class="store-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Web Access</div>
+            <div class="app-icon-large glass">🚀</div>
+            <h2>Gatepass Lite</h2>
+            <p>Experience fast and secure access management directly from your browser. No installation required. Perfect for immediate utility.</p>
+            <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn glass-btn" style="width: 100%;">Open Web App</a>
+        </div>
+
+        <!-- Vip Notification -->
+        <div class="download-card glass">
+            <div class="store-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">Coming Soon</div>
+            <div class="app-icon-large glass">🔔</div>
+            <h2>Vip Notification</h2>
+            <p>Advanced real-time push alert infrastructure. Currently undergoing rigorous closed beta testing to ensure ultimate reliability.</p>
+            <a href="app-tester.html" class="action-btn glass-btn" style="width: 100%; opacity: 0.7;">View Testing Details</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
+        <div class="policy-links" style="margin-top: 8px;">
+            <span>Legal: </span>
+            <a href="gatepass-policy.html">Gatepass Policy</a> | 
+            <a href="vip-policy.html">Vip Notification Policy</a>
+        </div>
+        <div style="margin-top: 15px; font-size: 0.85rem; color: var(--shape3);">
+            👁️ Page Views: <span id="visitor-count" style="font-weight: 700; color: var(--text-color);">Loading...</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
