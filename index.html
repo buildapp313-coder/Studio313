@@ -6,6 +6,8 @@
     <title>Studio313 | Elite Mobile & Web Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Nayi Ticker File Link (For Animations) -->
+    <link rel="stylesheet" href="ticker.css">
 </head>
 <body>
 
@@ -14,20 +16,30 @@
     <div class="liquid-shape shape-2"></div>
     <div class="liquid-shape shape-3"></div>
 
-    <!-- Glass Navbar -->
+    <!-- Glass Navbar with Mobile Hamburger -->
     <nav class="navbar glass">
         <div class="logo">Studio313</div>
-        <ul class="nav-links">
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="download.html">Apps</a></li>
             <li><a href="app-tester.html">App-Tester</a></li>
             <li><a href="policies.html">Policies</a></li>
             <li>
-                <select class="theme-selector glass-btn" onchange="changeTheme(this.value)">
-                    <option value="dark">🌙 Dark Liquid</option>
-                    <option value="light">☀️ Light Glass</option>
-                    <option value="vip">👑 VIP Gold</option>
-                </select>
+                <!-- Naya Custom VIP Theme Switcher (Fix for White Background) -->
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn glass-btn" onclick="toggleDropdown()">
+                        <span id="dropdownBtnText">🌙 Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', '🌙 Dark Liquid')">🌙 Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', '☀️ Light Glass')">☀️ Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', '👑 VIP Gold')">👑 VIP Gold</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </nav>
@@ -36,6 +48,17 @@
     <div class="header-text">
         <h1>Next-Gen Ecosystem</h1>
         <p>Explore high-performance cross-platform applications crafted with advanced liquid architecture and seamless cloud integrations.</p>
+    </div>
+
+    <!-- VIP Animated Advertising Ticker -->
+    <div class="ticker-wrapper glass">
+        <div class="ticker-track">
+            <div class="ticker-item"><span class="highlight">NEW</span> Welcome to Studio313 Global Hub! 🚀</div>
+            <div class="ticker-item"><span class="highlight">UPDATE</span> Gatepass Lite Web Version is now LIVE! Secure your access today. 🛡️</div>
+            <div class="ticker-item"><span class="highlight">BETA</span> Join the Vip Notification Tester Program. Limited slots available! 🔔</div>
+            <div class="ticker-item"><span class="highlight">HIRE US</span> Need a custom Flutter app? Contact our support team for elite development. 💻</div>
+            <div class="ticker-item"><span class="highlight">WELCOME</span> We are tracking our amazing new visitors. Thanks for dropping by! 🌍</div>
+        </div>
     </div>
 
     <!-- VIP Glass Search Bar -->
