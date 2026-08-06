@@ -67,6 +67,34 @@ async function fetchVisitorCount() {
 window.onload = function() {
     updateCelestialLighting();
     fetchVisitorCount();
+
+    // --- Custom Dropdown Logic ---
+function toggleDropdown() {
+    document.getElementById("themeDropdown").classList.toggle("show");
+}
+
+function setCustomTheme(themeValue, themeText) {
+    changeTheme(themeValue); // Purana function call karega
+    document.getElementById("dropdownBtnText").innerText = themeText;
+    document.getElementById("themeDropdown").classList.remove("show");
+}
+
+// Close dropdown if clicked outside
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-btn') && !event.target.matches('#dropdownBtnText')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].classList.contains('show')) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+    }
+}
+
+// --- Mobile Hamburger Menu Logic ---
+function toggleMobileMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
     
     // Update lighting every 10 minutes seamlessly if user keeps tab open
     setInterval(updateCelestialLighting, 600000);
