@@ -128,15 +128,21 @@ body {
     background: var(--glass-border);
 }
 
-.theme-selector {
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--glass-bg);
-    color: var(--text-color);
-    border: 1px solid var(--glass-border);
-    outline: none;
-    cursor: pointer;
-    font-weight: 600;
+/* --- FIX FOR DROPDOWN OPTIONS --- */
+.theme-selector option {
+    background-color: #1a1a24;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+[data-theme="light"] .theme-selector option {
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+[data-theme="vip"] .theme-selector option {
+    background-color: #120000;
+    color: #ffd700;
 }
 
 /* --- HERO HEADER --- */
