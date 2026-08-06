@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio313 | Liquid Glass Apps</title>
+    <title>Studio313 | Elite Mobile & Web Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-color: #0b0914;
+            --shape1: #4f46e5;
+            --shape2: #ec4899;
+            --shape3: #06b6d4;
+            --text-color: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --phone-frame: #1a1a24;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f0f4f8;
+            --shape1: #a5b4fc;
+            --shape2: #f9a8d4;
+            --shape3: #67e8f9;
+            --text-color: #1e293b;
+            --text-muted: rgba(30, 41, 59, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --phone-frame: #cbd5e1;
+        }
+
+        [data-theme="vip"] {
+            --bg-color: #120000;
+            --shape1: #fbbf24;
+            --shape2: #d97706;
+            --shape3: #78350f;
+            --text-color: #ffd700;
+            --text-muted: rgba(255, 215, 0, 0.7);
+            --glass-bg: rgba(255, 215, 0, 0.03);
+            --glass-border: rgba(255, 215, 0, 0.3);
+            --phone-frame: #3b2f00;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,42 +51,27 @@
         }
 
         body {
-            /* Deep vibrant background to make glass pop */
-            background-color: #0b0914;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
-            color: #ffffff;
             overflow-x: hidden;
             position: relative;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* 🔴 LIQUID GLOWING SHAPES (Crucial for Glass Effect) 🔴 */
+        /* --- LIQUID GLOWING BACKGROUND SHAPES --- */
         .liquid-shape {
             position: absolute;
-            filter: blur(90px);
+            filter: blur(100px);
             z-index: -1;
             border-radius: 50%;
             animation: moveLiquid 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.6;
         }
 
-        .shape-1 {
-            top: -10%; left: -10%;
-            width: 50vw; height: 50vw;
-            background: #4f46e5; /* Deep Indigo */
-        }
-
-        .shape-2 {
-            bottom: -20%; right: -10%;
-            width: 60vw; height: 60vw;
-            background: #ec4899; /* Neon Pink */
-            animation-delay: -5s;
-        }
-
-        .shape-3 {
-            top: 30%; left: 40%;
-            width: 40vw; height: 40vw;
-            background: #06b6d4; /* Cyan */
-            animation-delay: -10s;
-        }
+        .shape-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--shape1); }
+        .shape-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--shape2); animation-delay: -5s; }
+        .shape-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: var(--shape3); animation-delay: -10s; }
 
         @keyframes moveLiquid {
             0% { transform: translate(0, 0) scale(1); }
@@ -57,167 +79,216 @@
             100% { transform: translate(-5%, -5%) scale(0.9); }
         }
 
-        /* 🔵 MASTER LIQUID GLASS EFFECT 🔵 */
+        /* --- GLASSMORPHISM EFFECT --- */
         .glass {
-            background: rgba(255, 255, 255, 0.05); /* Very slight white tint */
-            backdrop-filter: blur(25px); /* Strong blur */
-            -webkit-backdrop-filter: blur(25px); /* Safari support */
-            border-top: 1px solid rgba(255, 255, 255, 0.4); /* Edge highlight */
-            border-left: 1px solid rgba(255, 255, 255, 0.4); /* Edge highlight */
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid var(--glass-border);
+            border-left: 1px solid var(--glass-border);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
         }
 
-        /* Navigation Bar */
+        /* --- NAVIGATION BAR --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             margin: 20px auto;
             width: 90%;
-            max-width: 1200px;
+            max-width: 1300px;
             border-radius: 20px;
             z-index: 100;
             position: relative;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            letter-spacing: 1px;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-links li a {
-            color: #fff;
+            color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s;
-            padding: 5px 10px;
-            border-radius: 8px;
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: all 0.3s;
         }
 
         .nav-links li a:hover {
-            color: #06b6d4;
-            background: rgba(255,255,255,0.1);
+            background: var(--glass-border);
         }
 
-        /* Main Content */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 0;
+        .theme-selector {
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: var(--glass-bg);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            outline: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* --- HERO HEADER --- */
+        .header-text {
+            text-align: center;
+            margin: 50px 20px 40px;
             z-index: 10;
             position: relative;
         }
 
-        .header-text {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
         .header-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .header-text p {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Apps Grid */
-        .apps-grid {
+        /* --- APPS SHOWCASE GRID --- */
+        .showcase {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1300px;
+            margin: 0 auto 80px;
+            z-index: 10;
+            position: relative;
         }
 
-        /* Glass App Cards */
-        .app-card {
-            width: 350px;
-            border-radius: 30px;
-            padding: 30px;
+        /* --- HAND-HELD STYLE PHONE MOCKUP --- */
+        .phone-frame {
+            width: 320px;
+            height: 650px;
+            border-radius: 45px;
+            border: 8px solid var(--phone-frame);
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 2px rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
-            position: relative;
-            transition: transform 0.4s ease;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .app-card:hover {
-            transform: translateY(-10px);
+        .phone-frame:hover {
+            transform: translateY(-15px) scale(1.02);
         }
 
-        .badge {
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            padding: 8px 16px;
+        .dynamic-island {
+            width: 90px;
+            height: 22px;
+            background: #000;
             border-radius: 20px;
+            margin: 0 auto 15px;
+        }
+
+        .app-header {
+            margin-bottom: 15px;
+        }
+
+        .app-title {
+            font-size: 1.4rem;
             font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .badge.live { background: linear-gradient(135deg, #10b981, #059669); }
-        .badge.beta { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .app-status {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
 
-        .app-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(255,255,255,0.1);
+        .status-live { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .status-beta { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+        .app-widget {
             border-radius: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .app-card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .app-card p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            padding: 18px;
+            margin-bottom: 15px;
             flex-grow: 1;
         }
 
-        .btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
+        .widget-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .ui-line {
+            height: 8px;
+            background: var(--glass-border);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .ui-line.short { width: 60%; }
+        .ui-line.medium { width: 80%; }
+
+        .action-btn {
+            background: var(--text-color);
+            color: var(--bg-color);
             text-align: center;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 14px;
             text-decoration: none;
+            font-weight: 700;
+            margin-top: auto;
+            transition: opacity 0.3s;
+            display: block;
+        }
+
+        .action-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid var(--glass-border);
+            z-index: 10;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: var(--glass-bg);
+            margin-top: auto;
+        }
+
+        .policy-links a {
+            color: var(--shape3);
+            text-decoration: none;
+            margin: 0 10px;
             font-weight: 600;
-            transition: all 0.3s;
         }
-
-        .btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        .policy-links a:hover {
+            text-decoration: underline;
         }
-
     </style>
 </head>
 <body>
@@ -227,47 +298,92 @@
     <div class="liquid-shape shape-2"></div>
     <div class="liquid-shape shape-3"></div>
 
-    <!-- Glass Navbar -->
+    <!-- Glass Navbar with Options & Theme Switcher -->
     <nav class="navbar glass">
         <div class="logo">Studio313</div>
-        <!-- Menu Options (Baad mein yahan aur add kar sakte hain) -->
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
             <li><a href="#">Download</a></li>
             <li><a href="#">App-Tester</a></li>
-            <li><a href="#">Policies</a></li>
+            <li><a href="https://gatepass-lite.web.app" target="_blank">Websites</a></li>
+            <li>
+                <select class="theme-selector" onchange="changeTheme(this.value)">
+                    <option value="dark">🌙 Dark Liquid</option>
+                    <option value="light">☀️ Light Glass</option>
+                    <option value="vip">👑 VIP Gold</option>
+                </select>
+            </li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="header-text">
-            <h1>Next-Gen Utilities</h1>
-            <p>Experience the ultimate liquid UI with our cross-platform applications.</p>
-        </div>
-
-        <div class="apps-grid">
-            
-            <!-- Gatepass Lite Card -->
-            <div class="app-card glass">
-                <div class="badge live">WEB APP LIVE</div>
-                <div class="app-icon glass">🚀</div>
-                <h2>Gatepass Lite</h2>
-                <p>Highly secure access management system. Integrated with fast backend systems to ensure smooth operations across all your devices.</p>
-                <a href="https://gatepass-lite.web.app" target="_blank" class="btn">Launch Web App</a>
-            </div>
-
-            <!-- Vip Notification Card -->
-            <div class="app-card glass">
-                <div class="badge beta">BETA TESTING</div>
-                <div class="app-icon glass">🔔</div>
-                <h2>Vip Notification</h2>
-                <p>Real-time push messaging infrastructure for immediate alerts. Designed with robust SDK integrations for maximum reach.</p>
-                <a href="#" class="btn">Join Testing Program</a>
-            </div>
-
-        </div>
+    <!-- Header Section -->
+    <div class="header-text">
+        <h1>Next-Gen Ecosystem</h1>
+        <p>Explore high-performance applications crafted with advanced liquid architecture and seamless cloud integration.</p>
     </div>
+
+    <!-- Apps Showcase inside Hand-Held Mockups -->
+    <div class="showcase">
+        
+        <!-- App 1: Gatepass Lite -->
+        <div class="phone-frame glass">
+            <div class="dynamic-island"></div>
+            <div class="app-header">
+                <div class="app-title">Gatepass Lite</div>
+                <div class="app-status status-live">Live Web App</div>
+            </div>
+            <div class="app-widget glass">
+                <div class="widget-title">Access Control Dashboard</div>
+                <div class="ui-line"></div>
+                <div class="ui-line medium"></div>
+                <div class="ui-line short"></div>
+                <div style="margin-top: 25px; display: flex; gap: 10px;">
+                    <div class="glass" style="flex: 1; height: 50px; border-radius: 12px;"></div>
+                    <div class="glass" style="flex: 1; height: 50px; border-radius: 12px;"></div>
+                </div>
+            </div>
+            <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn">Launch Web App</a>
+        </div>
+
+        <!-- App 2: Vip Notification -->
+        <div class="phone-frame glass">
+            <div class="dynamic-island"></div>
+            <div class="app-header">
+                <div class="app-title">Vip Notification</div>
+                <div class="app-status status-beta">App Tester Mode</div>
+            </div>
+            <div class="app-widget glass">
+                <div class="widget-title">Real-time Push Alerts</div>
+                <div class="glass" style="padding: 12px; border-radius: 12px; margin-bottom: 10px;">
+                    <div class="ui-line medium"></div>
+                    <div class="ui-line short" style="margin-bottom: 0;"></div>
+                </div>
+                <div class="glass" style="padding: 12px; border-radius: 12px;">
+                    <div class="ui-line"></div>
+                    <div class="ui-line short" style="margin-bottom: 0;"></div>
+                </div>
+            </div>
+            <a href="#" class="action-btn" style="background: rgba(255,255,255,0.1); color: var(--text-color); border: 1px solid var(--glass-border);">Join Tester Program</a>
+        </div>
+
+    </div>
+
+    <!-- Footer & Policy Links -->
+    <footer>
+        <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
+        <div class="policy-links" style="margin-top: 8px;">
+            <span>Legal: </span>
+            <a href="#gatepass-policy">Gatepass Policy</a> | 
+            <a href="#vip-policy">Vip Notification Policy</a>
+        </div>
+    </footer>
+
+    <!-- Script for Themes -->
+    <script>
+        function changeTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+        }
+    </script>
 
 </body>
 </html>
