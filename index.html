@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio313 | Elite Mobile & Web Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Yahan CSS file link ki gayi hai -->
+    <!-- CSS File Link -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,9 +20,9 @@
         <div class="logo">Studio313</div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="download.html">Download</a></li>
+            <li><a href="download.html">Apps</a></li>
             <li><a href="app-tester.html">App-Tester</a></li>
-            <li><a href="https://gatepass-lite.web.app" target="_blank">Websites</a></li>
+            <li><a href="policies.html">Policies</a></li>
             <li>
                 <select class="theme-selector" onchange="changeTheme(this.value)">
                     <option value="dark">🌙 Dark Liquid</option>
@@ -36,7 +36,13 @@
     <!-- Header Section -->
     <div class="header-text">
         <h1>Next-Gen Ecosystem</h1>
-        <p>Explore high-performance applications crafted with advanced liquid architecture and seamless cloud integration.</p>
+        <p>Explore high-performance cross-platform applications crafted with advanced liquid architecture and seamless cloud integrations.</p>
+    </div>
+
+    <!-- VIP Glass Search Bar -->
+    <div style="max-width: 600px; margin: 0 auto 40px; padding: 12px 25px; border-radius: 25px; display: flex; align-items: center;" class="glass">
+        <span style="font-size: 1.2rem; margin-right: 15px;">🔍</span>
+        <input type="text" id="searchInput" onkeyup="searchApps()" placeholder="Search apps, features (e.g. Gatepass)..." style="width: 100%; background: transparent; border: none; color: var(--text-color); font-size: 1.05rem; outline: none; font-family: 'Poppins', sans-serif;">
     </div>
 
     <!-- Apps Showcase inside Hand-Held Mockups -->
@@ -59,7 +65,10 @@
                     <div class="glass" style="flex: 1; height: 50px; border-radius: 12px;"></div>
                 </div>
             </div>
-            <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn">Launch Web App</a>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+                <a href="gatepass-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
+                <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn">Launch Web App</a>
+            </div>
         </div>
 
         <!-- App 2: Vip Notification -->
@@ -80,22 +89,30 @@
                     <div class="ui-line short" style="margin-bottom: 0;"></div>
                 </div>
             </div>
-            <a href="app-tester.html" class="action-btn" style="background: rgba(255,255,255,0.1); color: var(--text-color); border: 1px solid var(--glass-border);">Join Tester Program</a>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+                <a href="vip-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
+                <a href="app-tester.html" class="action-btn" style="background: rgba(255,255,255,0.1); color: var(--text-color); border: 1px solid var(--glass-border);">Join Tester Program</a>
+            </div>
         </div>
 
+    </div>
+
+    <!-- Support & Legal Section -->
+    <div style="text-align: center; margin: 0 auto 50px; max-width: 800px; padding: 30px; border-radius: 20px;" class="glass">
+        <h2 style="margin-bottom: 15px;">Need Assistance?</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">We are dedicated to providing secure and flawless mobile experiences. Have a question or feedback?</p>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="contact.html" style="padding: 10px 20px; border-radius: 10px; text-decoration: none; color: var(--text-color); border: 1px solid var(--glass-border);">✉️ Contact Support</a>
+            <a href="studio-policy.html" style="padding: 10px 20px; border-radius: 10px; text-decoration: none; color: var(--bg-color); background: var(--text-color); font-weight: 600;">⚖️ Studio Privacy Policy</a>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
-        <div class="policy-links" style="margin-top: 8px;">
-            <span>Legal: </span>
-            <a href="gatepass-policy.html">Gatepass Policy</a> | 
-            <a href="vip-policy.html">Vip Notification Policy</a>
-        </div>
     </footer>
 
-    <!-- Yahan JavaScript file link ki gayi hai -->
+    <!-- JS File Link -->
     <script src="script.js"></script>
 
 </body>
