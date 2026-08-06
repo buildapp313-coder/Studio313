@@ -1,0 +1,47 @@
+/* VIP Animated Advertising Ticker */
+.ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 0;
+    margin: 20px 0 40px 0; /* Header ke baad aur search se pehle ki space */
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: scrollTicker 25s linear infinite;
+}
+
+/* Hover karne par animation ruk jaye */
+.ticker-wrapper:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: inline-block;
+    padding: 0 40px;
+    font-size: 1rem;
+    color: var(--shape3);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.ticker-item span.highlight {
+    color: var(--text-color);
+    background: var(--shape1);
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-size: 0.85rem;
+}
+
+@keyframes scrollTicker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
