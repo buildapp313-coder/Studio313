@@ -1,263 +1,343 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio313 | Premium Mobile Applications</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Studio313 | Liquid Glass Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for Themes */
-        :root {
-            /* Light Theme */
-            --bg-main: #f8f9fa;
-            --text-main: #121212;
-            --text-muted: #666666;
-            --card-bg: #ffffff;
-            --accent: #2563eb;
-            --card-border: rgba(0, 0, 0, 0.05);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --btn-text: #ffffff;
-        }
-
-        [data-theme="dark"] {
-            /* Dark Theme */
-            --bg-main: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --card-border: rgba(255, 255, 255, 0.05);
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            --btn-text: #0f172a;
-        }
-
-        [data-theme="vip"] {
-            /* VIP Gold Theme */
-            --bg-main: linear-gradient(135deg, #12001b 0%, #000000 100%);
-            --text-main: #ffd700;
-            --text-muted: #e5c100;
-            --card-bg: rgba(255, 215, 0, 0.03);
-            --accent: #ffaa00;
-            --card-border: rgba(255, 215, 0, 0.2);
-            --shadow: 0 10px 40px rgba(255, 215, 0, 0.1);
-            --btn-text: #000000;
-        }
-
-        /* Global Styles */
-        body {
-            font-family: 'Inter', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: var(--bg-main);
-            color: var(--text-main);
-            transition: all 0.4s ease;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #05050a; /* Deep dark background */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: #ffffff;
+            position: relative;
         }
 
-        /* Navbar & Theme Switcher */
+        /* The Glowing Background Orbs (Liquid Effect) */
+        .background-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #4f46e5; /* Indigo */
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #9333ea; /* Purple */
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #0ea5e9; /* Light Blue */
+            top: 40%;
+            left: 40%;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* Glassmorphism Utility Class */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation */
         nav {
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 30px;
+            padding: 15px 30px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--card-border);
+            z-index: 10;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--text-main);
-        }
-
-        .theme-selector {
-            padding: 8px 12px;
-            border-radius: 8px;
-            background: var(--card-bg);
-            color: var(--text-main);
-            border: 1px solid var(--card-border);
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, var(--text-main), var(--accent));
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+        /* Hero Section */
+        header {
+            text-align: center;
+            margin: 60px 20px 40px;
+            z-index: 10;
         }
 
-        /* Apps Grid */
-        .apps-container {
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Apps Container */
+        .showcase {
             display: flex;
             justify-content: center;
+            gap: 50px;
             flex-wrap: wrap;
-            gap: 30px;
-            padding: 40px 20px;
-            flex: 1;
+            padding: 20px;
+            z-index: 10;
+            margin-bottom: 80px;
         }
 
-        .app-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 30px;
+        /* Mobile Phone Mockup */
+        .phone-frame {
             width: 320px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 650px;
+            border-radius: 45px;
+            border: 8px solid #1a1a24;
+            background: rgba(0, 0, 0, 0.4);
             position: relative;
+            padding: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 0 0 2px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .app-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        .phone-frame:hover {
+            transform: translateY(-15px) scale(1.02);
         }
 
-        .app-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--accent);
-            color: var(--btn-text);
-            padding: 4px 10px;
+        /* Dynamic Island / Camera Notch */
+        .dynamic-island {
+            width: 100px;
+            height: 25px;
+            background: #000;
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
+            margin: 0 auto 20px;
+            position: relative;
+            top: -5px;
         }
 
+        /* Inside the Phone - App UI Elements */
+        .app-header {
+            margin-bottom: 20px;
+        }
+        
         .app-title {
-            font-size: 1.5rem;
-            margin: 15px 0 10px;
+            font-size: 1.4rem;
             font-weight: 600;
         }
-
-        .app-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--btn-text);
-            text-decoration: none;
-            padding: 12px 24px;
+        
+        .app-status {
+            font-size: 0.7rem;
+            padding: 3px 10px;
             border-radius: 10px;
-            font-weight: 600;
-            transition: opacity 0.3s;
-            width: calc(100% - 48px);
-            text-align: center;
+            display: inline-block;
+            margin-top: 5px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn:hover {
-            opacity: 0.8;
+        .status-live { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .status-beta { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+        .app-widget {
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        /* Mockup UI Lines */
+        .ui-line {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .ui-line.short { width: 60%; }
+        .ui-line.medium { width: 80%; }
+
+        /* Action Button */
+        .action-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: auto;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
         /* Footer */
         footer {
+            width: 100%;
             text-align: center;
-            padding: 30px 20px;
-            border-top: 1px solid var(--card-border);
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-top: auto;
+            background: rgba(0,0,0,0.3);
         }
 
-        .policy-links {
-            margin-top: 10px;
-        }
-
-        .policy-links a {
-            color: var(--accent);
+        .links a {
+            color: #a5b4fc;
             text-decoration: none;
             margin: 0 10px;
-            font-weight: 600;
-        }
-        
-        .policy-links a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation & Theme Switcher -->
-    <nav>
+    <!-- Liquid Orbs Background -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Glass Navbar -->
+    <nav class="glass-panel">
         <div class="logo">Studio313</div>
-        <select class="theme-selector" onchange="changeTheme(this.value)">
-            <option value="dark">🌙 Dark Theme (Default)</option>
-            <option value="light">☀️ Minimal Light</option>
-            <option value="vip">👑 VIP Gold</option>
-        </select>
+        <div style="font-size: 0.9rem; opacity: 0.8;">Liquid Glass UI</div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <h1>Crafting Digital Excellence</h1>
-        <p>Developing seamless, high-performance cross-platform applications with robust backend integrations. Explore our utilities designed for the modern user.</p>
-    </div>
+    <!-- Header -->
+    <header>
+        <h1>Next-Gen Apps</h1>
+        <p>Experience seamless design and robust performance crafted for the modern era.</p>
+    </header>
 
-    <!-- Application Portfolio -->
-    <div class="apps-container">
+    <!-- Apps Showcase (Mobile Mockups) -->
+    <div class="showcase">
         
-        <!-- App 1: Gatepass Lite -->
-        <div class="app-card">
-            <div class="app-badge">Live</div>
-            <div class="app-title">Gatepass Lite</div>
-            <div class="app-desc">A lightweight, highly secure, and fast access management utility. Experience seamless operations and smart design on any device.</div>
-            <a href="https://gatepass-lite.web.app" target="_blank" class="btn">View Web App</a>
+        <!-- Gatepass Lite Mockup -->
+        <div class="phone-frame glass-panel">
+            <div class="dynamic-island"></div>
+            
+            <div class="app-header">
+                <div class="app-title">Gatepass Lite</div>
+                <div class="app-status status-live">Live - Web App</div>
+            </div>
+
+            <!-- Glass Widget inside phone -->
+            <div class="app-widget glass-panel" style="background: rgba(79, 70, 229, 0.1);">
+                <div class="widget-title">Security Dashboard</div>
+                <div class="ui-line"></div>
+                <div class="ui-line medium"></div>
+                <div class="ui-line short"></div>
+                
+                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                    <div class="glass-panel" style="flex: 1; height: 60px; border-radius: 12px;"></div>
+                    <div class="glass-panel" style="flex: 1; height: 60px; border-radius: 12px;"></div>
+                </div>
+            </div>
+
+            <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn">Open Web App</a>
         </div>
 
-        <!-- App 2: Vip Notification -->
-        <div class="app-card">
-            <div class="app-badge" style="background: #ef4444; color: white;">Beta Testing</div>
-            <div class="app-title">Vip Notification</div>
-            <div class="app-desc">Advanced real-time messaging and high-priority alert system. Stay connected instantly with smart push infrastructure.</div>
-            <a href="#" class="btn" style="background: var(--card-border); color: var(--text-main);">Coming Soon to Play Store</a>
+        <!-- Vip Notification Mockup -->
+        <div class="phone-frame glass-panel">
+            <div class="dynamic-island"></div>
+            
+            <div class="app-header">
+                <div class="app-title">Vip Notification</div>
+                <div class="app-status status-beta">Testing Phase</div>
+            </div>
+
+            <!-- Glass Widget inside phone -->
+            <div class="app-widget glass-panel" style="background: rgba(14, 165, 233, 0.1);">
+                <div class="widget-title">Alert Configuration</div>
+                
+                <div class="glass-panel" style="padding: 15px; border-radius: 12px; margin-bottom: 10px;">
+                    <div class="ui-line medium"></div>
+                    <div class="ui-line short" style="margin-bottom: 0;"></div>
+                </div>
+
+                <div class="glass-panel" style="padding: 15px; border-radius: 12px;">
+                    <div class="ui-line"></div>
+                    <div class="ui-line short" style="margin-bottom: 0;"></div>
+                </div>
+            </div>
+
+            <a href="#" class="action-btn" style="background: rgba(255,255,255,0.1); color: #fff;">Coming Soon</a>
         </div>
 
     </div>
 
-    <!-- Footer & Policies -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Studio313. All rights reserved. | Empowering mobile experiences.</p>
-        <div class="policy-links">
-            <span>Legal: </span>
-            <a href="#gatepass-policy">Gatepass Lite Policy</a> | 
-            <a href="#vip-policy">Vip Notification Policy</a>
+        <div style="margin-bottom: 10px;">&copy; 2026 Studio313. All rights reserved.</div>
+        <div class="links">
+            <a href="#gatepass-privacy">Gatepass Privacy</a> | 
+            <a href="#vip-privacy">Vip Notification Privacy</a>
         </div>
     </footer>
-
-    <!-- JavaScript for Theme Switching -->
-    <script>
-        function changeTheme(themeName) {
-            document.documentElement.setAttribute('data-theme', themeName);
-        }
-    </script>
 
 </body>
 </html>
