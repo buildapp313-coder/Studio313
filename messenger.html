@@ -285,6 +285,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        // VIP FEATURE ADDED: Firestore database ko import kiya taake search kaam kare
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
@@ -298,6 +300,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        const db = getFirestore(app); // Database engine start
 
         const authScreen = document.getElementById('authScreen');
         const loginPanel = document.getElementById('loginPanel');
@@ -331,6 +334,49 @@
         const performSignOut = () => signOut(auth);
         document.getElementById('btnLogout').addEventListener('click', performSignOut);
         document.getElementById('dropSignOut').addEventListener('click', performSignOut);
+
+        // --- ASLI DATABASE SEARCH LOGIC (Premium) ---
+        // Isay window par attach kiya hai taake HTML ka onclick function isay read kar sake
+        window.submitAddContact = async function() {
+            const val = document.getElementById('newContactInput').value.trim();
+            if(!val) return alert("Please enter an Email ID to search.");
+
+            // Backend search query
+            try {
+                const usersRef = collection(db, "messenger_users"); // Apka wo table jahan users save hotay hain
+                const q = query(usersRef, where("email", "==", val));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert("User not found in the VIP Database! Check the email.");
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const userData = doc.data();
+                        
+                        // Khali list ka message (Your contact list is empty) hatao
+                        const emptyMsg = document.querySelector('#onlineUsersList div');
+                        if(emptyMsg) emptyMsg.remove();
+
+                        // Naya Contact Glass List mein show karo
+                        const list = document.getElementById('onlineUsersList');
+                        list.innerHTML += `
+                            <li class="list-item">
+                                <div class="item-icon icon-online"></div>
+                                <div>
+                                    <div class="item-name">${userData.displayName || val}</div>
+                                    <div class="item-sub">${userData.customStatus || 'Available'}</div>
+                                </div>
+                            </li>
+                        `;
+                        alert("✅ Successfully added " + (userData.displayName || val) + " to your contacts!");
+                        window.closeAddPopup(); // Popup band kardo
+                    });
+                }
+            } catch (error) {
+                console.error("Database Error:", error);
+                alert("Search connection failed. Please try again later.");
+            }
+        };
     </script>
 
     <!-- UI Interactions Script -->
@@ -367,19 +413,13 @@
         // 3. Bottom Toolbar Actions & Premium Popup Logic
         document.getElementById('btnAdd').addEventListener('click', () => openAddPopup());
 
-        function openAddPopup() {
+        // Functions ko global banaya taake Module script inko access kar sake
+        window.openAddPopup = function() {
             document.getElementById('addContactPopup').style.display = 'flex';
         }
-        function closeAddPopup() {
+        window.closeAddPopup = function() {
             document.getElementById('addContactPopup').style.display = 'none';
             document.getElementById('newContactInput').value = '';
-        }
-        function submitAddContact() {
-            const val = document.getElementById('newContactInput').value;
-            if(val) {
-                alert("VIP Search initiated for: " + val + "\n(Backend search logic will be connected next!)");
-                closeAddPopup();
-            }
         }
 
         document.getElementById('btnChat').addEventListener('click', () => {
