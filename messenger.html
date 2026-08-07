@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Messenger | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- Classic Messenger Vibe --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Floating Window Design */
+        .messenger-window {
+            width: 320px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid #b0c4de;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Window Header */
+        .window-header {
+            background: linear-gradient(to bottom, #f0f4fd, #d9e4f6);
+            padding: 10px 15px;
+            border-bottom: 1px solid #b0c4de;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .header-icon {
+            width: 20px;
+            height: 20px;
+            background: #f59e0b; /* Nostalgic yellow icon */
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .window-content {
+            padding: 30px 25px;
+            text-align: center;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(to bottom, #60a5fa, #3b82f6);
+            color: white;
+            border: 1px solid #2563eb;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to bottom, #3b82f6, #2563eb);
+        }
+
+        .status-message {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="messenger-window">
+        <div class="window-header">
+            <span class="header-icon"></span>
+            Web Messenger
+        </div>
+
+        <!-- Panel 1: Google Login -->
+        <div class="window-content" id="loginPanel">
+            <h3 style="margin-top: 0; color: #1e293b;">Sign In</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 25px;">Connect with your Google ID to enter the network.</p>
+            <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
+            <div id="authStatus" class="status-message">Waiting for authentication...</div>
+        </div>
+
+        <!-- Panel 2: Profile Setup (Hidden by default) -->
+        <div class="window-content" id="setupPanel" style="display: none;">
+            <h3 style="margin-top: 0; color: #1e293b; font-size: 1.1rem;">Create Your Identity</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 20px;">This information will be visible on your profile.</p>
+            
+            <div class="input-group">
+                <label>Display Name</label>
+                <input type="text" id="profName" class="form-control" placeholder="E.g. Cool_Dev99">
+            </div>
+
+            <div class="input-group">
+                <label>Gender</label>
+                <select id="profGender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Not Specified">Prefer not to say</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Primary Region</label>
+                <select id="profRegion" class="form-control">
+                    <option value="The Gulf Region">The Gulf Region</option>
+                    <option value="South Asia">South Asia</option>
+                    <option value="North America">North America</option>
+                    <option value="Europe">Europe</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Custom Status (Optional)</label>
+                <input type="text" id="profStatus" class="form-control" placeholder="E.g. Have something to share?">
+            </div>
+
+            <button id="btnSaveProfile" class="btn-primary">Save & Enter</button>
+        </div>
+        
+        <!-- Panel 3: Success Loading (Hidden by default) -->
+        <div class="window-content" id="loadingPanel" style="display: none;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">⏳</div>
+            <h4 style="margin: 0; color: #1e293b;">Loading Contacts...</h4>
+            <p style="font-size: 0.8rem; color: #64748b;">Signing you in as <strong id="displayNameSuccess"></strong></p>
+        </div>
+
+    </div>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+        // Aapki Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+            authDomain: "studio313-hq.firebaseapp.com",
+            projectId: "studio313-hq",
+            storageBucket: "studio313-hq.firebasestorage.app",
+            messagingSenderId: "328116481829",
+            appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        const loginPanel = document.getElementById('loginPanel');
+        const setupPanel = document.getElementById('setupPanel');
+        const loadingPanel = document.getElementById('loadingPanel');
+        let currentUser = null;
+
+        // Watch for Login Status
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('authStatus').innerText = "Authenticating...";
+                
+                // Check if user has already created a profile in the new "messenger_users" collection
+                const userRef = doc(db, "messenger_users", user.uid);
+                const userDoc = await getDoc(userRef);
+
+                if (userDoc.exists()) {
+                    // Profile exists, go straight to loading
+                    const userData = userDoc.data();
+                    loginPanel.style.display = "none";
+                    setupPanel.style.display = "none";
+                    loadingPanel.style.display = "block";
+                    document.getElementById('displayNameSuccess').innerText = userData.displayName;
+                    
+                    // Yahan hum next step mein "Main Contact List" page par redirect karenge
+                    setTimeout(() => { alert("Next Step: Redirection to the Main Contact List window!"); }, 1500);
+
+                } else {
+                    // New User: Show Setup Panel
+                    loginPanel.style.display = "none";
+                    setupPanel.style.display = "block";
+                    document.getElementById('profName').value = user.displayName || "";
+                }
+            } else {
+                // Not logged in
+                loginPanel.style.display = "block";
+                setupPanel.style.display = "none";
+                loadingPanel.style.display = "none";
+            }
+        });
+
+        // Login Button Click
+        document.getElementById('btnGoogleLogin').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch((error) => {
+                document.getElementById('authStatus').innerText = "Login failed. Try again.";
+            });
+        });
+
+        // Save Profile Button Click
+        document.getElementById('btnSaveProfile').addEventListener('click', async () => {
+            const name = document.getElementById('profName').value.trim();
+            const gender = document.getElementById('profGender').value;
+            const region = document.getElementById('profRegion').value;
+            const statusMsg = document.getElementById('profStatus').value.trim() || "Available";
+
+            if (!name) return alert("Display name is required!");
+
+            document.getElementById('btnSaveProfile').innerText = "Saving...";
+
+            // Save to Database
+            await setDoc(doc(db, "messenger_users", currentUser.uid), {
+                displayName: name,
+                gender: gender,
+                region: region,
+                customStatus: statusMsg,
+                email: currentUser.email,
+                joinedAt: serverTimestamp(),
+                isOnline: true
+            });
+
+            // Transition to loading screen
+            setupPanel.style.display = "none";
+            loadingPanel.style.display = "block";
+            document.getElementById('displayNameSuccess').innerText = name;
+            
+            // Temporary alert for testing
+            setTimeout(() => { alert("Profile Created! Ready for the Main Interface."); }, 1500);
+        });
+    </script>
+</body>
+</html>
