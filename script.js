@@ -50,10 +50,10 @@ window.onload = function() {
     let savedTheme = localStorage.getItem('studio313_theme') || 'dark';
     changeTheme(savedTheme);
     
-    // Dropdown ka text saved theme ke mutabiq theek karega
-    let themeText = '🌙 Dark Liquid';
-    if(savedTheme === 'light') themeText = '☀️ Light Glass';
-    if(savedTheme === 'vip') themeText = '👑 VIP Gold';
+    // Dropdown ka text saved theme ke mutabiq theek karega (Premium & Clean text without emojis)
+    let themeText = 'Dark Liquid';
+    if(savedTheme === 'light') themeText = 'Light Glass';
+    if(savedTheme === 'vip') themeText = 'VIP Gold';
     
     let dropdownTextEl = document.getElementById("dropdownBtnText");
     if(dropdownTextEl) {
