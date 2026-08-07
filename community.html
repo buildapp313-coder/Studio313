@@ -236,6 +236,63 @@
         }
     </style>
 </head>
+    <!-- Real Firebase Visitor Counter -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+    // Aapki Firebase Keys
+    const firebaseConfig = {
+        apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+        authDomain: "studio313-hq.firebaseapp.com",
+        projectId: "studio313-hq",
+        storageBucket: "studio313-hq.firebasestorage.app",
+        messagingSenderId: "328116481829",
+        appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function updateRealCounter() {
+        const countEl = document.getElementById('visitor-count');
+        if (!countEl) return;
+
+        // Firebase mein 'stats' collection aur 'views' document ka reference
+        const docRef = doc(db, "stats", "views");
+        
+        try {
+            // Check karega ke user naya hai ya purana (Browser Storage se)
+            const hasVisited = localStorage.getItem('studio313_real_visitor');
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                // Agar database mein counter nahi hai, toh 1 se shuru karega
+                await setDoc(docRef, { count: 1 });
+                countEl.innerText = "1";
+                localStorage.setItem('studio313_real_visitor', 'yes');
+            } else {
+                if (!hasVisited) {
+                    // Agar naya user hai, toh Firebase mein +1 karega
+                    await updateDoc(docRef, { count: increment(1) });
+                    localStorage.setItem('studio313_real_visitor', 'yes');
+                    
+                    // Naya updated count layega
+                    const updatedSnap = await getDoc(docRef);
+                    countEl.innerText = updatedSnap.data().count.toLocaleString();
+                } else {
+                    // Agar purana user refresh kar raha hai, toh count nahi barhayega sirf show karega
+                    countEl.innerText = docSnap.data().count.toLocaleString();
+                }
+            }
+        } catch (error) {
+            console.error("Counter Error:", error);
+            countEl.innerText = "Active";
+        }
+    }
+
+    updateRealCounter();
+</script>
 <body>
 
     <div class="liquid-shape shape-1"></div>
