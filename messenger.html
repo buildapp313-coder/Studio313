@@ -3,116 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Glass Messenger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="messenger.css">
+    <title>Web Messenger | Studio313</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- Premium Glassmorphism (Weather App Vibe) --- */
+        body {
+            margin: 0; padding: 0; height: 100vh;
+            /* Moody Weather/Rainy Background for Glass Effect */
+            background: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Messenger Container - The Glass Box */
+        .messenger-app {
+            width: 340px; height: 650px;
+            /* Transparent Frosted Glass Effect */
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
+            color: #ffffff;
+        }
+
+        /* 1. App Header */
+        .app-header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; font-weight: 600;
+        }
+        .app-title { display: flex; align-items: center; gap: 8px; }
+        .smile-icon { width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
+
+        /* Menu Bar */
+        .menu-bar {
+            background: rgba(255, 255, 255, 0.05); padding: 6px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); display: flex; gap: 12px;
+        }
+        .menu-bar span { cursor: pointer; transition: 0.2s; } 
+        .menu-bar span:hover { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+
+        /* 2. User Profile Area */
+        .my-profile-area {
+            padding: 15px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; gap: 12px; align-items: center;
+        }
+        .my-avatar {
+            width: 50px; height: 50px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: bold; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .my-info { flex: 1; }
+        .my-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+        .my-status { 
+            font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); background: transparent; 
+            border: 1px solid transparent; width: 100%; outline: none; transition: 0.2s;
+            padding: 2px 4px; border-radius: 4px;
+        }
+        .my-status:focus { border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(0, 0, 0, 0.2); color: #fff; }
+
+        /* 3. Monetization (Ad Banner Glass) */
+        .ad-banner {
+            margin: 10px; height: 60px; 
+            background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 4. Lists (Contacts & Rooms) */
+        .list-container { flex: 1; overflow-y: auto; background: transparent; }
+        .list-container::-webkit-scrollbar { width: 4px; }
+        .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        
+        .list-group { margin-bottom: 5px; }
+        .group-header {
+            background: rgba(0, 0, 0, 0.2); padding: 6px 15px;
+            font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+            cursor: pointer; display: flex; justify-content: space-between;
+        }
+        
+        .list-items { list-style: none; padding: 0; margin: 0; }
+        .list-item {
+            padding: 10px 15px 10px 25px; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        .list-item:hover { background: rgba(255, 255, 255, 0.1); }
+        
+        .item-icon { width: 10px; height: 10px; border-radius: 50%; }
+        .icon-online { background: #10b981; box-shadow: 0 0 8px #10b981; }
+        .icon-room { background: #3b82f6; border-radius: 3px; box-shadow: 0 0 8px #3b82f6; }
+        
+        .item-name { font-size: 0.85rem; font-weight: 500; color: #fff; }
+        .item-sub { font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
+
+        /* 5. Bottom Toolbar */
+        .bottom-toolbar {
+            background: rgba(0, 0, 0, 0.2); padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-around;
+        }
+        .tool-btn {
+            background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
+            color: rgba(255, 255, 255, 0.7); transition: transform 0.2s, color 0.2s;
+        }
+        .tool-btn:hover { transform: scale(1.15); color: #fff; }
+
+        /* Panels Management */
+        #authScreen { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; }
+        .btn-primary { 
+            width: 100%; background: rgba(59, 130, 246, 0.5); border: 1px solid rgba(59, 130, 246, 0.8); 
+            color: white; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px;
+            backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .btn-primary:hover { background: rgba(59, 130, 246, 0.8); box-shadow: 0 0 15px rgba(59,130,246,0.5); }
+    </style>
 </head>
 <body>
 
-    <!-- Background Animation/Image -->
-    <div class="app-bg"></div>
-
-    <!-- Login Overlay -->
-    <div id="authScreen" class="glass-overlay">
-        <div class="glass-box text-center">
-            <h2 style="color: #fff; margin-bottom: 10px; font-weight: 500;">VIP Secure Network</h2>
-            <p style="color: #cbd5e1; font-size: 0.85rem; margin-bottom: 30px;">Authenticate to access the global infrastructure.</p>
-            <button id="btnGoogleLogin" class="glass-btn primary-btn">Connect Google ID</button>
-        </div>
-    </div>
-
-    <!-- Main App Container -->
-    <div id="mainInterface" class="app-container" style="display: none;">
+    <div class="messenger-app">
         
-        <!-- Left Panel: Contacts & Rooms -->
-        <div class="glass-panel left-panel">
+        <!-- App Header & Menu -->
+        <div class="app-header">
+            <div class="app-title"><span class="smile-icon"></span> Web Messenger</div>
+            <div style="display: flex; gap: 10px;">
+                <span style="cursor:pointer; color: rgba(255,255,255,0.7);">➖</span>
+                <span style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
+            </div>
+        </div>
+        <div class="menu-bar">
+            <span>Messenger</span> <span>Contacts</span> <span>Actions</span> <span>Help</span>
+        </div>
+
+        <!-- AUTHENTICATION SCREEN -->
+        <div id="authScreen">
+            <div id="loginPanel" style="width: 100%;">
+                <h3 style="margin: 0 0 5px 0;">Sign In</h3>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Connect your Google ID.</p>
+                <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
+            </div>
+            <div id="loadingPanel" style="display: none; width: 100%;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+                <h4 style="margin:0;">Loading Contacts...</h4>
+            </div>
+        </div>
+
+        <!-- MAIN MESSENGER UI (Hidden until login) -->
+        <div id="mainInterface" style="display: none; flex: 1; flex-direction: column;">
             
-            <div class="panel-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div id="myAvatar" class="avatar-circle">?</div>
-                    <div>
-                        <div id="myName" class="user-name">Loading...</div>
-                        <div class="user-status">● Online</div>
-                    </div>
+            <!-- User Profile -->
+            <div class="my-profile-area">
+                <div class="my-avatar" id="myAvatar">?</div>
+                <div class="my-info">
+                    <div class="my-name" id="myName">User Name</div>
+                    <input type="text" class="my-status" id="myStatus" value="Available (Click to change status)">
                 </div>
-                <button id="btnLogout" class="icon-btn" title="Sign Out">🚪</button>
             </div>
 
-            <!-- Action Bar -->
-            <div class="action-bar">
-                <div class="search-box">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Search chats...">
-                </div>
-                <!-- The + Add Button -->
-                <button id="btnAddContact" class="glass-btn add-btn" title="Add Contact by ID">＋</button>
+            <!-- AdMob Space -->
+            <div class="ad-banner" title="Google AdMob Banner Space">
+                Ad: Chat with your friends anywhere! <br>(Google AdMob Space)
             </div>
 
-            <div class="scroll-area">
-                <!-- Regional Rooms -->
-                <div class="list-section">
-                    <div class="section-title">Regional Hubs</div>
-                    <ul class="glass-list" id="roomsList">
-                        <li class="list-item room-item">
-                            <div class="item-icon">🌍</div>
-                            <div class="item-info">
-                                <div class="name">The Gulf Region</div>
-                                <div class="sub">Public Chat Room</div>
+            <!-- Contacts & Rooms List -->
+            <div class="list-container">
+                
+                <!-- Regional Hubs -->
+                <div class="list-group">
+                    <div class="group-header">▼ Regional Hubs (2)</div>
+                    <ul class="list-items">
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">The Gulf Region</div>
+                                <div class="item-sub">Public Chat Room</div>
                             </div>
                         </li>
-                        <li class="list-item room-item">
-                            <div class="item-icon">🌐</div>
-                            <div class="item-info">
-                                <div class="name">Global Lounge</div>
-                                <div class="sub">Open Discussion</div>
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">Global Lounge</div>
+                                <div class="item-sub">Public Chat Room</div>
                             </div>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Online Contacts (Empty by default) -->
-                <div class="list-section">
-                    <div class="section-title">My Contacts (<span id="contactCount">0</span>)</div>
-                    <ul class="glass-list" id="contactsList">
-                        <!-- Yahan koi dummy data nahi, JS se asli users aayenge -->
-                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.8rem;">
-                            Your contact list is empty.<br>Click '+' to search by ID.
+                <!-- Online Friends (Khali rakha hai jaisa aapne kaha tha) -->
+                <div class="list-group">
+                    <div class="group-header">▼ Online Users (0)</div>
+                    <ul class="list-items" id="onlineUsersList">
+                        <div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">
+                            Your contact list is empty.<br>Click '+' below to search by ID.
                         </div>
                     </ul>
                 </div>
-            </div>
-        </div>
 
-        <!-- Right Panel: Private Chat (Hidden initially) -->
-        <div class="glass-panel right-panel" id="privateChatPanel">
-            <div class="chat-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div class="avatar-circle" id="chatTargetAvatar" style="background: rgba(255,255,255,0.2);">#</div>
-                    <div>
-                        <div class="user-name" id="chatTargetName">Select a chat</div>
-                        <div class="user-status" id="chatTargetStatus">---</div>
-                    </div>
-                </div>
-                <button id="btnCloseChat" class="icon-btn">❌</button>
             </div>
 
-            <div class="chat-history" id="privateMessages">
-                <div style="text-align: center; margin-top: 50%; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
-                    Open a room or contact to start messaging.
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <button class="icon-btn">📎</button>
-                <input type="text" class="glass-input" placeholder="Type your message..." disabled>
-                <button class="icon-btn">😀</button>
-                <button class="glass-btn send-btn" disabled>Send</button>
+            <!-- Bottom Tools -->
+            <div class="bottom-toolbar">
+                <button class="tool-btn" title="Add Contact">➕</button>
+                <button class="tool-btn" title="Send Instant Message">💬</button>
+                <button class="tool-btn" title="Join Room">🌍</button>
+                <button class="tool-btn" id="btnLogout" title="Sign Out">🚪</button>
             </div>
         </div>
 
     </div>
 
-    <!-- Module Script Load -->
-    <script type="module" src="messenger.js"></script>
+    <!-- Firebase Logic (Same as before, untouched) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+            authDomain: "studio313-hq.firebaseapp.com",
+            projectId: "studio313-hq",
+            storageBucket: "studio313-hq.firebasestorage.app",
+            messagingSenderId: "328116481829",
+            appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const authScreen = document.getElementById('authScreen');
+        const loginPanel = document.getElementById('loginPanel');
+        const loadingPanel = document.getElementById('loadingPanel');
+        const mainInterface = document.getElementById('mainInterface');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginPanel.style.display = 'none';
+                loadingPanel.style.display = 'block';
+                
+                setTimeout(() => {
+                    authScreen.style.display = 'none';
+                    mainInterface.style.display = 'flex';
+                    
+                    document.getElementById('myName').innerText = user.displayName;
+                    document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
+                }, 1200);
+
+            } else {
+                authScreen.style.display = 'flex';
+                mainInterface.style.display = 'none';
+                loginPanel.style.display = 'block';
+                loadingPanel.style.display = 'none';
+            }
+        });
+
+        document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+    </script>
 </body>
 </html>
