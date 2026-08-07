@@ -7,56 +7,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Premium Chat Layout */
+        /* Ultra Premium Chat Layout */
         .chat-container {
             display: flex;
             max-width: 1300px;
             margin: 20px auto 60px;
             height: 75vh;
-            border-radius: 30px;
+            border-radius: 20px; /* Sharper corners */
             overflow: hidden;
             position: relative;
             z-index: 10;
+            background: rgba(10, 10, 15, 0.7); /* Deep dark corporate glass */
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         /* Sidebar - Categories & Countries */
         .chat-sidebar {
-            width: 300px;
-            border-right: 1px solid var(--glass-border);
-            padding: 20px;
+            width: 280px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px 20px;
             display: flex;
             flex-direction: column;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .chat-sidebar h3 {
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .channel-list {
             list-style: none;
-            overflow-y: auto;
+            margin-bottom: 30px;
         }
 
         .channel-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            transition: all 0.2s ease;
+            color: #a0a0b0;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
-        .channel-item:hover, .channel-item.active {
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid var(--shape3);
+        .channel-item:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .channel-item.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid var(--shape3);
         }
 
         /* Main Chat Area */
@@ -69,11 +79,26 @@
 
         .chat-header {
             padding: 20px 30px;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            margin-right: 6px;
         }
 
         .chat-messages {
@@ -82,14 +107,14 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
 
-        /* Message Bubbles */
+        /* Minimalist Message Bubbles */
         .message {
             display: flex;
             gap: 15px;
-            max-width: 80%;
+            max-width: 75%;
         }
 
         .message.own {
@@ -98,97 +123,118 @@
         }
 
         .avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--shape1);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px; /* Square with rounded corners for corporate look */
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .msg-content {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             padding: 15px 20px;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            position: relative;
+            border-radius: 0 15px 15px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .message.own .msg-content {
-            background: rgba(6, 182, 212, 0.1); /* Slight blue tint for own msgs */
-            border-color: rgba(6, 182, 212, 0.3);
+            background: rgba(var(--shape3-rgb, 6, 182, 212), 0.08); /* Very subtle accent */
+            border-color: rgba(var(--shape3-rgb, 6, 182, 212), 0.2);
+            border-radius: 15px 0 15px 15px;
+            color: #ffffff;
         }
 
         .msg-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-            font-size: 0.85rem;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
-        .badge-admin { background: #fbbf24; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; }
-        .badge-tester { background: #34d399; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; }
+        .msg-name {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
 
-        /* Input Area */
+        .msg-time {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .badge { 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-weight: 600; 
+            font-size: 0.7rem; 
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .badge-admin { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .badge-tester { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+
+        /* Sleek Input Area */
         .chat-input-area {
             padding: 20px 30px;
-            border-top: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             gap: 15px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            align-items: center;
         }
 
         .chat-input {
             flex: 1;
-            padding: 15px 25px;
-            border-radius: 25px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-color);
-            font-size: 1rem;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s;
+            transition: border-color 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         .chat-input:focus {
             border-color: var(--shape3);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
         }
 
-        /* Login Overlay */
-        .login-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 9, 20, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            border-radius: 30px;
+        .btn-send {
+            padding: 0 25px;
+            height: 50px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
         }
 
         @media (max-width: 850px) {
-            .chat-container { flex-direction: column; height: 85vh; }
-            .chat-sidebar { width: 100%; height: 150px; border-right: none; border-bottom: 1px solid var(--glass-border); }
+            .chat-container { flex-direction: column; height: 85vh; border-radius: 0; }
+            .chat-sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Liquid Background Elements -->
     <div class="liquid-shape shape-1"></div>
     <div class="liquid-shape shape-2"></div>
     <div class="liquid-shape shape-3"></div>
 
-    <!-- Glass Navbar -->
     <nav class="navbar glass">
         <div class="logo">Studio313</div>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">Menu</button>
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="download.html">Apps</a></li>
@@ -197,45 +243,35 @@
             <li>
                 <div class="custom-dropdown">
                     <button class="dropdown-btn glass-btn" onclick="toggleDropdown()">
-                        <span id="dropdownBtnText">🌙 Dark Liquid</span> ▼
+                        <span id="dropdownBtnText">Dark Liquid</span> ▼
                     </button>
                     <div class="dropdown-content glass" id="themeDropdown">
-                        <a href="#" onclick="setCustomTheme('dark', '🌙 Dark Liquid')">🌙 Dark Liquid</a>
-                        <a href="#" onclick="setCustomTheme('light', '☀️ Light Glass')">☀️ Light Glass</a>
-                        <a href="#" onclick="setCustomTheme('vip', '👑 VIP Gold')">👑 VIP Gold</a>
+                        <a href="#" onclick="setCustomTheme('dark', 'Dark Liquid')">Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', 'Light Glass')">Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', 'VIP Gold')">VIP Gold</a>
                     </div>
                 </div>
             </li>
         </ul>
     </nav>
 
-    <!-- Chat Application Interface -->
-    <div class="chat-container glass">
+    <!-- Professional Chat Application Interface -->
+    <div class="chat-container">
         
-        <!-- Login Overlay (Will be hidden once user logs in via JS/Firebase) -->
-        <div class="login-overlay" id="loginOverlay">
-            <div class="glass" style="padding: 40px; border-radius: 20px; text-align: center; max-width: 400px;">
-                <h2 style="font-size: 2rem; margin-bottom: 10px;">VIP Access</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">Sign in securely to join the Studio313 Global Hub.</p>
-                <button class="action-btn glass-btn" style="width: 100%; padding: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="document.getElementById('loginOverlay').style.display='none'">
-                    <span>🔗</span> Connect Secure ID
-                </button>
-            </div>
-        </div>
-
-        <!-- Left Sidebar (Rooms) -->
+        <!-- Left Sidebar (Corporate Hubs) -->
         <div class="chat-sidebar">
-            <h3>🌐 Global Servers</h3>
+            <h3>Global Channels</h3>
             <ul class="channel-list">
-                <li class="channel-item active">💬 General Lounge</li>
-                <li class="channel-item">🚀 Dev Updates</li>
+                <li class="channel-item active">General Discussion</li>
+                <li class="channel-item">Release Notes</li>
+                <li class="channel-item">Support Desk</li>
             </ul>
 
-            <h3 style="margin-top: 20px;">📍 Country Hubs</h3>
+            <h3>Regional Hubs</h3>
             <ul class="channel-list">
-                <li class="channel-item">🇶🇦 Qatar Hub</li>
-                <li class="channel-item">🇺🇸 USA Hub</li>
-                <li class="channel-item">🇵🇰 PK / 🇮🇳 IN Hub</li>
+                <li class="channel-item">The Gulf Region (QA)</li>
+                <li class="channel-item">North America (US)</li>
+                <li class="channel-item">South Asia (PK/IN)</li>
             </ul>
         </div>
 
@@ -244,52 +280,52 @@
             <!-- Header -->
             <div class="chat-header">
                 <div>
-                    <h2 style="font-size: 1.3rem;">💬 General Lounge</h2>
-                    <span style="color: #34d399; font-size: 0.8rem;">● 124 VIPs Online</span>
+                    <h2>General Discussion</h2>
+                    <span style="color: #9ca3af; font-size: 0.8rem;"><span class="status-dot"></span>System Operational</span>
                 </div>
-                <div class="glass-btn" style="padding: 5px 15px; border-radius: 10px; font-size: 0.9rem;">
-                    Rules
+                <div class="glass-btn" style="padding: 6px 15px; border-radius: 6px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                    Guidelines
                 </div>
             </div>
 
             <!-- Messages -->
-            <div class="chat-messages">
+            <div class="chat-messages" id="chatMessages">
                 
                 <!-- Received Message (Admin) -->
                 <div class="message">
-                    <div class="avatar">S3</div>
+                    <div class="avatar" style="background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.3); color: #fbbf24;">HQ</div>
                     <div class="msg-content">
                         <div class="msg-header">
-                            <span style="font-weight: 600; color: var(--shape3);">Studio313 Founder</span>
-                            <span class="badge-admin">Admin</span>
-                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:24 AM</span>
+                            <span class="msg-name">System Admin</span>
+                            <span class="badge badge-admin">Admin</span>
+                            <span class="msg-time">10:24 AM</span>
                         </div>
-                        <p>Welcome to the global hub! Gatepass Lite is officially live. Drop your feedback here! 🚀</p>
+                        <p>Welcome to the Studio313 Global Hub. Gatepass Lite deployment is complete. Please share your diagnostic reports below.</p>
                     </div>
                 </div>
 
                 <!-- Received Message (Tester) -->
                 <div class="message">
-                    <div class="avatar" style="background: var(--shape2);">A</div>
+                    <div class="avatar" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: #34d399;">AD</div>
                     <div class="msg-content">
                         <div class="msg-header">
-                            <span style="font-weight: 600;">Ali_Dev</span>
-                            <span class="badge-tester">Beta Tester</span>
-                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:26 AM</span>
+                            <span class="msg-name">Ali_Dev</span>
+                            <span class="badge badge-tester">Beta Tester</span>
+                            <span class="msg-time">10:26 AM</span>
                         </div>
-                        <p>The new Vip Notification update is super fast. Testing it right now!</p>
+                        <p>The new notification update is running smoothly on the latest build. Awaiting further instructions.</p>
                     </div>
                 </div>
 
                 <!-- Own Message -->
                 <div class="message own">
-                    <div class="avatar" style="background: var(--text-color); color: var(--bg-color);">You</div>
+                    <div class="avatar">You</div>
                     <div class="msg-content">
                         <div class="msg-header">
-                            <span style="font-weight: 600;">You</span>
-                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:30 AM</span>
+                            <span class="msg-name">You</span>
+                            <span class="msg-time">10:30 AM</span>
                         </div>
-                        <p>Looks amazing! The glassmorphism UI is flawless on mobile too. 🔥</p>
+                        <p>Acknowledged. The interface has been successfully updated to the corporate standard.</p>
                     </div>
                 </div>
 
@@ -297,15 +333,14 @@
 
             <!-- Input Area -->
             <div class="chat-input-area">
-                <button class="glass-btn" style="width: 50px; border-radius: 50%; font-size: 1.2rem;">📎</button>
-                <input type="text" class="chat-input" placeholder="Type a secure message...">
-                <button class="action-btn glass-btn" style="width: 60px; border-radius: 20px;">➔</button>
+                <input type="text" class="chat-input" id="messageInput" placeholder="Enter secure message...">
+                <button class="action-btn glass-btn btn-send" onclick="alert('Firebase Connection Required to Transmit.')">Send</button>
             </div>
         </div>
 
     </div>
 
-    <!-- JS File Link -->
+    <!-- Main JavaScript File -->
     <script src="script.js"></script>
 
 </body>
