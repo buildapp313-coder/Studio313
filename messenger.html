@@ -9,19 +9,15 @@
         /* --- Premium Glassmorphism (Weather App Vibe) --- */
         body {
             margin: 0; padding: 0; height: 100vh;
-            /* Moody Weather/Rainy Background for Glass Effect */
             background: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex; align-items: center; justify-content: center;
-            /* ADDED: Gap for side-by-side windows */
-            gap: 20px;
+            gap: 20px; /* Dono windows ke darmiyan gap */
         }
 
-        /* Messenger Container - The Glass Box */
-        .messenger-app {
-            width: 340px; height: 650px;
-            /* Transparent Frosted Glass Effect */
+        /* Panels Shared Style */
+        .messenger-app, .chat-panel {
             background: rgba(30, 41, 59, 0.4); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
@@ -31,14 +27,13 @@
             overflow: hidden;
             display: flex; flex-direction: column; position: relative;
             color: #ffffff;
+            width: 340px; height: 650px;
         }
 
         /* 1. App Header */
         .app-header {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.9rem; font-weight: 600;
+            background: rgba(0, 0, 0, 0.2); padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600;
         }
         .app-title { display: flex; align-items: center; gap: 8px; }
         .smile-icon { width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
@@ -53,8 +48,7 @@
 
         /* 2. User Profile Area */
         .my-profile-area {
-            padding: 15px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; gap: 12px; align-items: center;
+            padding: 15px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 12px; align-items: center;
         }
         .my-avatar {
             width: 50px; height: 50px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2);
@@ -65,18 +59,15 @@
         .my-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
         .my-status { 
             font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); background: transparent; 
-            border: 1px solid transparent; width: 100%; outline: none; transition: 0.2s;
-            padding: 2px 4px; border-radius: 4px;
+            border: 1px solid transparent; width: 100%; outline: none; transition: 0.2s; padding: 2px 4px; border-radius: 4px;
         }
         .my-status:focus { border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(0, 0, 0, 0.2); color: #fff; }
 
-        /* 3. Monetization (Ad Banner Glass) */
+        /* 3. Monetization */
         .ad-banner {
-            margin: 10px; height: 60px; 
-            background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3);
+            margin: 10px; height: 60px; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3);
             border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center;
-            font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer;
-            backdrop-filter: blur(10px);
+            font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px);
         }
 
         /* 4. Lists (Contacts & Rooms) */
@@ -86,69 +77,34 @@
         
         .list-group { margin-bottom: 5px; }
         .group-header {
-            background: rgba(0, 0, 0, 0.2); padding: 6px 15px;
-            font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); 
-            border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-            cursor: pointer; display: flex; justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2); padding: 6px 15px; font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: pointer; display: flex; justify-content: space-between;
         }
-        
         .list-items { list-style: none; padding: 0; margin: 0; transition: max-height 0.3s ease-out; overflow: hidden; }
         .list-item {
             padding: 10px 15px 10px 25px; display: flex; align-items: center; gap: 10px;
             cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02);
         }
         .list-item:hover { background: rgba(255, 255, 255, 0.1); }
-        
         .item-icon { width: 10px; height: 10px; border-radius: 50%; }
         .icon-online { background: #10b981; box-shadow: 0 0 8px #10b981; }
         .icon-room { background: #3b82f6; border-radius: 3px; box-shadow: 0 0 8px #3b82f6; }
-        
         .item-name { font-size: 0.85rem; font-weight: 500; color: #fff; }
         .item-sub { font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
 
         /* 5. Bottom Toolbar */
         .bottom-toolbar {
-            background: rgba(0, 0, 0, 0.2); padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; justify-content: space-around;
+            background: rgba(0, 0, 0, 0.2); padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-around;
         }
-        .tool-btn {
-            background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
-            color: rgba(255, 255, 255, 0.7); transition: transform 0.2s, color 0.2s;
-        }
+        .tool-btn { background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: rgba(255, 255, 255, 0.7); transition: 0.2s; }
         .tool-btn:hover { transform: scale(1.15); color: #fff; }
 
-        /* Panels Management */
-        #authScreen { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; }
+        /* Buttons & Inputs */
         .btn-primary { 
             width: 100%; background: rgba(59, 130, 246, 0.5); border: 1px solid rgba(59, 130, 246, 0.8); 
-            color: white; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px;
-            backdrop-filter: blur(5px); transition: 0.3s;
+            color: white; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px; backdrop-filter: blur(5px); transition: 0.3s;
         }
         .btn-primary:hover { background: rgba(59, 130, 246, 0.8); box-shadow: 0 0 15px rgba(59,130,246,0.5); }
-
-        /* --- ADDED VIP CSS FOR DROPDOWNS & POPUPS --- */
-        .glass-dropdown {
-            position: absolute; top: 100%; left: 0; margin-top: 5px;
-            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px;
-            padding: 5px 0; min-width: 150px; display: none; z-index: 100;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-        .dropdown-item {
-            padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.2s;
-        }
-        .dropdown-item:hover { background: rgba(255, 255, 255, 0.1); padding-left: 20px; color: #60a5fa; }
-
-        .glass-popup-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: center; z-index: 200;
-        }
-        .glass-popup-box {
-            background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px; border-radius: 16px; width: 85%; max-width: 350px; text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-        }
         .glass-input {
             width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); 
             padding: 10px; border-radius: 8px; color: #fff; outline: none; font-family: 'Poppins'; font-size: 0.85rem;
@@ -156,27 +112,68 @@
         .glass-input::placeholder { color: rgba(255,255,255,0.4); }
         .glass-input:focus { background: rgba(255, 255, 255, 0.1); }
 
-        /* --- ADDED VIP CSS FOR PRIVATE CHAT WINDOW --- */
-        .chat-panel {
-            background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-            display: none; flex-direction: column; overflow: hidden;
-            width: 350px; height: 650px; color: #ffffff; position: relative;
+        /* Panels Management */
+        #authScreen { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; }
+        
+        /* Dropdowns & Popups */
+        .glass-dropdown {
+            position: absolute; top: 100%; left: 0; margin-top: 5px;
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px;
+            padding: 5px 0; min-width: 150px; display: none; z-index: 100; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
+        .dropdown-item { padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
+        .dropdown-item:hover { background: rgba(255, 255, 255, 0.1); padding-left: 20px; color: #60a5fa; }
+
+        .glass-popup-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 200;
+        }
+        .glass-popup-box {
+            background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.2); padding: 25px; border-radius: 16px; width: 85%; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        /* --- NEW: VIP CHAT UI UPDATES --- */
+        .chat-panel { display: none; width: 360px; } /* Thodi si broad ki hai private chat */
+        
+        /* Status Bar under Header */
+        .chat-status-bar {
+            background: rgba(255, 255, 255, 0.05); padding: 8px 15px; font-size: 0.75rem; color: rgba(255,255,255,0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; gap: 8px; align-items: center;
+        }
+
+        /* Chat Area & Bubbles */
         .chat-area { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; }
         .chat-area::-webkit-scrollbar { width: 4px; }
         .chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        
+        .message-row { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .message-row.sent { align-items: flex-end; }
+        .message-row.received { align-items: flex-start; }
+        
         .chat-bubble {
-            background: rgba(59, 130, 246, 0.5); padding: 8px 12px; border-radius: 12px 12px 0 12px;
-            align-self: flex-end; max-width: 85%; font-size: 0.85rem; border: 1px solid rgba(59, 130, 246, 0.8);
-            margin-bottom: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 10px 15px; max-width: 80%; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); line-height: 1.4;
         }
+        .message-row.sent .chat-bubble {
+            background: rgba(59, 130, 246, 0.6); border: 1px solid rgba(59, 130, 246, 0.8); border-radius: 16px 16px 0 16px; 
+        }
+        .message-row.received .chat-bubble {
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px 16px 16px 0;
+        }
+        .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+        /* Emoticon Panel */
+        .emoticon-panel {
+            background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px; display: none; grid-template-columns: repeat(6, 1fr); gap: 10px; max-height: 150px; overflow-y: auto;
+        }
+        .emoticon-btn { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
+        .emoticon-btn:hover { transform: scale(1.2); }
     </style>
 </head>
 <body>
 
-    <div class="messenger-app">
+    <!-- WRAPPER: Dono windows iske andar aayengi -->
+    <div class="messenger-app" style="margin-right: 0;">
         
         <!-- App Header & Menu -->
         <div class="app-header">
@@ -241,7 +238,7 @@
             </div>
 
             <!-- Contacts & Rooms List -->
-            <div class="list-container">
+            <div class="list-container" id="mainListContainer">
                 
                 <!-- Regional Hubs -->
                 <div class="list-group">
@@ -285,7 +282,7 @@
             </div>
         </div>
         
-        <!-- ADDED VIP Premium Add Contact Popup -->
+        <!-- Premium Add Contact Popup -->
         <div id="addContactPopup" class="glass-popup-overlay">
             <div class="glass-popup-box">
                 <h3 style="margin-top: 0; color: #fff; font-weight: 500; font-size: 1.1rem;">Add New Contact</h3>
@@ -300,29 +297,64 @@
 
     </div>
 
-    <!-- NEW: VIP SIDE PRIVATE CHAT WINDOW -->
+    <!-- NEW: UPGRADED VIP SIDE PRIVATE CHAT WINDOW -->
     <div id="privateChatWindow" class="chat-panel">
+        
+        <!-- Header -->
         <div class="app-header">
             <div class="app-title">
                 <span class="item-icon icon-online" style="width:12px; height:12px; display:inline-block; margin-right:5px;"></span> 
                 <span id="chatTargetName">User Name</span>
             </div>
             <div style="display: flex; gap: 10px; align-items: center;">
-                <span title="Call" style="cursor:pointer; color: rgba(255,255,255,0.7);">📞</span>
+                <span title="Voice Call" style="cursor:pointer; color: rgba(255,255,255,0.7);">📞</span>
                 <span title="Close Chat" onclick="closeChatWindow()" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
             </div>
         </div>
+
+        <!-- User Status Message Bar -->
+        <div class="chat-status-bar">
+            <span>💬</span> 
+            <span id="chatTargetStatus">Status Message: Not happy about the rain</span>
+        </div>
+
+        <!-- Chat History Area -->
         <div id="chatMessagesArea" class="chat-area">
-            <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 50%;">
-                Say hi to start the premium conversation!
+            <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">
+                Secure connection established
+            </div>
+            
+            <!-- Dummy Received Message for Demo -->
+            <div class="message-row received">
+                <div class="chat-bubble">Hey! What's going on?</div>
+                <div class="chat-time">10:15 PM</div>
             </div>
         </div>
+
+        <!-- Emoticon Panel (Hidden by Default) -->
+        <div id="emoticonPanel" class="emoticon-panel">
+            <button class="emoticon-btn" onclick="addEmoji('😀')">😀</button>
+            <button class="emoticon-btn" onclick="addEmoji('😂')">😂</button>
+            <button class="emoticon-btn" onclick="addEmoji('😍')">😍</button>
+            <button class="emoticon-btn" onclick="addEmoji('😎')">😎</button>
+            <button class="emoticon-btn" onclick="addEmoji('🤔')">🤔</button>
+            <button class="emoticon-btn" onclick="addEmoji('👍')">👍</button>
+            <button class="emoticon-btn" onclick="addEmoji('❤️')">❤️</button>
+            <button class="emoticon-btn" onclick="addEmoji('🔥')">🔥</button>
+            <button class="emoticon-btn" onclick="addEmoji('🎉')">🎉</button>
+            <button class="emoticon-btn" onclick="addEmoji('😭')">😭</button>
+            <button class="emoticon-btn" onclick="addEmoji('😡')">😡</button>
+            <button class="emoticon-btn" onclick="addEmoji('👻')">👻</button>
+        </div>
+
+        <!-- Chat Input Tool -->
         <div style="padding: 15px; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: center;">
-            <span style="cursor:pointer; font-size:1.2rem; color: rgba(255,255,255,0.6);">📎</span>
-            <input type="text" id="chatInputMsg" class="glass-input" placeholder="Type a message..." style="flex: 1; padding: 8px 12px;">
-            <button class="btn-primary" style="width: auto; margin: 0; padding: 8px 15px;" onclick="sendPrivateMessage()">Send</button>
+            <span onclick="toggleEmoticons()" style="cursor:pointer; font-size:1.4rem; transition:0.2s;" title="Emoticons" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">😀</span>
+            <input type="text" id="chatInputMsg" class="glass-input" placeholder="Type a message..." style="flex: 1; border-radius: 20px;">
+            <button class="btn-primary" style="width: auto; margin: 0; padding: 10px 18px; border-radius: 20px;" onclick="sendPrivateMessage()">Send</button>
         </div>
     </div>
+
 
     <!-- Firebase Logic -->
     <script type="module">
@@ -342,7 +374,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
-        const db = getFirestore(app); // Database engine start
+        const db = getFirestore(app);
 
         const authScreen = document.getElementById('authScreen');
         const loginPanel = document.getElementById('loginPanel');
@@ -367,32 +399,26 @@
                 mainInterface.style.display = 'none';
                 loginPanel.style.display = 'block';
                 loadingPanel.style.display = 'none';
-                document.getElementById('privateChatWindow').style.display = 'none'; // Close chat on logout
+                document.getElementById('privateChatWindow').style.display = 'none'; 
             }
         });
 
         document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
         
-        // Attached Signout to both original button and dropdown menu
         const performSignOut = () => signOut(auth);
         document.getElementById('btnLogout').addEventListener('click', performSignOut);
         document.getElementById('dropSignOut').addEventListener('click', performSignOut);
 
-        // --- ASLI DATABASE SEARCH LOGIC (Premium UI Testing Mode) ---
+        // UI Testing Mode Add Contact
         window.submitAddContact = async function() {
             const val = document.getElementById('newContactInput').value.trim();
             if(!val) return alert("Please enter an Email ID to search.");
-
             try {
-                // Premium UI effect dikhane ke liye hum direct list mein add kar rahe hain
-                let displayName = val.split('@')[0]; // Email ke shuru ka hissa naam ban jayega
-                let status = "Available (Testing)";
-
-                // Khali list ka message (Your contact list is empty) hatao
+                let displayName = val.split('@')[0]; 
+                let status = "Checking email right now...";
                 const emptyMsg = document.querySelector('#onlineUsersList div');
                 if(emptyMsg) emptyMsg.remove();
-
-                // Naya Contact Glass List mein show karo
+                
                 const list = document.getElementById('onlineUsersList');
                 list.innerHTML += `
                     <li class="list-item">
@@ -403,24 +429,20 @@
                         </div>
                     </li>
                 `;
-                
                 alert("✅ Successfully added " + displayName + " to your contacts!");
-                window.closeAddPopup(); // Popup smoothly band kardo
-
+                window.closeAddPopup(); 
             } catch (error) {
                 console.error("Error:", error);
-                alert("Something went wrong!");
             }
         };
     </script>
 
     <!-- UI Interactions Script -->
     <script>
-        // 1. Accordion Toggle Logic (Open/Close Lists)
+        // Accordions
         function toggleList(listId, headerElement) {
             const list = document.getElementById(listId);
             const text = headerElement.innerText;
-            
             if (list.style.display === 'none' || list.style.display === '') {
                 list.style.display = 'block';
                 headerElement.innerText = text.replace('▶', '▼');
@@ -430,81 +452,91 @@
             }
         }
 
-        // 2. Top Menus Actions (Dropdowns & Alerts)
+        // Dropdowns
         function toggleDropdown(dropId, event) {
             event.stopPropagation();
             document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
             const drop = document.getElementById(dropId);
             if(drop) drop.style.display = 'block';
         }
-
-        window.addEventListener('click', () => {
-            document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
-        });
-
+        window.addEventListener('click', () => { document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none'); });
+        
         document.getElementById('menuActions').addEventListener('click', () => alert("User Actions menu will open here."));
         document.getElementById('menuHelp').addEventListener('click', () => alert("Help Center will open here."));
 
-        // 3. Bottom Toolbar Actions & Premium Popup Logic
+        // Add Contact Popups
         document.getElementById('btnAdd').addEventListener('click', () => openAddPopup());
+        window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
+        window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
 
-        // Functions ko global banaya taake Module script inko access kar sake
-        window.openAddPopup = function() {
-            document.getElementById('addContactPopup').style.display = 'flex';
-        }
-        window.closeAddPopup = function() {
-            document.getElementById('addContactPopup').style.display = 'none';
-            document.getElementById('newContactInput').value = '';
-        }
-
-        // 4. VIP SIDE CHAT WINDOW LOGIC
-        window.openChatWindow = function(userName) {
+        // --- VIP CHAT WINDOW LOGIC ---
+        window.openChatWindow = function(userName, userStatus) {
             document.getElementById('chatTargetName').innerText = userName;
+            // Update the status message in the chat header
+            document.getElementById('chatTargetStatus').innerText = "Status Message: " + (userStatus || "Available");
             document.getElementById('privateChatWindow').style.display = 'flex';
-            document.getElementById('chatMessagesArea').innerHTML = `
-                <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">
-                    Secure connection established with ${userName}
-                </div>
-            `;
         }
 
-        window.closeChatWindow = function() {
-            document.getElementById('privateChatWindow').style.display = 'none';
-        }
+        window.closeChatWindow = function() { document.getElementById('privateChatWindow').style.display = 'none'; }
 
-        // Attach click event to lists to open chat
-        document.querySelector('.list-container').addEventListener('click', function(e) {
+        // Click on list item to open chat
+        document.getElementById('mainListContainer').addEventListener('click', function(e) {
             const item = e.target.closest('.list-item');
             if(item) {
                 const name = item.querySelector('.item-name').innerText;
-                openChatWindow(name);
+                const status = item.querySelector('.item-sub').innerText;
+                openChatWindow(name, status);
             }
         });
 
-        // Chat Sending logic (UI Testing)
+        // Chat Emoticons Logic
+        window.toggleEmoticons = function() {
+            const panel = document.getElementById('emoticonPanel');
+            panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
+        }
+        
+        window.addEmoji = function(emoji) {
+            const input = document.getElementById('chatInputMsg');
+            input.value += emoji;
+            input.focus();
+        }
+
+        // Sending Message Logic (Generates Blue Bubble)
         window.sendPrivateMessage = function() {
             const input = document.getElementById('chatInputMsg');
             const msg = input.value.trim();
             if(msg) {
                 const msgArea = document.getElementById('chatMessagesArea');
-                msgArea.innerHTML += `<div class="chat-bubble">${msg}</div>`;
+                // Get current time
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12; hours = hours ? hours : 12;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                const timeStr = hours + ':' + minutes + ' ' + ampm;
+
+                // Create Sent Message Bubble Structure
+                const newMsg = `
+                    <div class="message-row sent">
+                        <div class="chat-bubble">${msg}</div>
+                        <div class="chat-time">${timeStr}</div>
+                    </div>
+                `;
+                
+                msgArea.innerHTML += newMsg;
                 input.value = '';
+                document.getElementById('emoticonPanel').style.display = 'none'; // Close emoji panel on send
                 msgArea.scrollTop = msgArea.scrollHeight;
             }
         };
 
-        // Enter key to send message
         document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') { sendPrivateMessage(); }
         });
 
-        document.getElementById('btnChat').addEventListener('click', () => {
-            alert("Please select a user from the Online Users list to start chatting.");
-        });
-
-        document.getElementById('btnRooms').addEventListener('click', () => {
-            alert("Global Room browser will open here.");
-        });
+        document.getElementById('btnChat').addEventListener('click', () => alert("Click on any user in the list to start chatting."));
+        document.getElementById('btnRooms').addEventListener('click', () => alert("Global Room browser will open here."));
     </script>
 </body>
 </html>
