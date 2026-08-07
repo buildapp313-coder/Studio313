@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-// Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
     authDomain: "studio313-hq.firebaseapp.com",
@@ -14,123 +14,158 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
-// UI Elements (Mapped to current HTML safely)
 const authScreen = document.getElementById('authScreen');
+const loginPanel = document.getElementById('loginPanel');
+const loadingPanel = document.getElementById('loadingPanel');
 const mainInterface = document.getElementById('mainInterface');
-const loginPanel = document.getElementById('loginPanel'); // Added for smooth transition
-const loadingPanel = document.getElementById('loadingPanel'); // Added for smooth transition
-const btnGoogleLogin = document.getElementById('btnGoogleLogin');
-const btnLogout = document.getElementById('btnLogout');
 
-// Using ID from current HTML, falling back to old ID just in case
-const btnAddContact = document.getElementById('btnAdd') || document.getElementById('btnAddContact');
-const myName = document.getElementById('myName');
-const myAvatar = document.getElementById('myAvatar');
-
-// Side Chat Panel Elements (Made safe so it doesn't crash if HTML isn't added yet)
-const rightPanel = document.getElementById('privateChatPanel');
-const btnCloseChat = document.getElementById('btnCloseChat');
-
-// User Authentication State
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User logged in: Premium Smooth Transition
-        if(loginPanel && loadingPanel) {
-            loginPanel.style.display = 'none';
-            loadingPanel.style.display = 'block';
-        }
+        loginPanel.style.display = 'none';
+        loadingPanel.style.display = 'block';
         
         setTimeout(() => {
-            if(authScreen) authScreen.style.display = 'none';
-            if(mainInterface) mainInterface.style.display = 'flex';
+            authScreen.style.display = 'none';
+            mainInterface.style.display = 'flex';
             
-            if(myName) myName.innerText = user.displayName;
-            if(myAvatar) myAvatar.innerText = user.displayName.substring(0, 2).toUpperCase();
+            document.getElementById('myName').innerText = user.displayName;
+            document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
         }, 1200);
-        
-        // List is intentionally kept empty here as per instructions.
-        // It will only populate when we add database fetch logic later.
-        
     } else {
-        // User logged out
-        if(authScreen) authScreen.style.display = 'flex';
-        if(mainInterface) mainInterface.style.display = 'none';
-        if(loginPanel) loginPanel.style.display = 'block';
-        if(loadingPanel) loadingPanel.style.display = 'none';
+        authScreen.style.display = 'flex';
+        mainInterface.style.display = 'none';
+        loginPanel.style.display = 'block';
+        loadingPanel.style.display = 'none';
+        document.getElementById('privateChatWindow').style.display = 'none'; 
     }
 });
 
-// Login & Logout Actions
-if(btnGoogleLogin) {
-    btnGoogleLogin.addEventListener('click', () => {
-        btnGoogleLogin.innerText = "Authenticating...";
-        signInWithPopup(auth, provider).catch(err => {
-            console.error(err);
-            btnGoogleLogin.innerText = "Sign in with Google";
-        });
-    });
-}
+document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
 
-if(btnLogout) {
-    btnLogout.addEventListener('click', () => signOut(auth));
-}
+const performSignOut = () => signOut(auth);
+document.getElementById('btnLogout').addEventListener('click', performSignOut);
+document.getElementById('dropSignOut').addEventListener('click', performSignOut);
 
-// Add Contact (+) Button Action
-if(btnAddContact) {
-    btnAddContact.addEventListener('click', () => {
-        // Basic prompt for now, we will make a VIP Glass popup for this next
-        const targetId = prompt("Enter User ID or Email to search and add to contacts:");
-        if(targetId) {
-            alert("Search initiated for: " + targetId + "\n(Backend search logic will be connected next!)");
-        }
-    });
-}
-
-// Room/Contact Click Action (Slide in the Right Panel)
-document.querySelectorAll('.list-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-        // Get name from the clicked item
-        const nameElement = e.currentTarget.querySelector('.item-name');
-        if(!nameElement) return;
+// UI Testing Mode Add Contact
+window.submitAddContact = async function() {
+    const val = document.getElementById('newContactInput').value.trim();
+    if(!val) return alert("Please enter an Email ID to search.");
+    try {
+        let displayName = val.split('@')[0]; 
+        let status = "Checking email right now...";
+        const emptyMsg = document.querySelector('#onlineUsersList div');
+        if(emptyMsg) emptyMsg.remove();
         
-        const roomName = nameElement.innerText;
-        
-        // If Right Panel exists in HTML, update and show it
-        if(rightPanel) {
-            document.getElementById('chatTargetName').innerText = roomName;
-            document.getElementById('chatTargetStatus').innerText = "Connected";
-            document.getElementById('chatTargetAvatar').innerText = roomName.substring(0, 1);
-            
-            // Enable input
-            const glassInput = document.querySelector('.glass-input');
-            const sendBtn = document.querySelector('.send-btn');
-            if(glassInput) glassInput.disabled = false;
-            if(sendBtn) sendBtn.disabled = false;
-            
-            // Show Right Panel
-            rightPanel.classList.add('active');
-            
-            // Update messages area temporarily
-            document.getElementById('privateMessages').innerHTML = `
-                <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.8rem; margin: 20px 0;">
-                    Secure connection established to ${roomName}
+        const list = document.getElementById('onlineUsersList');
+        list.innerHTML += `
+            <li class="list-item">
+                <div class="item-icon icon-online"></div>
+                <div>
+                    <div class="item-name">${displayName}</div>
+                    <div class="item-sub">${status}</div>
                 </div>
-            `;
-        } else {
-            // Temporary alert until HTML is added
-            alert("Ready to open Private Chat for: " + roomName);
-        }
-    });
+            </li>
+        `;
+        alert("✅ Successfully added " + displayName + " to your contacts!");
+        window.closeAddPopup(); 
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
+// Accordions
+window.toggleList = function(listId, headerElement) {
+    const list = document.getElementById(listId);
+    const text = headerElement.innerText;
+    if (list.style.display === 'none' || list.style.display === '') {
+        list.style.display = 'block';
+        headerElement.innerText = text.replace('▶', '▼');
+    } else {
+        list.style.display = 'none';
+        headerElement.innerText = text.replace('▼', '▶');
+    }
+}
+
+// Dropdowns
+window.toggleDropdown = function(dropId, event) {
+    event.stopPropagation();
+    document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
+    const drop = document.getElementById(dropId);
+    if(drop) drop.style.display = 'block';
+}
+window.addEventListener('click', () => { document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none'); });
+
+document.getElementById('menuActions').addEventListener('click', () => alert("User Actions menu will open here."));
+document.getElementById('menuHelp').addEventListener('click', () => alert("Help Center will open here."));
+
+// Add Contact Popups
+document.getElementById('btnAdd').addEventListener('click', () => window.openAddPopup());
+window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
+window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
+
+// VIP CHAT WINDOW LOGIC
+window.openChatWindow = function(userName, userStatus) {
+    document.getElementById('chatTargetName').innerText = userName;
+    document.getElementById('chatTargetStatus').innerText = "Status Message: " + (userStatus || "Available");
+    document.getElementById('privateChatWindow').style.display = 'flex';
+}
+
+window.closeChatWindow = function() { document.getElementById('privateChatWindow').style.display = 'none'; }
+
+document.getElementById('mainListContainer').addEventListener('click', function(e) {
+    const item = e.target.closest('.list-item');
+    if(item) {
+        const name = item.querySelector('.item-name').innerText;
+        const status = item.querySelector('.item-sub').innerText;
+        window.openChatWindow(name, status);
+    }
 });
 
-// Close Right Panel
-if(btnCloseChat) {
-    btnCloseChat.addEventListener('click', () => {
-        if(rightPanel) rightPanel.classList.remove('active');
-        const glassInput = document.querySelector('.glass-input');
-        const sendBtn = document.querySelector('.send-btn');
-        if(glassInput) glassInput.disabled = true;
-        if(sendBtn) sendBtn.disabled = true;
-    });
+// Chat Emoticons Logic
+window.toggleEmoticons = function() {
+    const panel = document.getElementById('emoticonPanel');
+    panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
 }
+
+window.addEmoji = function(emoji) {
+    const input = document.getElementById('chatInputMsg');
+    input.value += emoji;
+    input.focus();
+}
+
+// Sending Message Logic
+window.sendPrivateMessage = function() {
+    const input = document.getElementById('chatInputMsg');
+    const msg = input.value.trim();
+    if(msg) {
+        const msgArea = document.getElementById('chatMessagesArea');
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12; hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const timeStr = hours + ':' + minutes + ' ' + ampm;
+
+        const newMsg = `
+            <div class="message-row sent">
+                <div class="chat-bubble">${msg}</div>
+                <div class="chat-time">${timeStr}</div>
+            </div>
+        `;
+        
+        msgArea.innerHTML += newMsg;
+        input.value = '';
+        document.getElementById('emoticonPanel').style.display = 'none'; 
+        msgArea.scrollTop = msgArea.scrollHeight;
+    }
+};
+
+document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') { window.sendPrivateMessage(); }
+});
+
+document.getElementById('btnChat').addEventListener('click', () => alert("Click on any user in the list to start chatting."));
+document.getElementById('btnRooms').addEventListener('click', () => alert("Global Room browser will open here."));
