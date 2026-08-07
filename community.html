@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global VIP Hub | Studio313</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Premium Chat Layout */
+        .chat-container {
+            display: flex;
+            max-width: 1300px;
+            margin: 20px auto 60px;
+            height: 75vh;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Sidebar - Categories & Countries */
+        .chat-sidebar {
+            width: 300px;
+            border-right: 1px solid var(--glass-border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-sidebar h3 {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .channel-list {
+            list-style: none;
+            overflow-y: auto;
+        }
+
+        .channel-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .channel-item:hover, .channel-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--shape3);
+        }
+
+        /* Main Chat Area */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Message Bubbles */
+        .message {
+            display: flex;
+            gap: 15px;
+            max-width: 80%;
+        }
+
+        .message.own {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--shape1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .msg-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .message.own .msg-content {
+            background: rgba(6, 182, 212, 0.1); /* Slight blue tint for own msgs */
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        .badge-admin { background: #fbbf24; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; }
+        .badge-tester { background: #34d399; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; }
+
+        /* Input Area */
+        .chat-input-area {
+            padding: 20px 30px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--shape3);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 9, 20, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            border-radius: 30px;
+        }
+
+        @media (max-width: 850px) {
+            .chat-container { flex-direction: column; height: 85vh; }
+            .chat-sidebar { width: 100%; height: 150px; border-right: none; border-bottom: 1px solid var(--glass-border); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Liquid Background Elements -->
+    <div class="liquid-shape shape-1"></div>
+    <div class="liquid-shape shape-2"></div>
+    <div class="liquid-shape shape-3"></div>
+
+    <!-- Glass Navbar -->
+    <nav class="navbar glass">
+        <div class="logo">Studio313</div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="download.html">Apps</a></li>
+            <li><a href="app-tester.html">App-Tester</a></li>
+            <li><a href="community.html" style="color: var(--shape3); font-weight: 700;">Community</a></li>
+            <li>
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn glass-btn" onclick="toggleDropdown()">
+                        <span id="dropdownBtnText">🌙 Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', '🌙 Dark Liquid')">🌙 Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', '☀️ Light Glass')">☀️ Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', '👑 VIP Gold')">👑 VIP Gold</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Chat Application Interface -->
+    <div class="chat-container glass">
+        
+        <!-- Login Overlay (Will be hidden once user logs in via JS/Firebase) -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="glass" style="padding: 40px; border-radius: 20px; text-align: center; max-width: 400px;">
+                <h2 style="font-size: 2rem; margin-bottom: 10px;">VIP Access</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Sign in securely to join the Studio313 Global Hub.</p>
+                <button class="action-btn glass-btn" style="width: 100%; padding: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="document.getElementById('loginOverlay').style.display='none'">
+                    <span>🔗</span> Connect Secure ID
+                </button>
+            </div>
+        </div>
+
+        <!-- Left Sidebar (Rooms) -->
+        <div class="chat-sidebar">
+            <h3>🌐 Global Servers</h3>
+            <ul class="channel-list">
+                <li class="channel-item active">💬 General Lounge</li>
+                <li class="channel-item">🚀 Dev Updates</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">📍 Country Hubs</h3>
+            <ul class="channel-list">
+                <li class="channel-item">🇶🇦 Qatar Hub</li>
+                <li class="channel-item">🇺🇸 USA Hub</li>
+                <li class="channel-item">🇵🇰 PK / 🇮🇳 IN Hub</li>
+            </ul>
+        </div>
+
+        <!-- Main Chat Window -->
+        <div class="chat-main">
+            <!-- Header -->
+            <div class="chat-header">
+                <div>
+                    <h2 style="font-size: 1.3rem;">💬 General Lounge</h2>
+                    <span style="color: #34d399; font-size: 0.8rem;">● 124 VIPs Online</span>
+                </div>
+                <div class="glass-btn" style="padding: 5px 15px; border-radius: 10px; font-size: 0.9rem;">
+                    Rules
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="chat-messages">
+                
+                <!-- Received Message (Admin) -->
+                <div class="message">
+                    <div class="avatar">S3</div>
+                    <div class="msg-content">
+                        <div class="msg-header">
+                            <span style="font-weight: 600; color: var(--shape3);">Studio313 Founder</span>
+                            <span class="badge-admin">Admin</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:24 AM</span>
+                        </div>
+                        <p>Welcome to the global hub! Gatepass Lite is officially live. Drop your feedback here! 🚀</p>
+                    </div>
+                </div>
+
+                <!-- Received Message (Tester) -->
+                <div class="message">
+                    <div class="avatar" style="background: var(--shape2);">A</div>
+                    <div class="msg-content">
+                        <div class="msg-header">
+                            <span style="font-weight: 600;">Ali_Dev</span>
+                            <span class="badge-tester">Beta Tester</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:26 AM</span>
+                        </div>
+                        <p>The new Vip Notification update is super fast. Testing it right now!</p>
+                    </div>
+                </div>
+
+                <!-- Own Message -->
+                <div class="message own">
+                    <div class="avatar" style="background: var(--text-color); color: var(--bg-color);">You</div>
+                    <div class="msg-content">
+                        <div class="msg-header">
+                            <span style="font-weight: 600;">You</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">10:30 AM</span>
+                        </div>
+                        <p>Looks amazing! The glassmorphism UI is flawless on mobile too. 🔥</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-input-area">
+                <button class="glass-btn" style="width: 50px; border-radius: 50%; font-size: 1.2rem;">📎</button>
+                <input type="text" class="chat-input" placeholder="Type a secure message...">
+                <button class="action-btn glass-btn" style="width: 60px; border-radius: 20px;">➔</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS File Link -->
+    <script src="script.js"></script>
+
+</body>
+</html>
