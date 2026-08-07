@@ -358,6 +358,44 @@ footer {
 
 /* Spacing Adjustments */
 .showcase {
+    /* --- FIX 1: Extra Space Fix (Push Footer to Bottom) --- */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.contact-wrapper, .tester-container, .download-grid {
+    flex: 1 0 auto; /* Pushes the footer down */
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+/* --- FIX 2: Custom VIP Dropdown Arrow for Contact Form --- */
+.form-group select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Custom White SVG Arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+/* Fix option highlight colors inside the form */
+.form-group select.form-control option {
+    background-color: #1a1a24;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.form-group select.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+}
     margin-top: 20px; /* Push phones down */
     margin-bottom: 40px; /* Reduce bottom space */
 }
