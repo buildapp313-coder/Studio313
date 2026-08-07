@@ -6,54 +6,39 @@
     <title>Web Messenger | Studio313</title>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Base Resets */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; height: 100vh; overflow: hidden; background: #0f172a; display: flex; justify-content: center; align-items: center; }
-
-        /* 1. Vibrant Animated Background (To make the glass pop!) */
-        .app-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(45deg, #1e3a8a, #9333ea, #0f766e, #1e40af);
-            background-size: 400% 400%; 
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG { 
-            0% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
-            100% { background-position: 0% 50%; } 
+        /* --- Premium Glassmorphism (Weather App Vibe) --- */
+        body {
+            margin: 0; padding: 0; height: 100vh;
+            /* Moody Weather/Rainy Background for Glass Effect */
+            background: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; align-items: center; justify-content: center;
+            /* ADDED: Gap for side-by-side windows */
+            gap: 20px;
         }
 
-        /* NEW: Flex Wrapper to hold Main App and Side Chat side-by-side */
-        .app-wrapper {
-            display: flex; gap: 20px; align-items: center; justify-content: center; z-index: 10;
-        }
-
-        /* 2. Real Frosted Glass Panels */
-        .messenger-app, .chat-panel {
+        /* Messenger Container - The Glass Box */
+        .messenger-app {
+            width: 340px; height: 650px;
+            /* Transparent Frosted Glass Effect */
             background: rgba(30, 41, 59, 0.4); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-            border-radius: 20px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3); 
-            display: flex; flex-direction: column; overflow: hidden; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 340px; height: 650px; position: relative; color: #ffffff;
-        }
-
-        /* 3. Fix Search Box & Buttons */
-        .glass-btn {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); 
-            color: #fff; cursor: pointer; transition: 0.3s; font-family: 'Poppins';
-        }
-        .glass-btn:hover { 
-            background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 15px rgba(255,255,255,0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
+            color: #ffffff;
         }
 
         /* 1. App Header */
         .app-header {
-            background: rgba(0, 0, 0, 0.2); padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; font-weight: 600;
         }
         .app-title { display: flex; align-items: center; gap: 8px; }
         .smile-icon { width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
@@ -63,8 +48,8 @@
             background: rgba(255, 255, 255, 0.05); padding: 6px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); display: flex; gap: 12px;
         }
-        .menu-bar span { cursor: pointer; transition: 0.2s; padding: 2px 5px; border-radius: 4px; } 
-        .menu-bar span:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .menu-bar span { cursor: pointer; transition: 0.2s; } 
+        .menu-bar span:hover { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
 
         /* 2. User Profile Area */
         .my-profile-area {
@@ -80,15 +65,18 @@
         .my-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
         .my-status { 
             font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); background: transparent; 
-            border: 1px solid transparent; width: 100%; outline: none; transition: 0.2s; padding: 2px 4px; border-radius: 4px;
+            border: 1px solid transparent; width: 100%; outline: none; transition: 0.2s;
+            padding: 2px 4px; border-radius: 4px;
         }
         .my-status:focus { border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(0, 0, 0, 0.2); color: #fff; }
 
-        /* 3. Monetization Banner */
+        /* 3. Monetization (Ad Banner Glass) */
         .ad-banner {
-            margin: 10px; height: 60px; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3);
+            margin: 10px; height: 60px; 
+            background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3);
             border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center;
-            font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px);
+            font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer;
+            backdrop-filter: blur(10px);
         }
 
         /* 4. Lists (Contacts & Rooms) */
@@ -98,7 +86,8 @@
         
         .list-group { margin-bottom: 5px; }
         .group-header {
-            background: rgba(0, 0, 0, 0.2); padding: 6px 15px; font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); 
+            background: rgba(0, 0, 0, 0.2); padding: 6px 15px;
+            font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); 
             border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
             cursor: pointer; display: flex; justify-content: space-between;
         }
@@ -137,7 +126,7 @@
         }
         .btn-primary:hover { background: rgba(59, 130, 246, 0.8); box-shadow: 0 0 15px rgba(59,130,246,0.5); }
 
-        /* VIP CSS FOR DROPDOWNS & POPUPS */
+        /* --- ADDED VIP CSS FOR DROPDOWNS & POPUPS --- */
         .glass-dropdown {
             position: absolute; top: 100%; left: 0; margin-top: 5px;
             background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -145,7 +134,9 @@
             padding: 5px 0; min-width: 150px; display: none; z-index: 100;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        .dropdown-item { padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
+        .dropdown-item {
+            padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.2s;
+        }
         .dropdown-item:hover { background: rgba(255, 255, 255, 0.1); padding-left: 20px; color: #60a5fa; }
 
         .glass-popup-overlay {
@@ -155,7 +146,8 @@
         }
         .glass-popup-box {
             background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px; border-radius: 16px; width: 85%; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            padding: 25px; border-radius: 16px; width: 85%; max-width: 350px; text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
         .glass-input {
             width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -163,173 +155,180 @@
         }
         .glass-input::placeholder { color: rgba(255,255,255,0.4); }
         .glass-input:focus { background: rgba(255, 255, 255, 0.1); }
-        
-        /* Message Bubbles Styling */
-        .chat-bubble {
-            background: rgba(59, 130, 246, 0.5); padding: 8px 12px; border-radius: 12px 12px 0 12px; 
-            align-self: flex-end; max-width: 85%; font-size: 0.85rem; border: 1px solid rgba(59, 130, 246, 0.8);
-            margin-bottom: 5px;
+
+        /* --- ADDED VIP CSS FOR PRIVATE CHAT WINDOW --- */
+        .chat-panel {
+            background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            display: none; flex-direction: column; overflow: hidden;
+            width: 350px; height: 650px; color: #ffffff; position: relative;
         }
+        .chat-area { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; }
         .chat-area::-webkit-scrollbar { width: 4px; }
         .chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .chat-bubble {
+            background: rgba(59, 130, 246, 0.5); padding: 8px 12px; border-radius: 12px 12px 0 12px;
+            align-self: flex-end; max-width: 85%; font-size: 0.85rem; border: 1px solid rgba(59, 130, 246, 0.8);
+            margin-bottom: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
-    
-    <div class="app-bg"></div>
 
-    <!-- WRAPPER: Dono windows iske andar aayengi -->
-    <div class="app-wrapper">
-
-        <!-- ORIGINAL MAIN WINDOW -->
-        <div class="messenger-app">
+    <div class="messenger-app">
+        
+        <!-- App Header & Menu -->
+        <div class="app-header">
+            <div class="app-title"><span class="smile-icon"></span> Web Messenger</div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <span title="Back to Website" onclick="window.location.href='index.html'" style="cursor:pointer; color: rgba(255,255,255,0.7); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">🏠</span>
+                <span title="Minimize" style="cursor:pointer; color: rgba(255,255,255,0.7);">➖</span>
+                <span title="Close" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
+            </div>
+        </div>
+        <div class="menu-bar">
+            <!-- Wrapped in relative divs for Dropdowns -->
+            <div style="position: relative; display: inline-block;">
+                <span id="menuMessenger" onclick="toggleDropdown('dropMessenger', event)">Messenger</span>
+                <div id="dropMessenger" class="glass-dropdown">
+                    <div class="dropdown-item" onclick="window.location.href='index.html'">🏠 Back to Website</div>
+                    <div class="dropdown-item">⚙️ Settings</div>
+                    <div class="dropdown-item" id="dropSignOut">🚪 Sign Out</div>
+                </div>
+            </div>
             
-            <!-- App Header & Menu -->
-            <div class="app-header">
-                <div class="app-title"><span class="smile-icon"></span> Web Messenger</div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <span title="Back to Website" onclick="window.location.href='index.html'" style="cursor:pointer; color: rgba(255,255,255,0.7); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">🏠</span>
-                    <span title="Minimize" style="cursor:pointer; color: rgba(255,255,255,0.7);">➖</span>
-                    <span title="Close" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
+            <div style="position: relative; display: inline-block;">
+                <span id="menuContacts" onclick="toggleDropdown('dropContacts', event)">Contacts</span>
+                <div id="dropContacts" class="glass-dropdown">
+                    <div class="dropdown-item" onclick="openAddPopup()">➕ Add Contact</div>
+                    <div class="dropdown-item">📋 Manage List</div>
                 </div>
             </div>
-            <div class="menu-bar">
-                <div style="position: relative; display: inline-block;">
-                    <span id="menuMessenger" onclick="toggleDropdown('dropMessenger', event)">Messenger</span>
-                    <div id="dropMessenger" class="glass-dropdown">
-                        <div class="dropdown-item" onclick="window.location.href='index.html'">🏠 Back to Website</div>
-                        <div class="dropdown-item">⚙️ Settings</div>
-                        <div class="dropdown-item" id="dropSignOut">🚪 Sign Out</div>
-                    </div>
-                </div>
-                
-                <div style="position: relative; display: inline-block;">
-                    <span id="menuContacts" onclick="toggleDropdown('dropContacts', event)">Contacts</span>
-                    <div id="dropContacts" class="glass-dropdown">
-                        <div class="dropdown-item" onclick="openAddPopup()">➕ Add Contact</div>
-                        <div class="dropdown-item">📋 Manage List</div>
-                    </div>
-                </div>
-                
-                <span id="menuActions">Actions</span> 
-                <span id="menuHelp">Help</span>
-            </div>
+            
+            <span id="menuActions">Actions</span> 
+            <span id="menuHelp">Help</span>
+        </div>
 
-            <!-- AUTHENTICATION SCREEN -->
-            <div id="authScreen">
-                <div id="loginPanel" style="width: 100%;">
-                    <h3 style="margin: 0 0 5px 0;">Sign In</h3>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Connect your Google ID.</p>
-                    <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
-                </div>
-                <div id="loadingPanel" style="display: none; width: 100%;">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
-                    <h4 style="margin:0;">Loading Contacts...</h4>
+        <!-- AUTHENTICATION SCREEN -->
+        <div id="authScreen">
+            <div id="loginPanel" style="width: 100%;">
+                <h3 style="margin: 0 0 5px 0;">Sign In</h3>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Connect your Google ID.</p>
+                <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
+            </div>
+            <div id="loadingPanel" style="display: none; width: 100%;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+                <h4 style="margin:0;">Loading Contacts...</h4>
+            </div>
+        </div>
+
+        <!-- MAIN MESSENGER UI (Hidden until login) -->
+        <div id="mainInterface" style="display: none; flex: 1; flex-direction: column;">
+            
+            <!-- User Profile -->
+            <div class="my-profile-area">
+                <div class="my-avatar" id="myAvatar">?</div>
+                <div class="my-info">
+                    <div class="my-name" id="myName">User Name</div>
+                    <input type="text" class="my-status" id="myStatus" value="Available (Click to change status)">
                 </div>
             </div>
 
-            <!-- MAIN MESSENGER UI (Hidden until login) -->
-            <div id="mainInterface" style="display: none; flex: 1; flex-direction: column;">
+            <!-- AdMob Space -->
+            <div class="ad-banner" title="Google AdMob Banner Space">
+                Ad: Chat with your friends anywhere! <br>(Google AdMob Space)
+            </div>
+
+            <!-- Contacts & Rooms List -->
+            <div class="list-container">
                 
-                <!-- User Profile -->
-                <div class="my-profile-area">
-                    <div class="my-avatar" id="myAvatar">?</div>
-                    <div class="my-info">
-                        <div class="my-name" id="myName">User Name</div>
-                        <input type="text" class="my-status" id="myStatus" value="Available (Click to change status)">
-                    </div>
-                </div>
-
-                <div class="ad-banner" title="Google AdMob Banner Space">
-                    Ad: Chat with your friends anywhere! <br>(Google AdMob Space)
-                </div>
-
-                <!-- Contacts & Rooms List -->
-                <div class="list-container" id="mainListContainer">
-                    <div class="list-group">
-                        <div class="group-header" onclick="toggleList('hubsList', this)">▼ Regional Hubs (2)</div>
-                        <ul class="list-items" id="hubsList">
-                            <li class="list-item">
-                                <div class="item-icon icon-room"></div>
-                                <div><div class="item-name">The Gulf Region</div><div class="item-sub">Public Chat Room</div></div>
-                            </li>
-                            <li class="list-item">
-                                <div class="item-icon icon-room"></div>
-                                <div><div class="item-name">Global Lounge</div><div class="item-sub">Public Chat Room</div></div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="list-group">
-                        <div class="group-header" onclick="toggleList('onlineUsersList', this)">▼ Online Users (0)</div>
-                        <ul class="list-items" id="onlineUsersList">
-                            <div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">
-                                Your contact list is empty.<br>Click '+' below to search by ID.
+                <!-- Regional Hubs -->
+                <div class="list-group">
+                    <div class="group-header" onclick="toggleList('hubsList', this)">▼ Regional Hubs (2)</div>
+                    <ul class="list-items" id="hubsList">
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">The Gulf Region</div>
+                                <div class="item-sub">Public Chat Room</div>
                             </div>
-                        </ul>
-                    </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">Global Lounge</div>
+                                <div class="item-sub">Public Chat Room</div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- Bottom Tools -->
-                <div class="bottom-toolbar">
-                    <button class="tool-btn" id="btnAdd" title="Add Contact">➕</button>
-                    <button class="tool-btn" id="btnChat" title="Send Instant Message">💬</button>
-                    <button class="tool-btn" id="btnRooms" title="Join Room">🌍</button>
-                    <button class="tool-btn" id="btnLogout" title="Sign Out">🚪</button>
+                <!-- Online Friends -->
+                <div class="list-group">
+                    <div class="group-header" onclick="toggleList('onlineUsersList', this)">▼ Online Users (0)</div>
+                    <ul class="list-items" id="onlineUsersList">
+                        <div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">
+                            Your contact list is empty.<br>Click '+' below to search by ID.
+                        </div>
+                    </ul>
                 </div>
+
             </div>
-            
-            <!-- Premium Add Contact Popup -->
-            <div id="addContactPopup" class="glass-popup-overlay">
-                <div class="glass-popup-box">
-                    <h3 style="margin-top: 0; color: #fff; font-weight: 500; font-size: 1.1rem;">Add New Contact</h3>
-                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 15px;">Enter User ID or Email</p>
-                    <input type="text" id="newContactInput" class="glass-input" style="margin-bottom: 15px;" placeholder="e.g. user@gmail.com">
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px;" onclick="submitAddContact()">Add</button>
-                        <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px; background: rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6);" onclick="closeAddPopup()">Cancel</button>
-                    </div>
+
+            <!-- Bottom Tools -->
+            <div class="bottom-toolbar">
+                <button class="tool-btn" id="btnAdd" title="Add Contact">➕</button>
+                <button class="tool-btn" id="btnChat" title="Send Instant Message">💬</button>
+                <button class="tool-btn" id="btnRooms" title="Join Room">🌍</button>
+                <button class="tool-btn" id="btnLogout" title="Sign Out">🚪</button>
+            </div>
+        </div>
+        
+        <!-- ADDED VIP Premium Add Contact Popup -->
+        <div id="addContactPopup" class="glass-popup-overlay">
+            <div class="glass-popup-box">
+                <h3 style="margin-top: 0; color: #fff; font-weight: 500; font-size: 1.1rem;">Add New Contact</h3>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 15px;">Enter User ID or Email</p>
+                <input type="text" id="newContactInput" class="glass-input" style="margin-bottom: 15px;" placeholder="e.g. user@gmail.com">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px;" onclick="submitAddContact()">Add</button>
+                    <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px; background: rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6);" onclick="closeAddPopup()">Cancel</button>
                 </div>
             </div>
         </div>
-        <!-- END OF ORIGINAL MAIN WINDOW -->
 
-        <!-- NEW: SIDE PRIVATE CHAT WINDOW (Initially Hidden) -->
-        <div id="privateChatWindow" class="chat-panel" style="display: none;">
-            
-            <!-- Chat Header -->
-            <div class="app-header">
-                <div class="app-title">
-                    <span class="item-icon icon-online" style="width:12px; height:12px; display:inline-block; margin-right:5px;"></span> 
-                    <span id="chatTargetName">User Name</span>
-                </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <span title="Call" style="cursor:pointer; color: rgba(255,255,255,0.7);">📞</span>
-                    <span title="Close Chat" onclick="closeChatWindow()" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
-                </div>
+    </div>
+
+    <!-- NEW: VIP SIDE PRIVATE CHAT WINDOW -->
+    <div id="privateChatWindow" class="chat-panel">
+        <div class="app-header">
+            <div class="app-title">
+                <span class="item-icon icon-online" style="width:12px; height:12px; display:inline-block; margin-right:5px;"></span> 
+                <span id="chatTargetName">User Name</span>
             </div>
-
-            <!-- Chat Messages Area -->
-            <div id="chatMessagesArea" class="chat-area" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column;">
-                <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 50%;">
-                    Say hi to start the conversation!
-                </div>
-            </div>
-
-            <!-- Chat Input Tool -->
-            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: center;">
-                <span style="cursor:pointer; font-size:1.2rem; color: rgba(255,255,255,0.6);">📎</span>
-                <input type="text" id="chatInputMsg" class="glass-input" placeholder="Type a message..." style="flex: 1; padding: 8px 12px;">
-                <button class="btn-primary" style="width: auto; margin: 0; padding: 8px 15px;" onclick="sendPrivateMessage()">Send</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <span title="Call" style="cursor:pointer; color: rgba(255,255,255,0.7);">📞</span>
+                <span title="Close Chat" onclick="closeChatWindow()" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
             </div>
         </div>
-
-    </div> <!-- End of App Wrapper -->
+        <div id="chatMessagesArea" class="chat-area">
+            <div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 50%;">
+                Say hi to start the premium conversation!
+            </div>
+        </div>
+        <div style="padding: 15px; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: center;">
+            <span style="cursor:pointer; font-size:1.2rem; color: rgba(255,255,255,0.6);">📎</span>
+            <input type="text" id="chatInputMsg" class="glass-input" placeholder="Type a message..." style="flex: 1; padding: 8px 12px;">
+            <button class="btn-primary" style="width: auto; margin: 0; padding: 8px 15px;" onclick="sendPrivateMessage()">Send</button>
+        </div>
+    </div>
 
     <!-- Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
@@ -343,6 +342,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        const db = getFirestore(app); // Database engine start
 
         const authScreen = document.getElementById('authScreen');
         const loginPanel = document.getElementById('loginPanel');
@@ -367,23 +367,60 @@
                 mainInterface.style.display = 'none';
                 loginPanel.style.display = 'block';
                 loadingPanel.style.display = 'none';
-                document.getElementById('privateChatWindow').style.display = 'none'; // Logout par chat b band ho jaye
+                document.getElementById('privateChatWindow').style.display = 'none'; // Close chat on logout
             }
         });
 
         document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
         
+        // Attached Signout to both original button and dropdown menu
         const performSignOut = () => signOut(auth);
         document.getElementById('btnLogout').addEventListener('click', performSignOut);
         document.getElementById('dropSignOut').addEventListener('click', performSignOut);
+
+        // --- ASLI DATABASE SEARCH LOGIC (Premium UI Testing Mode) ---
+        window.submitAddContact = async function() {
+            const val = document.getElementById('newContactInput').value.trim();
+            if(!val) return alert("Please enter an Email ID to search.");
+
+            try {
+                // Premium UI effect dikhane ke liye hum direct list mein add kar rahe hain
+                let displayName = val.split('@')[0]; // Email ke shuru ka hissa naam ban jayega
+                let status = "Available (Testing)";
+
+                // Khali list ka message (Your contact list is empty) hatao
+                const emptyMsg = document.querySelector('#onlineUsersList div');
+                if(emptyMsg) emptyMsg.remove();
+
+                // Naya Contact Glass List mein show karo
+                const list = document.getElementById('onlineUsersList');
+                list.innerHTML += `
+                    <li class="list-item">
+                        <div class="item-icon icon-online"></div>
+                        <div>
+                            <div class="item-name">${displayName}</div>
+                            <div class="item-sub">${status}</div>
+                        </div>
+                    </li>
+                `;
+                
+                alert("✅ Successfully added " + displayName + " to your contacts!");
+                window.closeAddPopup(); // Popup smoothly band kardo
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+            }
+        };
     </script>
 
     <!-- UI Interactions Script -->
     <script>
-        // 1. Accordions
+        // 1. Accordion Toggle Logic (Open/Close Lists)
         function toggleList(listId, headerElement) {
             const list = document.getElementById(listId);
             const text = headerElement.innerText;
+            
             if (list.style.display === 'none' || list.style.display === '') {
                 list.style.display = 'block';
                 headerElement.innerText = text.replace('▶', '▼');
@@ -393,45 +430,34 @@
             }
         }
 
-        // 2. Dropdowns
+        // 2. Top Menus Actions (Dropdowns & Alerts)
         function toggleDropdown(dropId, event) {
             event.stopPropagation();
             document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
             const drop = document.getElementById(dropId);
             if(drop) drop.style.display = 'block';
         }
-        window.addEventListener('click', () => { document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none'); });
+
+        window.addEventListener('click', () => {
+            document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
+        });
+
         document.getElementById('menuActions').addEventListener('click', () => alert("User Actions menu will open here."));
         document.getElementById('menuHelp').addEventListener('click', () => alert("Help Center will open here."));
 
-        // 3. Add Contact (Testing Mode)
+        // 3. Bottom Toolbar Actions & Premium Popup Logic
         document.getElementById('btnAdd').addEventListener('click', () => openAddPopup());
-        window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
-        window.closeAddPopup = function() { 
+
+        // Functions ko global banaya taake Module script inko access kar sake
+        window.openAddPopup = function() {
+            document.getElementById('addContactPopup').style.display = 'flex';
+        }
+        window.closeAddPopup = function() {
             document.getElementById('addContactPopup').style.display = 'none';
             document.getElementById('newContactInput').value = '';
         }
-        window.submitAddContact = async function() {
-            const val = document.getElementById('newContactInput').value.trim();
-            if(!val) return alert("Please enter an Email ID.");
-            try {
-                let displayName = val.split('@')[0];
-                const emptyMsg = document.querySelector('#onlineUsersList div');
-                if(emptyMsg) emptyMsg.remove();
 
-                const list = document.getElementById('onlineUsersList');
-                list.innerHTML += `
-                    <li class="list-item">
-                        <div class="item-icon icon-online"></div>
-                        <div><div class="item-name">${displayName}</div><div class="item-sub">Available (Testing)</div></div>
-                    </li>
-                `;
-                alert("✅ Added " + displayName);
-                window.closeAddPopup();
-            } catch (error) { console.error(error); }
-        };
-
-        // 4. NEW: SIDE CHAT WINDOW LOGIC
+        // 4. VIP SIDE CHAT WINDOW LOGIC
         window.openChatWindow = function(userName) {
             document.getElementById('chatTargetName').innerText = userName;
             document.getElementById('privateChatWindow').style.display = 'flex';
@@ -446,8 +472,8 @@
             document.getElementById('privateChatWindow').style.display = 'none';
         }
 
-        // List item par click karne se chat window khulega
-        document.getElementById('mainListContainer').addEventListener('click', function(e) {
+        // Attach click event to lists to open chat
+        document.querySelector('.list-container').addEventListener('click', function(e) {
             const item = e.target.closest('.list-item');
             if(item) {
                 const name = item.querySelector('.item-name').innerText;
@@ -455,7 +481,7 @@
             }
         });
 
-        // Chat Bhejne ka function (UI testing)
+        // Chat Sending logic (UI Testing)
         window.sendPrivateMessage = function() {
             const input = document.getElementById('chatInputMsg');
             const msg = input.value.trim();
@@ -463,17 +489,22 @@
                 const msgArea = document.getElementById('chatMessagesArea');
                 msgArea.innerHTML += `<div class="chat-bubble">${msg}</div>`;
                 input.value = '';
-                msgArea.scrollTop = msgArea.scrollHeight; // Auto scroll to bottom
+                msgArea.scrollTop = msgArea.scrollHeight;
             }
         };
 
-        // Enter dabane se bhi message chala jaye
+        // Enter key to send message
         document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') { sendPrivateMessage(); }
         });
 
-        document.getElementById('btnChat').addEventListener('click', () => alert("Click on any name in the list to start chatting."));
-        document.getElementById('btnRooms').addEventListener('click', () => alert("Global Room browser will open here."));
+        document.getElementById('btnChat').addEventListener('click', () => {
+            alert("Please select a user from the Online Users list to start chatting.");
+        });
+
+        document.getElementById('btnRooms').addEventListener('click', () => {
+            alert("Global Room browser will open here.");
+        });
     </script>
 </body>
 </html>
