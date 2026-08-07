@@ -3,171 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Messenger | Login</title>
+    <title>Web Messenger | Studio313</title>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* --- Classic Messenger Vibe --- */
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
+            margin: 0; padding: 0; height: 100vh;
             background: linear-gradient(135deg, #e0eafc, #cfdef3);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* Floating Window Design */
-        .messenger-window {
-            width: 320px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid #b0c4de;
-            overflow: hidden;
-            position: relative;
+        /* Messenger Container */
+        .messenger-app {
+            width: 340px; height: 650px;
+            background: #f4f6f9; border-radius: 8px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid #9fa8bb; overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
         }
 
-        /* Window Header */
-        .window-header {
-            background: linear-gradient(to bottom, #f0f4fd, #d9e4f6);
-            padding: 10px 15px;
-            border-bottom: 1px solid #b0c4de;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #333;
+        /* 1. App Header */
+        .app-header {
+            background: linear-gradient(to bottom, #d0dcf3, #b8c8e8);
+            padding: 8px 12px; border-bottom: 1px solid #9fa8bb;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; font-weight: 600; color: #1e293b;
+        }
+        .app-title { display: flex; align-items: center; gap: 8px; }
+        .smile-icon { width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; }
+
+        /* Menu Bar */
+        .menu-bar {
+            background: #eef2f8; padding: 4px 10px; border-bottom: 1px solid #cbd5e1;
+            font-size: 0.75rem; color: #475569; display: flex; gap: 12px;
+        }
+        .menu-bar span { cursor: pointer; } .menu-bar span:hover { text-decoration: underline; }
+
+        /* 2. User Profile Area */
+        .my-profile-area {
+            padding: 15px; background: #ffffff; border-bottom: 1px solid #cbd5e1;
+            display: flex; gap: 12px; align-items: center;
+        }
+        .my-avatar {
+            width: 50px; height: 50px; border-radius: 5px; border: 1px solid #cbd5e1;
+            background: #e2e8f0; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: bold; color: #64748b;
+        }
+        .my-info { flex: 1; }
+        .my-name { font-weight: 600; font-size: 0.95rem; color: #0f172a; margin-bottom: 2px; }
+        .my-status { font-size: 0.75rem; color: #64748b; background: transparent; border: 1px solid transparent; width: 100%; outline: none; }
+        .my-status:focus { border: 1px solid #cbd5e1; background: #f8fafc; }
+
+        /* 3. Monetization (Ad Banner) */
+        .ad-banner {
+            margin: 10px; height: 60px; background: #fffde7; border: 1px solid #fde047;
+            border-radius: 4px; display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; color: #ca8a04; font-weight: 600; cursor: pointer;
         }
 
-        .header-icon {
-            width: 20px;
-            height: 20px;
-            background: #f59e0b; /* Nostalgic yellow icon */
-            border-radius: 50%;
-            display: inline-block;
+        /* 4. Lists (Contacts & Rooms) */
+        .list-container { flex: 1; overflow-y: auto; background: #ffffff; }
+        
+        .list-group { margin-bottom: 5px; }
+        .group-header {
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9); padding: 5px 15px;
+            font-size: 0.8rem; font-weight: 600; color: #334155; border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0; cursor: pointer; display: flex; justify-content: space-between;
         }
-
-        .window-content {
-            padding: 30px 25px;
-            text-align: center;
+        
+        .list-items { list-style: none; padding: 0; margin: 0; }
+        .list-item {
+            padding: 8px 15px 8px 25px; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; transition: background 0.2s;
         }
+        .list-item:hover { background: #f1f5f9; }
+        
+        .item-icon { width: 12px; height: 12px; border-radius: 50%; }
+        .icon-online { background: #10b981; box-shadow: 0 0 5px #10b981; }
+        .icon-room { background: #3b82f6; border-radius: 2px; }
+        
+        .item-name { font-size: 0.85rem; color: #1e293b; font-weight: 500; }
+        .item-sub { font-size: 0.7rem; color: #64748b; }
 
-        /* Form Elements */
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
+        /* 5. Bottom Toolbar */
+        .bottom-toolbar {
+            background: #eef2f8; padding: 10px; border-top: 1px solid #cbd5e1;
+            display: flex; justify-content: space-around;
         }
-
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: #555;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .tool-btn {
+            background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
+            color: #475569; transition: transform 0.2s;
         }
+        .tool-btn:hover { transform: scale(1.1); color: #2563eb; }
 
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: #3b82f6;
-        }
-
-        /* Action Buttons */
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(to bottom, #60a5fa, #3b82f6);
-            color: white;
-            border: 1px solid #2563eb;
-            padding: 10px;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(to bottom, #3b82f6, #2563eb);
-        }
-
-        .status-message {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 15px;
-        }
-
+        /* Panels Management */
+        #loginPanel, #loadingPanel { padding: 40px 25px; text-align: center; }
+        .btn-primary { width: 100%; background: linear-gradient(to bottom, #60a5fa, #3b82f6); color: white; border: 1px solid #2563eb; padding: 10px; border-radius: 4px; font-weight: 600; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="messenger-window">
-        <div class="window-header">
-            <span class="header-icon"></span>
-            Web Messenger
-        </div>
-
-        <!-- Panel 1: Google Login -->
-        <div class="window-content" id="loginPanel">
-            <h3 style="margin-top: 0; color: #1e293b;">Sign In</h3>
-            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 25px;">Connect with your Google ID to enter the network.</p>
-            <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
-            <div id="authStatus" class="status-message">Waiting for authentication...</div>
-        </div>
-
-        <!-- Panel 2: Profile Setup (Hidden by default) -->
-        <div class="window-content" id="setupPanel" style="display: none;">
-            <h3 style="margin-top: 0; color: #1e293b; font-size: 1.1rem;">Create Your Identity</h3>
-            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 20px;">This information will be visible on your profile.</p>
-            
-            <div class="input-group">
-                <label>Display Name</label>
-                <input type="text" id="profName" class="form-control" placeholder="E.g. Cool_Dev99">
-            </div>
-
-            <div class="input-group">
-                <label>Gender</label>
-                <select id="profGender" class="form-control">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Not Specified">Prefer not to say</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Primary Region</label>
-                <select id="profRegion" class="form-control">
-                    <option value="The Gulf Region">The Gulf Region</option>
-                    <option value="South Asia">South Asia</option>
-                    <option value="North America">North America</option>
-                    <option value="Europe">Europe</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Custom Status (Optional)</label>
-                <input type="text" id="profStatus" class="form-control" placeholder="E.g. Have something to share?">
-            </div>
-
-            <button id="btnSaveProfile" class="btn-primary">Save & Enter</button>
-        </div>
+    <div class="messenger-app">
         
-        <!-- Panel 3: Success Loading (Hidden by default) -->
-        <div class="window-content" id="loadingPanel" style="display: none;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">⏳</div>
-            <h4 style="margin: 0; color: #1e293b;">Loading Contacts...</h4>
-            <p style="font-size: 0.8rem; color: #64748b;">Signing you in as <strong id="displayNameSuccess"></strong></p>
+        <!-- App Header & Menu -->
+        <div class="app-header">
+            <div class="app-title"><span class="smile-icon"></span> Web Messenger</div>
+            <div style="display: flex; gap: 5px;">
+                <span style="cursor:pointer;">➖</span>
+                <span style="cursor:pointer;">❌</span>
+            </div>
+        </div>
+        <div class="menu-bar">
+            <span>Messenger</span> <span>Contacts</span> <span>Actions</span> <span>Help</span>
+        </div>
+
+        <!-- AUTHENTICATION SCREEN -->
+        <div id="authScreen" style="flex: 1; background: #fff; display: flex; flex-direction: column; justify-content: center;">
+            <div id="loginPanel">
+                <h3 style="color: #1e293b;">Sign In</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 25px;">Connect your Google ID.</p>
+                <button id="btnGoogleLogin" class="btn-primary">Sign in with Google</button>
+            </div>
+            <div id="loadingPanel" style="display: none;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+                <h4>Loading Contacts...</h4>
+            </div>
+        </div>
+
+        <!-- MAIN MESSENGER UI (Hidden until login) -->
+        <div id="mainInterface" style="display: none; flex: 1; flex-direction: column;">
+            
+            <!-- User Profile -->
+            <div class="my-profile-area">
+                <div class="my-avatar" id="myAvatar">?</div>
+                <div class="my-info">
+                    <div class="my-name" id="myName">User Name</div>
+                    <input type="text" class="my-status" id="myStatus" value="Available (Click to change status)">
+                </div>
+            </div>
+
+            <!-- AdMob Space -->
+            <div class="ad-banner" title="Google AdMob Banner Space">
+                Ad: Chat with your friends anywhere! <br>(Google AdMob Space)
+            </div>
+
+            <!-- Contacts & Rooms List -->
+            <div class="list-container">
+                
+                <!-- Regional Hubs -->
+                <div class="list-group">
+                    <div class="group-header">▼ Regional Hubs (2)</div>
+                    <ul class="list-items">
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">The Gulf Region</div>
+                                <div class="item-sub">Public Chat Room</div>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-icon icon-room"></div>
+                            <div>
+                                <div class="item-name">Global Lounge</div>
+                                <div class="item-sub">Public Chat Room</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Online Friends -->
+                <div class="list-group">
+                    <div class="group-header">▼ Online Users (3)</div>
+                    <ul class="list-items" id="onlineUsersList">
+                        <!-- Dummy Users for UI, will be connected to Firebase next -->
+                        <li class="list-item">
+                            <div class="item-icon icon-online"></div>
+                            <div>
+                                <div class="item-name">Cool_Dev99</div>
+                                <div class="item-sub">Working on code...</div>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-icon icon-online"></div>
+                            <div>
+                                <div class="item-name">Tester_Ali</div>
+                                <div class="item-sub">Available</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Tools -->
+            <div class="bottom-toolbar">
+                <button class="tool-btn" title="Add Contact">➕</button>
+                <button class="tool-btn" title="Send Instant Message">💬</button>
+                <button class="tool-btn" title="Join Room">🌍</button>
+                <button class="tool-btn" id="btnLogout" title="Sign Out">🚪</button>
+            </div>
         </div>
 
     </div>
@@ -175,10 +210,8 @@
     <!-- Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
-        // Aapki Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
             authDomain: "studio313-hq.firebaseapp.com",
@@ -190,86 +223,38 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
+        const authScreen = document.getElementById('authScreen');
         const loginPanel = document.getElementById('loginPanel');
-        const setupPanel = document.getElementById('setupPanel');
         const loadingPanel = document.getElementById('loadingPanel');
-        let currentUser = null;
+        const mainInterface = document.getElementById('mainInterface');
 
-        // Watch for Login Status
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUser = user;
-                document.getElementById('authStatus').innerText = "Authenticating...";
+                // Show Loading temporarily
+                loginPanel.style.display = 'none';
+                loadingPanel.style.display = 'block';
                 
-                // Check if user has already created a profile in the new "messenger_users" collection
-                const userRef = doc(db, "messenger_users", user.uid);
-                const userDoc = await getDoc(userRef);
-
-                if (userDoc.exists()) {
-                    // Profile exists, go straight to loading
-                    const userData = userDoc.data();
-                    loginPanel.style.display = "none";
-                    setupPanel.style.display = "none";
-                    loadingPanel.style.display = "block";
-                    document.getElementById('displayNameSuccess').innerText = userData.displayName;
+                // Simulate loading time, then show Main UI
+                setTimeout(() => {
+                    authScreen.style.display = 'none';
+                    mainInterface.style.display = 'flex';
                     
-                    // Yahan hum next step mein "Main Contact List" page par redirect karenge
-                    setTimeout(() => { alert("Next Step: Redirection to the Main Contact List window!"); }, 1500);
+                    document.getElementById('myName').innerText = user.displayName;
+                    document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
+                }, 1200);
 
-                } else {
-                    // New User: Show Setup Panel
-                    loginPanel.style.display = "none";
-                    setupPanel.style.display = "block";
-                    document.getElementById('profName').value = user.displayName || "";
-                }
             } else {
-                // Not logged in
-                loginPanel.style.display = "block";
-                setupPanel.style.display = "none";
-                loadingPanel.style.display = "none";
+                authScreen.style.display = 'flex';
+                mainInterface.style.display = 'none';
+                loginPanel.style.display = 'block';
+                loadingPanel.style.display = 'none';
             }
         });
 
-        // Login Button Click
-        document.getElementById('btnGoogleLogin').addEventListener('click', () => {
-            signInWithPopup(auth, provider).catch((error) => {
-                document.getElementById('authStatus').innerText = "Login failed. Try again.";
-            });
-        });
-
-        // Save Profile Button Click
-        document.getElementById('btnSaveProfile').addEventListener('click', async () => {
-            const name = document.getElementById('profName').value.trim();
-            const gender = document.getElementById('profGender').value;
-            const region = document.getElementById('profRegion').value;
-            const statusMsg = document.getElementById('profStatus').value.trim() || "Available";
-
-            if (!name) return alert("Display name is required!");
-
-            document.getElementById('btnSaveProfile').innerText = "Saving...";
-
-            // Save to Database
-            await setDoc(doc(db, "messenger_users", currentUser.uid), {
-                displayName: name,
-                gender: gender,
-                region: region,
-                customStatus: statusMsg,
-                email: currentUser.email,
-                joinedAt: serverTimestamp(),
-                isOnline: true
-            });
-
-            // Transition to loading screen
-            setupPanel.style.display = "none";
-            loadingPanel.style.display = "block";
-            document.getElementById('displayNameSuccess').innerText = name;
-            
-            // Temporary alert for testing
-            setTimeout(() => { alert("Profile Created! Ready for the Main Interface."); }, 1500);
-        });
+        document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
     </script>
 </body>
 </html>
