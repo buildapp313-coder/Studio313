@@ -3,190 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Studio313</title>
+    <title>Contact Support | Studio313</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Contact Page Specific Styles */
         .contact-wrapper {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
             max-width: 1100px;
-            margin: 0 auto 80px;
-            flex-wrap: wrap;
+            margin: 40px auto 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
             padding: 0 20px;
             z-index: 10;
             position: relative;
         }
 
-        .contact-card {
-            flex: 1;
-            min-width: 320px;
+        .contact-info, .contact-form-container {
             padding: 40px;
             border-radius: 30px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
-        .contact-card h2 {
-            font-size: 2rem;
+        .contact-info h2 {
+            font-size: 2.2rem;
             margin-bottom: 20px;
-            background: linear-gradient(to right, var(--text-color), var(--shape3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-color);
         }
 
         .contact-info p {
             color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.6;
+            line-height: 1.7;
+            margin-bottom: 30px;
         }
 
-        .info-item {
+        .info-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .info-list li {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            color: var(--text-color);
         }
 
-        /* Form Styles */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-control {
             width: 100%;
             padding: 15px 20px;
             border-radius: 15px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
             color: var(--text-color);
             font-size: 1rem;
-            outline: none;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
+            outline: none;
+            transition: all 0.3s;
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.08);
             border-color: var(--shape3);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
         }
 
-        /* Fix dropdown colors inside the form */
-        .form-control option {
+        .form-group select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-group select.form-control option {
             background-color: #1a1a24;
             color: #ffffff;
+            padding: 10px;
         }
-        [data-theme="light"] .form-control option {
-            background-color: #ffffff;
-            color: #1e293b;
-        }
-        [data-theme="vip"] .form-control option {
-            background-color: #120000;
-            color: #ffd700;
+
+        @media (max-width: 850px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Sun/Moon Liquid Background Elements -->
     <div class="liquid-shape shape-1"></div>
     <div class="liquid-shape shape-2"></div>
     <div class="liquid-shape shape-3"></div>
 
-    <!-- Glass Navbar -->
     <nav class="navbar glass">
         <div class="logo">Studio313</div>
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">Menu</button>
+        <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="download.html">Apps</a></li>
             <li><a href="app-tester.html">App-Tester</a></li>
-            <li><a href="policies.html">Policies</a></li>
+            <li><a href="community.html">Community</a></li>
             <li>
-                <select class="theme-selector glass-btn" onchange="changeTheme(this.value)">
-                    <option value="dark">🌙 Dark Liquid</option>
-                    <option value="light">☀️ Light Glass</option>
-                    <option value="vip">👑 VIP Gold</option>
-                </select>
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn glass-btn" onclick="toggleDropdown()">
+                        <span id="dropdownBtnText">Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', 'Dark Liquid')">Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', 'Light Glass')">Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', 'VIP Gold')">VIP Gold</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </nav>
 
-    <!-- Header Section -->
-    <div class="header-text">
-        <h1>Get in Touch</h1>
-        <p>Have a question, feedback, or need a custom mobile application? Our team is here to help you build the future.</p>
-    </div>
-
-    <!-- Contact Layout -->
     <div class="contact-wrapper">
-        
-        <!-- Contact Information Side -->
-        <div class="contact-card contact-info glass">
+        <div class="contact-info glass">
             <h2>Studio313 HQ</h2>
-            <p>We are a premium cross-platform mobile development agency. Whether you are reporting an issue with Gatepass Lite or exploring the Vip Notification beta, drop us a line!</p>
+            <p>We are a premium cross-platform mobile development agency. Whether you are reporting an issue with Gatepass Lite or exploring the Vip Notification beta, drop us a line.</p>
             
-            <div class="info-item">
-                <span style="font-size: 1.5rem;">📧</span>
-                <span>support@studio313.com</span>
-            </div>
-            <div class="info-item">
-                <span style="font-size: 1.5rem;">📱</span>
-                <span>Developer Console / Play Store</span>
-            </div>
-            <div class="info-item">
-                <span style="font-size: 1.5rem;">🌍</span>
-                <span>Global Remote Operations</span>
-            </div>
-            
-            <div style="margin-top: auto; padding-top: 30px;">
-                <a href="studio-policy.html" style="color: var(--shape3); text-decoration: none; font-weight: 600;">View Studio Privacy Policy ➔</a>
-            </div>
+            <ul class="info-list">
+                <li><strong>Email:</strong> request.app313@gmail.com</li>
+                <li><strong>Platform:</strong> Developer Console / Play Store</li>
+                <li><strong>Location:</strong> Global Remote Operations</li>
+            </ul>
+
+            <a href="studio-policy.html" style="color: var(--shape3); text-decoration: none; font-weight: 600;">View Studio Privacy Policy -></a>
         </div>
 
-        <!-- Contact Form Side -->
-        <div class="contact-card glass">
-            <h2 style="font-size: 1.6rem; margin-bottom: 25px;">Send a Message</h2>
-            
-            <form onsubmit="event.preventDefault(); alert('VIP Message Sent! Our team will get back to you soon.'); this.reset();">
+        <div class="contact-form-container glass">
+            <h2 style="margin-bottom: 25px; font-size: 1.8rem;">Send a Message</h2>
+            <form id="contactForm" onsubmit="event.preventDefault(); alert('Form logic will connect to Firebase shortly.');">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Your Full Name" required>
                 </div>
-                
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="Your Email Address" required>
                 </div>
-
                 <div class="form-group">
                     <select class="form-control" required>
                         <option value="" disabled selected>Select Subject...</option>
                         <option value="gatepass">Gatepass Lite - Feedback / Bug</option>
-                        <option value="vip_notif">Vip Notification - Tester Inquiry</option>
+                        <option value="vip">Vip Notification - Tester Inquiry</option>
                         <option value="custom">Custom App Development</option>
                         <option value="other">Other Inquiry</option>
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <textarea class="form-control" rows="5" placeholder="How can we help you today?" required></textarea>
+                    <textarea class="form-control" placeholder="Write your message here..." required></textarea>
                 </div>
-
-                <button type="submit" class="action-btn glass-btn" style="width: 100%; padding: 16px; font-size: 1.1rem; margin-top: 10px;">
-                    Send Secure Message 🚀
-                </button>
+                <button type="submit" class="action-btn glass-btn" style="width: 100%; padding: 15px;">Send Secure Message</button>
             </form>
         </div>
-
     </div>
 
-    <!-- Footer with Live Visitor Counter -->
     <footer>
         <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
         <div class="policy-links" style="margin-top: 8px;">
@@ -195,11 +180,10 @@
             <a href="vip-policy.html">Vip Notification Policy</a>
         </div>
         <div style="margin-top: 15px; font-size: 0.85rem; color: var(--shape3);">
-            👁️ Page Views: <span id="visitor-count" style="font-weight: 700; color: var(--text-color);">Loading...</span>
+            Page Views: <span id="visitor-count" style="font-weight: 700; color: var(--text-color);">Loading...</span>
         </div>
     </footer>
 
-    <!-- JS File Link (For Themes, Sun/Moon, and Counter) -->
     <script src="script.js"></script>
 
 </body>
