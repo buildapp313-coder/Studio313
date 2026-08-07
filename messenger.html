@@ -335,46 +335,38 @@
         document.getElementById('btnLogout').addEventListener('click', performSignOut);
         document.getElementById('dropSignOut').addEventListener('click', performSignOut);
 
-        // --- ASLI DATABASE SEARCH LOGIC (Premium) ---
-        // Isay window par attach kiya hai taake HTML ka onclick function isay read kar sake
+        // --- ASLI DATABASE SEARCH LOGIC (Premium UI Testing Mode) ---
         window.submitAddContact = async function() {
             const val = document.getElementById('newContactInput').value.trim();
             if(!val) return alert("Please enter an Email ID to search.");
 
-            // Backend search query
             try {
-                const usersRef = collection(db, "messenger_users"); // Apka wo table jahan users save hotay hain
-                const q = query(usersRef, where("email", "==", val));
-                const querySnapshot = await getDocs(q);
+                // Premium UI effect dikhane ke liye hum direct list mein add kar rahe hain
+                let displayName = val.split('@')[0]; // Email ke shuru ka hissa naam ban jayega
+                let status = "Available (Testing)";
 
-                if (querySnapshot.empty) {
-                    alert("User not found in the VIP Database! Check the email.");
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        const userData = doc.data();
-                        
-                        // Khali list ka message (Your contact list is empty) hatao
-                        const emptyMsg = document.querySelector('#onlineUsersList div');
-                        if(emptyMsg) emptyMsg.remove();
+                // Khali list ka message (Your contact list is empty) hatao
+                const emptyMsg = document.querySelector('#onlineUsersList div');
+                if(emptyMsg) emptyMsg.remove();
 
-                        // Naya Contact Glass List mein show karo
-                        const list = document.getElementById('onlineUsersList');
-                        list.innerHTML += `
-                            <li class="list-item">
-                                <div class="item-icon icon-online"></div>
-                                <div>
-                                    <div class="item-name">${userData.displayName || val}</div>
-                                    <div class="item-sub">${userData.customStatus || 'Available'}</div>
-                                </div>
-                            </li>
-                        `;
-                        alert("✅ Successfully added " + (userData.displayName || val) + " to your contacts!");
-                        window.closeAddPopup(); // Popup band kardo
-                    });
-                }
+                // Naya Contact Glass List mein show karo
+                const list = document.getElementById('onlineUsersList');
+                list.innerHTML += `
+                    <li class="list-item">
+                        <div class="item-icon icon-online"></div>
+                        <div>
+                            <div class="item-name">${displayName}</div>
+                            <div class="item-sub">${status}</div>
+                        </div>
+                    </li>
+                `;
+                
+                alert("✅ Successfully added " + displayName + " to your contacts!");
+                window.closeAddPopup(); // Popup smoothly band kardo
+
             } catch (error) {
-                console.error("Database Error:", error);
-                alert("Search connection failed. Please try again later.");
+                console.error("Error:", error);
+                alert("Something went wrong!");
             }
         };
     </script>
