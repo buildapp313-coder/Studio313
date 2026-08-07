@@ -59,16 +59,6 @@ window.onload = function() {
     if(dropdownTextEl) {
         dropdownTextEl.innerText = themeText;
     }
-
-    // --- VIP Visitor Counter (Dummy Logic for Premium Feel) ---
-    let countEl = document.getElementById('visitor-count');
-    if(countEl) {
-        let currentCount = localStorage.getItem('visitorCount') || 3012;
-        // Har refresh par randomly 1 se 5 views add karega
-        currentCount = parseInt(currentCount) + Math.floor(Math.random() * 5) + 1;
-        localStorage.setItem('visitorCount', currentCount);
-        countEl.innerText = currentCount.toLocaleString(); // Commas ke sath number show karega (e.g. 3,015)
-    }
 };
 
 // --- 5. SEARCH LOGIC (Optional / Placeholder) ---
