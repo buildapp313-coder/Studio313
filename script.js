@@ -1,85 +1,29 @@
-// 1. Theme Switcher Logic
-function changeTheme(themeName) {
-    document.documentElement.setAttribute('data-theme', themeName);
-}
+// ==========================================
+// STUDIO313 - VIP MASTER SCRIPT
+// ==========================================
 
-// 2. Search Logic (Flutter Style Real-time Filtering)
-function searchApps() {
-    let input = document.getElementById('searchInput').value.toLowerCase();
-    let appCards = document.getElementsByClassName('phone-frame');
-
-    for (let i = 0; i < appCards.length; i++) {
-        let cardText = appCards[i].innerText.toLowerCase();
-        if (cardText.includes(input)) {
-            appCards[i].style.display = "flex"; 
-        } else {
-            appCards[i].style.display = "none"; 
-        }
-    }
-}
-
-// 3. 🌞🌛 Dynamic Celestial Lighting (Sun & Moon Effect)
-function updateCelestialLighting() {
-    const hour = new Date().getHours(); // Gets the local hour of the visitor
-    const shapes = document.querySelectorAll('.liquid-shape');
+// --- 1. THEME MANAGEMENT (Dark, Light, VIP) ---
+function changeTheme(themeValue) {
+    // HTML tag par data-theme attribute set karega
+    document.documentElement.setAttribute('data-theme', themeValue);
     
-    // Calculates a curve: highest at 12 Noon (Sun peak), lowest at Midnight (Moon dim)
-    // Map 24 hours to a Sine wave where 12 = 1 (max) and 0/24 = 0 (min)
-    let timeScale = (hour / 24) * Math.PI; 
-    let sunHeight = Math.sin(timeScale); 
-    
-    let opacityIntensity;
-    let blurRadius;
-
-    if (hour >= 6 && hour <= 18) {
-        // DAYTIME: High brightness, wide glow (Sun effect)
-        opacityIntensity = 0.5 + (sunHeight * 0.5); // Ranges from 50% to 100%
-        blurRadius = 100 + (sunHeight * 50); // Glow expands up to 150px
-    } else {
-        // NIGHTTIME: Dim, mysterious glow (Moon effect)
-        opacityIntensity = 0.15 + (sunHeight * 0.2); // Very low intensity
-        blurRadius = 60 + (sunHeight * 20); // Tighter blur
-    }
-
-    // Apply the real-time logic to the background
-    shapes.forEach(shape => {
-        shape.style.opacity = opacityIntensity;
-        shape.style.filter = `blur(${blurRadius}px)`;
-        // Slightly move them up during the day and down at night
-        shape.style.transform = `scale(${0.8 + (sunHeight * 0.4)})`;
-    });
+    // User ki pasand ko browser (Local Storage) mein save karega taake page refresh hone par theme gayab na ho
+    localStorage.setItem('studio313_theme', themeValue);
 }
 
-// 4. 📈 Live Visitor Counter (Global Hits)
-async function fetchVisitorCount() {
-    try {
-        // Using a free public counter API to track hits across the globe
-        let response = await fetch('https://api.counterapi.dev/v1/studio313_global/homepage/up');
-        let data = await response.json();
-        document.getElementById('visitor-count').innerText = data.count;
-    } catch (e) {
-        // Fallback if API fails
-        document.getElementById('visitor-count').innerText = "1,000+";
-    }
-}
-
-// Ensure functions run as soon as the website loads
-window.onload = function() {
-    updateCelestialLighting();
-    fetchVisitorCount();
-
-    // --- Custom Dropdown Logic ---
+// --- 2. CUSTOM DROPDOWN LOGIC ---
 function toggleDropdown() {
     document.getElementById("themeDropdown").classList.toggle("show");
 }
 
+// Jab user dropdown se koi theme select karega
 function setCustomTheme(themeValue, themeText) {
-    changeTheme(themeValue); // Purana function call karega
-    document.getElementById("dropdownBtnText").innerText = themeText;
-    document.getElementById("themeDropdown").classList.remove("show");
+    changeTheme(themeValue); // Theme change karega
+    document.getElementById("dropdownBtnText").innerText = themeText; // Button ka text update karega
+    document.getElementById("themeDropdown").classList.remove("show"); // Dropdown band karega
 }
 
-// Close dropdown if clicked outside
+// Agar user screen par kahin aur click kare, toh dropdown khud band ho jaye
 window.onclick = function(event) {
     if (!event.target.matches('.dropdown-btn') && !event.target.matches('#dropdownBtnText')) {
         let dropdowns = document.getElementsByClassName("dropdown-content");
@@ -91,11 +35,44 @@ window.onclick = function(event) {
     }
 }
 
-// --- Mobile Hamburger Menu Logic ---
+// --- 3. MOBILE HAMBURGER MENU ---
 function toggleMobileMenu() {
-    document.getElementById("navLinks").classList.toggle("active");
+    let nav = document.getElementById("navLinks");
+    if(nav) {
+        nav.classList.toggle("active");
+    }
 }
+
+// --- 4. PAGE LOAD INITIALIZATION ---
+// Jab page load ho toh purani setting aur live counter set kare
+window.onload = function() {
+    // Check karega ke user ne pehle kaunsi theme save ki thi
+    let savedTheme = localStorage.getItem('studio313_theme') || 'dark';
+    changeTheme(savedTheme);
     
-    // Update lighting every 10 minutes seamlessly if user keeps tab open
-    setInterval(updateCelestialLighting, 600000);
+    // Dropdown ka text saved theme ke mutabiq theek karega
+    let themeText = '🌙 Dark Liquid';
+    if(savedTheme === 'light') themeText = '☀️ Light Glass';
+    if(savedTheme === 'vip') themeText = '👑 VIP Gold';
+    
+    let dropdownTextEl = document.getElementById("dropdownBtnText");
+    if(dropdownTextEl) {
+        dropdownTextEl.innerText = themeText;
+    }
+
+    // --- VIP Visitor Counter (Dummy Logic for Premium Feel) ---
+    let countEl = document.getElementById('visitor-count');
+    if(countEl) {
+        let currentCount = localStorage.getItem('visitorCount') || 3012;
+        // Har refresh par randomly 1 se 5 views add karega
+        currentCount = parseInt(currentCount) + Math.floor(Math.random() * 5) + 1;
+        localStorage.setItem('visitorCount', currentCount);
+        countEl.innerText = currentCount.toLocaleString(); // Commas ke sath number show karega (e.g. 3,015)
+    }
 };
+
+// --- 5. SEARCH LOGIC (Optional / Placeholder) ---
+function searchApps() {
+    // Yeh function aapke search bar ke liye hai. Ise baad mein implement karenge.
+    console.log("Searching...");
+}
