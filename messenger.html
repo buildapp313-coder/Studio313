@@ -6,45 +6,29 @@
     <title>Web Messenger | Studio313</title>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Base Resets */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; height: 100vh; overflow: hidden; background: #0f172a; display: flex; justify-content: center; align-items: center; }
-
-        /* 1. Vibrant Animated Background (To make the glass pop!) */
-        .app-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            /* Ek premium mesh gradient jo liquid ki tarah move karega */
-            background: linear-gradient(45deg, #1e3a8a, #9333ea, #0f766e, #1e40af);
-            background-size: 400% 400%; 
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG { 
-            0% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
-            100% { background-position: 0% 50%; } 
+        /* --- Premium Glassmorphism (Weather App Vibe) --- */
+        body {
+            margin: 0; padding: 0; height: 100vh;
+            /* Moody Weather/Rainy Background for Glass Effect */
+            background: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* 2. Real Frosted Glass Panels */
-        .glass-panel, .messenger-app {
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(25px); 
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-            border-radius: 24px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3); 
-            display: flex; flex-direction: column; overflow: hidden; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 340px; height: 650px; position: relative; color: #ffffff;
-        }
-
-        /* 3. Fix Search Box & Buttons to match the new glass */
-        .glass-btn {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); 
-            color: #fff; cursor: pointer; transition: 0.3s; font-family: 'Poppins';
-        }
-        .glass-btn:hover { 
-            background: rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 0 15px rgba(255,255,255,0.2); 
+        /* Messenger Container - The Glass Box */
+        .messenger-app {
+            width: 340px; height: 650px;
+            /* Transparent Frosted Glass Effect */
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
+            color: #ffffff;
         }
 
         /* 1. App Header */
@@ -62,8 +46,8 @@
             background: rgba(255, 255, 255, 0.05); padding: 6px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); display: flex; gap: 12px;
         }
-        .menu-bar span { cursor: pointer; transition: 0.2s; padding: 2px 5px; border-radius: 4px; } 
-        .menu-bar span:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .menu-bar span { cursor: pointer; transition: 0.2s; } 
+        .menu-bar span:hover { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
 
         /* 2. User Profile Area */
         .my-profile-area {
@@ -106,12 +90,12 @@
             cursor: pointer; display: flex; justify-content: space-between;
         }
         
-        .list-items { list-style: none; padding: 0; margin: 0; }
+        .list-items { list-style: none; padding: 0; margin: 0; transition: max-height 0.3s ease-out; overflow: hidden; }
         .list-item {
             padding: 10px 15px 10px 25px; display: flex; align-items: center; gap: 10px;
             cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02);
         }
-        .list-item:hover { background: rgba(255, 255, 255, 0.1); transform: translateX(5px); }
+        .list-item:hover { background: rgba(255, 255, 255, 0.1); }
         
         .item-icon { width: 10px; height: 10px; border-radius: 50%; }
         .icon-online { background: #10b981; box-shadow: 0 0 8px #10b981; }
@@ -140,40 +124,38 @@
         }
         .btn-primary:hover { background: rgba(59, 130, 246, 0.8); box-shadow: 0 0 15px rgba(59,130,246,0.5); }
 
-        /* --- NEW VIP DROPDOWNS & POPUPS --- */
+        /* --- ADDED VIP CSS FOR DROPDOWNS & POPUPS --- */
         .glass-dropdown {
-            position: absolute; top: 100%; left: 0;
-            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
-            padding: 8px 0; min-width: 160px; display: none; z-index: 100;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            position: absolute; top: 100%; left: 0; margin-top: 5px;
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px;
+            padding: 5px 0; min-width: 150px; display: none; z-index: 100;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         .dropdown-item {
-            padding: 10px 20px; color: #fff; font-size: 0.85rem; cursor: pointer; transition: 0.2s;
+            padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.2s;
         }
-        .dropdown-item:hover { background: rgba(255, 255, 255, 0.1); padding-left: 25px; color: #3b82f6; }
+        .dropdown-item:hover { background: rgba(255, 255, 255, 0.1); padding-left: 20px; color: #60a5fa; }
 
         .glass-popup-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);
             display: none; justify-content: center; align-items: center; z-index: 200;
         }
         .glass-popup-box {
             background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px; border-radius: 16px; width: 85%; text-align: center;
+            padding: 25px; border-radius: 16px; width: 85%; text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
         .glass-input {
             width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); 
-            padding: 10px 15px; border-radius: 8px; color: #fff; outline: none; font-family: 'Poppins';
+            padding: 10px; border-radius: 8px; color: #fff; outline: none; font-family: 'Poppins'; font-size: 0.85rem;
         }
         .glass-input::placeholder { color: rgba(255,255,255,0.4); }
         .glass-input:focus { background: rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
-    
-    <div class="app-bg"></div>
 
     <div class="messenger-app">
         
@@ -186,26 +168,27 @@
                 <span title="Close" style="cursor:pointer; color: rgba(255,255,255,0.7);">❌</span>
             </div>
         </div>
-        
-        <!-- Integrated Dropdowns inside Menu Bar -->
         <div class="menu-bar">
-            <div style="position: relative;">
-                <span onclick="toggleDropdown('dropMessenger', event)">Messenger</span>
+            <!-- Wrapped in relative divs for Dropdowns -->
+            <div style="position: relative; display: inline-block;">
+                <span id="menuMessenger" onclick="toggleDropdown('dropMessenger', event)">Messenger</span>
                 <div id="dropMessenger" class="glass-dropdown">
                     <div class="dropdown-item" onclick="window.location.href='index.html'">🏠 Back to Website</div>
                     <div class="dropdown-item">⚙️ Settings</div>
                     <div class="dropdown-item" id="dropSignOut">🚪 Sign Out</div>
                 </div>
             </div>
-            <div style="position: relative;">
-                <span onclick="toggleDropdown('dropContacts', event)">Contacts</span>
+            
+            <div style="position: relative; display: inline-block;">
+                <span id="menuContacts" onclick="toggleDropdown('dropContacts', event)">Contacts</span>
                 <div id="dropContacts" class="glass-dropdown">
                     <div class="dropdown-item" onclick="openAddPopup()">➕ Add Contact</div>
                     <div class="dropdown-item">📋 Manage List</div>
                 </div>
             </div>
-            <span>Actions</span> 
-            <span>Help</span>
+            
+            <span id="menuActions">Actions</span> 
+            <span id="menuHelp">Help</span>
         </div>
 
         <!-- AUTHENTICATION SCREEN -->
@@ -243,7 +226,7 @@
                 
                 <!-- Regional Hubs -->
                 <div class="list-group">
-                    <div class="group-header" onclick="toggleAccordion('hubsList', this)">▼ Regional Hubs (2)</div>
+                    <div class="group-header" onclick="toggleList('hubsList', this)">▼ Regional Hubs (2)</div>
                     <ul class="list-items" id="hubsList">
                         <li class="list-item">
                             <div class="item-icon icon-room"></div>
@@ -264,40 +247,41 @@
 
                 <!-- Online Friends -->
                 <div class="list-group">
-                    <div class="group-header" onclick="toggleAccordion('onlineUsersList', this)">▼ Online Users (0)</div>
+                    <div class="group-header" onclick="toggleList('onlineUsersList', this)">▼ Online Users (0)</div>
                     <ul class="list-items" id="onlineUsersList">
                         <div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">
                             Your contact list is empty.<br>Click '+' below to search by ID.
                         </div>
                     </ul>
                 </div>
+
             </div>
 
             <!-- Bottom Tools -->
             <div class="bottom-toolbar">
-                <button class="tool-btn" onclick="openAddPopup()" title="Add Contact">➕</button>
-                <button class="tool-btn" title="Send Instant Message">💬</button>
-                <button class="tool-btn" title="Join Room">🌍</button>
+                <button class="tool-btn" id="btnAdd" title="Add Contact">➕</button>
+                <button class="tool-btn" id="btnChat" title="Send Instant Message">💬</button>
+                <button class="tool-btn" id="btnRooms" title="Join Room">🌍</button>
                 <button class="tool-btn" id="btnLogout" title="Sign Out">🚪</button>
             </div>
         </div>
-
-        <!-- Add Contact Glass Popup -->
+        
+        <!-- ADDED: Premium Add Contact Popup -->
         <div id="addContactPopup" class="glass-popup-overlay">
             <div class="glass-popup-box">
-                <h3 style="margin-top: 0; color: #fff; font-weight: 500;">Add New Contact</h3>
-                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Enter User ID or Email</p>
+                <h3 style="margin-top: 0; color: #fff; font-weight: 500; font-size: 1.1rem;">Add New Contact</h3>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 15px;">Enter User ID or Email</p>
                 <input type="text" id="newContactInput" class="glass-input" style="margin-bottom: 15px;" placeholder="e.g. user@gmail.com">
                 <div style="display: flex; gap: 10px;">
-                    <button class="glass-btn primary-btn" style="flex: 1; padding: 10px;" onclick="submitAddContact()">Add</button>
-                    <button class="glass-btn" style="flex: 1; padding: 10px; background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4);" onclick="closeAddPopup()">Cancel</button>
+                    <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px;" onclick="submitAddContact()">Add</button>
+                    <button class="btn-primary" style="flex: 1; margin-top: 0; padding: 10px; background: rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6);" onclick="closeAddPopup()">Cancel</button>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Firebase Configuration & Authentication Logic -->
+    <!-- Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
@@ -343,19 +327,20 @@
 
         document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
         
-        // Attach Sign Out to both the bottom button and the new Dropdown button
-        const doSignOut = () => signOut(auth);
-        document.getElementById('btnLogout').addEventListener('click', doSignOut);
-        document.getElementById('dropSignOut').addEventListener('click', doSignOut);
+        // Attached Signout to both original button and dropdown menu
+        const performSignOut = () => signOut(auth);
+        document.getElementById('btnLogout').addEventListener('click', performSignOut);
+        document.getElementById('dropSignOut').addEventListener('click', performSignOut);
     </script>
 
     <!-- UI Interactions Script -->
     <script>
-        // Toggle Lists (Accordions)
-        function toggleAccordion(listId, headerElement) {
+        // 1. Accordion Toggle Logic (Open/Close Lists)
+        function toggleList(listId, headerElement) {
             const list = document.getElementById(listId);
             const text = headerElement.innerText;
-            if (list.style.display === 'none') {
+            
+            if (list.style.display === 'none' || list.style.display === '') {
                 list.style.display = 'block';
                 headerElement.innerText = text.replace('▶', '▼');
             } else {
@@ -364,20 +349,24 @@
             }
         }
 
-        // Toggle Dropdown Menus
+        // 2. Top Menus Actions (Dropdowns & Alerts)
         function toggleDropdown(dropId, event) {
-            event.stopPropagation(); // Prevents instant closing
+            event.stopPropagation();
             document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
             const drop = document.getElementById(dropId);
             if(drop) drop.style.display = 'block';
         }
 
-        // Close dropdowns if clicked outside
         window.addEventListener('click', () => {
             document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
         });
 
-        // Add Contact Popup Logic
+        document.getElementById('menuActions').addEventListener('click', () => alert("User Actions menu will open here."));
+        document.getElementById('menuHelp').addEventListener('click', () => alert("Help Center will open here."));
+
+        // 3. Bottom Toolbar Actions & Premium Popup Logic
+        document.getElementById('btnAdd').addEventListener('click', () => openAddPopup());
+
         function openAddPopup() {
             document.getElementById('addContactPopup').style.display = 'flex';
         }
@@ -392,6 +381,14 @@
                 closeAddPopup();
             }
         }
+
+        document.getElementById('btnChat').addEventListener('click', () => {
+            alert("Please select a user from the Online Users list to start chatting.");
+        });
+
+        document.getElementById('btnRooms').addEventListener('click', () => {
+            alert("Global Room browser will open here.");
+        });
     </script>
 </body>
 </html>
