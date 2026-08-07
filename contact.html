@@ -184,27 +184,71 @@
         </div>
     </footer>
 
+    <!-- Main JavaScript File -->
     <script src="script.js"></script>
 
+    <!-- Firebase SDKs & Database Logic -->
     <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
-    authDomain: "studio313-hq.firebaseapp.com",
-    projectId: "studio313-hq",
-    storageBucket: "studio313-hq.firebasestorage.app",
-    messagingSenderId: "328116481829",
-    appId: "1:328116481829:web:6cba13235e85ea76e174cc"
-  };
+        // Your specific Firebase configuration keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+            authDomain: "studio313-hq.firebaseapp.com",
+            projectId: "studio313-hq",
+            storageBucket: "studio313-hq.firebasestorage.app",
+            messagingSenderId: "328116481829",
+            appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+        };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
+        // Initialize Firebase Backend
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
+        // Contact Form Submission Handling
+        const contactForm = document.getElementById('contactForm');
+        if(contactForm) {
+            // Remove the inline dummy alert automatically
+            contactForm.removeAttribute("onsubmit");
+            
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Change button state to show processing
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerText = "Transmitting...";
+                submitBtn.disabled = true;
+
+                // Capture form values
+                const nameInput = contactForm.querySelector('input[type="text"]').value;
+                const emailInput = contactForm.querySelector('input[type="email"]').value;
+                const subjectInput = contactForm.querySelector('select').value;
+                const messageInput = contactForm.querySelector('textarea').value;
+
+                try {
+                    // Send data securely to Firestore "contacts" collection
+                    await addDoc(collection(db, "contacts"), {
+                        name: nameInput,
+                        email: emailInput,
+                        subject: subjectInput,
+                        message: messageInput,
+                        timestamp: new Date()
+                    });
+                    
+                    alert("Your message has been securely sent to Studio313 HQ.");
+                    contactForm.reset();
+                } catch (error) {
+                    console.error("Database Error: ", error);
+                    alert("Transmission failed. Please check your connection.");
+                } finally {
+                    // Restore button state
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
