@@ -122,120 +122,139 @@ body {
 
 
 /* =========================================
-   PREMIUM PLASTIC 3D CLAYMORPHISM (VIP Buttons)
+   EXACT 3D MATTE CLAYMORPHISM (Reference 225554_3)
    ========================================= */
 .nav-links {
-    gap: 12px !important;
+    gap: 15px !important;
 }
 
-/* Base Structure: Aapki class "btn-normal-3d" aur "quran-special-3d" ko target kiya gaya hai */
+/* Base Matte Clay Structure */
 .btn-normal-3d, 
 .quran-special-3d,
 .dropdown-btn {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    padding: 10px 22px !important;
+    padding: 12px 26px !important;
     font-family: 'Poppins', sans-serif;
     font-weight: 600 !important;
     font-size: 0.95rem;
-    letter-spacing: 0.3px;
-    border-radius: 50px !important;
+    letter-spacing: 0.5px;
+    
+    /* Reference image jaisi thori chokor golaai (Soft Rectangle) */
+    border-radius: 22px !important; 
+    
     text-decoration: none;
     border: none;
     cursor: pointer;
     position: relative;
-    top: 0;
-    color: #ffffff !important; /* Inline color ko override karne ke liye */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transition: all 0.15s ease-out !important;
 }
 
-/* Hover Effect: Upar uthna aur chamakna */
+/* Hover Effect - Sirf halka sa upar aana (No extra brightness) */
 .btn-normal-3d:hover, 
 .quran-special-3d:hover,
 .dropdown-btn:hover {
-    transform: translateY(-3px);
-    filter: brightness(1.1); 
+    transform: translateY(-2px);
 }
 
-/* Click Effect: Real Plastic Press Effect */
+/* --- 1. HOME (Like 'Deslant' - Matte Cream) --- */
+a.btn-normal-3d[href="index.html"] {
+    background: #eaddd7 !important;
+    color: #38312e !important; /* Dark Text */
+    --neon: #ffffff; /* Click Glow Color */
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.9),  /* Top Light */
+        inset 0 -6px 10px rgba(184, 159, 142, 0.9), /* Thick Bottom Volume */
+        0 8px 15px rgba(0, 0, 0, 0.15) !important;  /* Physical Drop Shadow */
+}
+
+/* --- 2. APPS (Like 'hoter' - Matte Taupe) --- */
+a.btn-normal-3d[href="download.html"] {
+    background: #bdaea7 !important;
+    color: #ffffff !important;
+    --neon: #ffffff;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.4), 
+        inset 0 -6px 10px rgba(135, 115, 107, 0.9), 
+        0 8px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- 3. APP-TESTER (Like 'Focus' - Matte Orange) --- */
+a.btn-normal-3d[href="app-tester.html"] {
+    background: #f38054 !important;
+    color: #ffffff !important;
+    --neon: #ffaa88;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.4), 
+        inset 0 -6px 10px rgba(199, 87, 42, 0.9), 
+        0 8px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- 4. POLICIES (Dark Slate Clay) --- */
+a.btn-normal-3d[href="policies.html"] {
+    background: #475569 !important;
+    color: #ffffff !important;
+    --neon: #94a3b8;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.2), 
+        inset 0 -6px 10px rgba(30, 41, 59, 0.95), 
+        0 8px 15px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* --- 5. READ QURAN (Premium VIP Gold Clay) --- */
+.quran-special-3d {
+    background: #eab308 !important;
+    color: #ffffff !important;
+    --neon: #fde047;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.6), 
+        inset 0 -6px 10px rgba(161, 98, 7, 0.95), 
+        0 8px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* --- 6. GLOBAL HUB (Like 'Success' - Light Orange/Yellow) --- */
+a.btn-normal-3d[href*="messenger.html"] {
+    background: #faa356 !important;
+    color: #ffffff !important;
+    --neon: #fcd34d;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.6), 
+        inset 0 -6px 10px rgba(214, 114, 28, 0.9), 
+        0 8px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- 7. THEME DROPDOWN (Like 'Loating' - Dark Cyan/Neon) --- */
+.dropdown-btn {
+    background: #294344 !important;
+    color: #6ee7b7 !important; /* Neon Text */
+    --neon: #6ee7b7;
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.15), 
+        inset 0 -6px 10px rgba(17, 36, 36, 0.95), 
+        0 8px 20px rgba(110, 231, 183, 0.15) !important; /* Halka sa default glow */
+}
+
+
+/* =========================================
+   ⚡ CORNER NEON CLICK EFFECT ⚡
+   ========================================= */
 .btn-normal-3d:active, 
 .quran-special-3d:active,
 .dropdown-btn:active {
-    transform: translateY(2px);
-    filter: brightness(0.95);
+    /* Button zor se neechay dabega */
+    transform: translateY(6px); 
+    
+    /* Motai (Volume) khatam ho jayegi aur sirf glow reh jayega */
     box-shadow: 
-        0 2px 4px rgba(0,0,0,0.3), 
-        inset 3px 4px 6px rgba(0,0,0,0.5), 
-        inset -2px -2px 4px rgba(255,255,255,0.15) !important;
+        inset 0 1px 2px rgba(255,255,255, 0.2), 
+        inset 0 -2px 4px rgba(0,0,0, 0.2), 
+        0 2px 4px rgba(0,0,0, 0.1),
+        
+        /* MAGIC: Yeh light sirf Top-Left aur Bottom-Right corners par aayegi! */
+        -6px -6px 20px var(--neon),  
+         6px  6px 20px var(--neon) !important;
 }
-
-/* --- 1. HOME BUTTON (Royal Blue Plastic) --- */
-a.btn-normal-3d[href="index.html"] {
-    background: linear-gradient(145deg, #4aa0ff, #1d4ed8) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(37, 99, 235, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important; 
-}
-
-/* --- 2. APPS BUTTON (Magenta Plastic) --- */
-a.btn-normal-3d[href="download.html"] {
-    background: linear-gradient(145deg, #f472b6, #be185d) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(190, 24, 93, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
-}
-
-/* --- 3. APP-TESTER BUTTON (Emerald Plastic) --- */
-a.btn-normal-3d[href="app-tester.html"] {
-    background: linear-gradient(145deg, #34d399, #047857) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(5, 150, 105, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
-}
-
-/* --- 4. POLICIES BUTTON (Slate Grey Plastic) --- */
-a.btn-normal-3d[href="policies.html"] {
-    background: linear-gradient(145deg, #94a3b8, #334155) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(0, 0, 0, 0.5), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.6), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.45) !important;
-}
-
-/* --- 5. READ QURAN (Premium Glowing Gold Plastic) --- */
-.quran-special-3d {
-    background: linear-gradient(145deg, #fde047, #b45309) !important;
-    box-shadow: 
-        0 0 25px rgba(245, 158, 11, 0.6), /* Golden Aura */
-        0 12px 24px -6px rgba(217, 119, 6, 0.8),
-        inset 2px 3px 7px rgba(255, 255, 255, 0.9), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-}
-
-/* --- 6. GLOBAL HUB (Vibrant Orange Plastic) --- */
-a.btn-normal-3d[href*="messenger.html"] {
-    background: linear-gradient(145deg, #fb923c, #c2410c) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(234, 88, 12, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.75), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
-}
-
-/* --- 7. THEME DROPDOWN (Deep Violet Plastic) --- */
-.dropdown-btn {
-    background: linear-gradient(145deg, #a78bfa, #5b21b6) !important;
-    box-shadow: 
-        0 12px 24px -6px rgba(109, 40, 217, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
-}
-
 
 /* --- HERO HEADER --- */
 .header-text {
