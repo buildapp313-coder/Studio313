@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-// VIP UPDATE: Real-time chat ke liye zaroori database tools import kiye hain
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, setDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
@@ -17,72 +16,96 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
-// Global VIP Variables (Current user ka data aur chat listener ko sambhalne ke liye)
 let currentUser = null;
-let currentChatUnsubscribe = null; 
+let currentChatUnsubscribe = null;
+let currentRoomID = null;
+let currentChatType = null;
+window.currentRequestDoc = null;
+window.currentRequestSender = null;
 
-const authScreen = document.getElementById('authScreen');
-const loginPanel = document.getElementById('loginPanel');
-const loadingPanel = document.getElementById('loadingPanel');
-const mainInterface = document.getElementById('mainInterface');
-
-onAuthStateChanged(auth, (user) => {
+// Auth & Real-time Online Tracking
+onAuthStateChanged(auth, async (user) => {
     if (user) {
-        currentUser = user; // User save kar liya
-        loginPanel.style.display = 'none';
-        loadingPanel.style.display = 'block';
+        currentUser = user;
+        document.getElementById('loginPanel').style.display = 'none';
+        document.getElementById('loadingPanel').style.display = 'block';
         
+        // 1. Mark User as Online in DB
+        await setDoc(doc(db, "online_users", user.uid), {
+            uid: user.uid, name: user.displayName, email: user.email, status: "Online"
+        });
+
         setTimeout(() => {
-            authScreen.style.display = 'none';
-            mainInterface.style.display = 'flex';
-            
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainInterface').style.display = 'flex';
             document.getElementById('myName').innerText = user.displayName;
             document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
         }, 1200);
+
+        // 2. Listen to who else is Online
+        onSnapshot(collection(db, "online_users"), (snapshot) => {
+            const list = document.getElementById('onlineUsersList');
+            list.innerHTML = '';
+            let count = 0;
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if(data.uid !== user.uid) { // Khud ko list mein nahi dikhana
+                    count++;
+                    list.innerHTML += `
+                        <li class="list-item" onclick="sendFriendRequest('${data.uid}', '${data.name}')">
+                            <div class="item-icon icon-online"></div>
+                            <div>
+                                <div class="item-name">${data.name}</div>
+                                <div class="item-sub">Online (Click to Chat)</div>
+                            </div>
+                        </li>
+                    `;
+                }
+            });
+            document.getElementById('onlineCountHeader').innerText = `▼ Online Users (${count})`;
+            if(count === 0) list.innerHTML = `<div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">No one is online right now.</div>`;
+        });
+
+        // 3. Listen for Incoming Chat Requests
+        onSnapshot(query(collection(db, "requests"), where("toUid", "==", user.uid), where("status", "==", "pending")), (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    const req = change.doc.data();
+                    window.currentRequestDoc = change.doc.id;
+                    window.currentRequestSender = { uid: req.fromUid, name: req.fromName };
+                    document.getElementById('reqMessage').innerText = `${req.fromName} wants to connect with you!`;
+                    document.getElementById('friendReqPopup').style.display = 'flex';
+                }
+            });
+        });
+
+        // 4. Listen for Accepted Requests (For the Sender)
+        onSnapshot(query(collection(db, "requests"), where("fromUid", "==", user.uid)), (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "modified") {
+                    const req = change.doc.data();
+                    if(req.status === 'accepted') {
+                        window.openChatWindow(req.toName, req.toUid, 'private');
+                    }
+                }
+            });
+        });
+
     } else {
+        if(currentUser) { deleteDoc(doc(db, "online_users", currentUser.uid)); }
         currentUser = null;
-        authScreen.style.display = 'flex';
-        mainInterface.style.display = 'none';
-        loginPanel.style.display = 'block';
-        loadingPanel.style.display = 'none';
+        document.getElementById('authScreen').style.display = 'flex';
+        document.getElementById('mainInterface').style.display = 'none';
         document.getElementById('privateChatWindow').style.display = 'none'; 
     }
 });
 
+// UI Basics
 document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
-
 const performSignOut = () => signOut(auth);
 document.getElementById('btnLogout').addEventListener('click', performSignOut);
 document.getElementById('dropSignOut').addEventListener('click', performSignOut);
 
-// UI Testing Mode Add Contact
-window.submitAddContact = async function() {
-    const val = document.getElementById('newContactInput').value.trim();
-    if(!val) return alert("Please enter an Email ID to search.");
-    try {
-        let displayName = val.split('@')[0]; 
-        let status = "Available";
-        const emptyMsg = document.querySelector('#onlineUsersList div');
-        if(emptyMsg) emptyMsg.remove();
-        
-        const list = document.getElementById('onlineUsersList');
-        list.innerHTML += `
-            <li class="list-item">
-                <div class="item-icon icon-online"></div>
-                <div>
-                    <div class="item-name">${displayName}</div>
-                    <div class="item-sub">${status}</div>
-                </div>
-            </li>
-        `;
-        alert("✅ Successfully added " + displayName + " to your contacts!");
-        window.closeAddPopup(); 
-    } catch (error) {
-        console.error("Error:", error);
-    }
-};
-
-// Accordions
 window.toggleList = function(listId, headerElement) {
     const list = document.getElementById(listId);
     const text = headerElement.innerText;
@@ -94,8 +117,6 @@ window.toggleList = function(listId, headerElement) {
         headerElement.innerText = text.replace('▼', '▶');
     }
 }
-
-// Dropdowns
 window.toggleDropdown = function(dropId, event) {
     event.stopPropagation();
     document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
@@ -104,120 +125,111 @@ window.toggleDropdown = function(dropId, event) {
 }
 window.addEventListener('click', () => { document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none'); });
 
-document.getElementById('menuActions').addEventListener('click', () => alert("User Actions menu will open here."));
-document.getElementById('menuHelp').addEventListener('click', () => alert("Help Center will open here."));
+// Friend Request System
+window.sendFriendRequest = async function(targetUid, targetName) {
+    try {
+        await addDoc(collection(db, "requests"), {
+            fromUid: currentUser.uid, fromName: currentUser.displayName,
+            toUid: targetUid, toName: targetName, status: 'pending', timestamp: serverTimestamp()
+        });
+        alert(`Chat request sent to ${targetName}! Waiting for them to accept.`);
+    } catch(e) { 
+        alert("Failed to send request. Is Firestore Rules set to allow write?"); 
+    }
+}
 
-// Add Contact Popups
-document.getElementById('btnAdd').addEventListener('click', () => window.openAddPopup());
-window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
-window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
+window.acceptRequest = async function() {
+    document.getElementById('friendReqPopup').style.display = 'none';
+    if(window.currentRequestDoc) {
+        await updateDoc(doc(db, "requests", window.currentRequestDoc), { status: 'accepted' });
+        window.openChatWindow(window.currentRequestSender.name, window.currentRequestSender.uid, 'private');
+    }
+}
 
-// VIP CHAT WINDOW LOGIC
-window.openChatWindow = function(userName, userStatus) {
-    document.getElementById('chatTargetName').innerText = userName;
-    document.getElementById('chatTargetStatus').innerText = "Status Message: " + (userStatus || "Available");
+window.rejectRequest = async function() {
+    document.getElementById('friendReqPopup').style.display = 'none';
+    if(window.currentRequestDoc) {
+        await updateDoc(doc(db, "requests", window.currentRequestDoc), { status: 'rejected' });
+    }
+}
+
+// Universal Chat System (Handles Both Hubs and Private)
+window.openChatWindow = function(targetName, targetId, chatType) {
+    document.getElementById('chatTargetName').innerText = targetName;
+    document.getElementById('chatTargetStatus').innerText = chatType === 'hub' ? "Global Public Room" : "Secure Private Connection";
     document.getElementById('privateChatWindow').style.display = 'flex';
     
-    // Naya VIP Function: Chat khulte hi database se puranay messages load karega
-    loadRealtimeMessages(userName);
+    currentRoomID = chatType === 'hub' ? `HUB_${targetId}` : [currentUser.uid, targetId].sort().join("_");
+    currentChatType = chatType;
+
+    const msgArea = document.getElementById('chatMessagesArea');
+    msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Fetching secure messages...</div>`;
+
+    if(currentChatUnsubscribe) currentChatUnsubscribe();
+
+    const q = query(collection(db, "messages"), where("roomID", "==", currentRoomID), orderBy("timestamp", "asc"));
+    
+    currentChatUnsubscribe = onSnapshot(q, (snapshot) => {
+        msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Connected to ${targetName}</div>`;
+        
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const isMe = data.senderUid === currentUser.uid;
+            const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
+            
+            // In Global Hubs, show the sender's name on top of the bubble
+            const nameTag = (!isMe && chatType === 'hub') ? `<div style="font-size:0.6rem; color:#fde047; margin-bottom:2px;">${data.senderName}</div>` : '';
+
+            msgArea.innerHTML += `
+                <div class="message-row ${isMe ? 'sent' : 'received'}">
+                    <div class="chat-bubble">${nameTag}${data.text}</div>
+                    <div class="chat-time">${timeStr}</div>
+                </div>
+            `;
+        });
+        msgArea.scrollTop = msgArea.scrollHeight;
+    });
 }
 
 window.closeChatWindow = function() { 
     document.getElementById('privateChatWindow').style.display = 'none'; 
-    // Agar chat band ki toh background listener bhi band kardo taake speed fast rahay
     if(currentChatUnsubscribe) currentChatUnsubscribe();
 }
 
-document.getElementById('mainListContainer').addEventListener('click', function(e) {
-    const item = e.target.closest('.list-item');
-    if(item) {
-        const name = item.querySelector('.item-name').innerText;
-        const status = item.querySelector('.item-sub').innerText;
-        window.openChatWindow(name, status);
-    }
-});
-
-// Chat Emoticons Logic
 window.toggleEmoticons = function() {
     const panel = document.getElementById('emoticonPanel');
     panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
 }
-
 window.addEmoji = function(emoji) {
     const input = document.getElementById('chatInputMsg');
     input.value += emoji;
     input.focus();
 }
 
-// --- ASLI FIREBASE DATABASE MESSAGING SYSTEM ---
-function loadRealtimeMessages(targetName) {
-    if(!currentUser) return;
-    const msgArea = document.getElementById('chatMessagesArea');
-    
-    // Dono users ke darmian ek private Room ID create ho rahi hai (e.g., Ali_Usman)
-    const roomID = [currentUser.displayName, targetName].sort().join("_");
-
-    // Purani dummy chat clear kar ke Loading dikhaye ga
-    msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Fetching secure messages...</div>`;
-
-    if(currentChatUnsubscribe) currentChatUnsubscribe(); 
-
-    // Firebase Query: Sirf is room ki chat dhoondo aur time ke hisab se line mein lagao
-    const q = query(collection(db, "private_chats"), where("roomID", "==", roomID), orderBy("timestamp", "asc"));
-    
-    currentChatUnsubscribe = onSnapshot(q, (snapshot) => {
-        msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Secure connection established with ${targetName}</div>`;
-        
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            const isMe = data.sender === currentUser.displayName;
-            const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
-            
-            // Agar aapne bheja toh Right par Blue bubble, agar usne bheja toh Left par Grey Bubble
-            const msgHtml = `
-                <div class="message-row ${isMe ? 'sent' : 'received'}">
-                    <div class="chat-bubble">${data.text}</div>
-                    <div class="chat-time">${timeStr}</div>
-                </div>
-            `;
-            msgArea.innerHTML += msgHtml;
-        });
-        // Scroll ko hamesha neeche rakho naye message par
-        msgArea.scrollTop = msgArea.scrollHeight;
-    });
-}
-
 // Asli Sending Message Logic
-window.sendPrivateMessage = async function() {
+window.sendVIPMessage = async function() {
     const input = document.getElementById('chatInputMsg');
     const msg = input.value.trim();
-    const targetName = document.getElementById('chatTargetName').innerText;
 
-    if(msg && currentUser && targetName) {
+    if(msg && currentUser && currentRoomID) {
         input.value = '';
         document.getElementById('emoticonPanel').style.display = 'none'; 
         
-        const roomID = [currentUser.displayName, targetName].sort().join("_");
-        
         try {
-            // Database mein add karo!
-            await addDoc(collection(db, "private_chats"), {
-                roomID: roomID,
-                sender: currentUser.displayName,
-                receiver: targetName,
+            await addDoc(collection(db, "messages"), {
+                roomID: currentRoomID,
+                senderUid: currentUser.uid,
+                senderName: currentUser.displayName,
                 text: msg,
-                timestamp: serverTimestamp() // Asli Google server ka time
+                timestamp: serverTimestamp() 
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Failed to send message. Firebase Indexing lag sakti hai agar ye pehli baar hai.");
+            alert("Database Error! Firestore rules ko Console mein 'allow read, write: if true;' karein.");
         }
     }
 };
 
 document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') { window.sendPrivateMessage(); }
+    if (e.key === 'Enter') { window.sendVIPMessage(); }
 });
-
-document.getElementById('btnChat').addEventListener('click', () => alert("Click on any user in the list to start chatting."));
-document.getElementById('btnRooms').addEventListener('click', () => alert("Global Room browser will open here."));
