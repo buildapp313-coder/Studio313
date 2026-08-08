@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Play Tester Service | Studio313</title>
+    <title>Premium App Services | Studio313</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .tester-container {
-            max-width: 900px;
+        .services-container {
+            max-width: 1100px; /* Widened for 3 cards */
             margin: 0 auto 80px;
-            padding: 50px 40px;
-            border-radius: 30px;
+            padding: 50px 20px;
             z-index: 10;
             position: relative;
             display: flex;
@@ -20,21 +19,7 @@
             text-align: center;
         }
 
-        .vip-badge {
-            background: linear-gradient(90deg, #f59e0b, #fbbf24);
-            color: #000;
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-        }
-
-        .tester-container h2 {
+        .services-container h2 {
             font-size: 2.8rem;
             margin-bottom: 15px;
             background: linear-gradient(to right, var(--text-color), var(--shape3));
@@ -43,110 +28,161 @@
             line-height: 1.2;
         }
 
-        .tester-container p.subtitle {
+        .services-container p.subtitle {
             color: var(--text-muted);
             font-size: 1.1rem;
             line-height: 1.7;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             max-width: 700px;
         }
 
-        /* VIP Features Box */
-        .features-grid {
+        /* 3-Tier Pricing Grid */
+        .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             width: 100%;
-            margin-bottom: 40px;
         }
 
-        .feature-card {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border);
-            padding: 25px;
-            border-radius: 20px;
-            text-align: left;
-            transition: transform 0.3s ease;
+        .pricing-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
+        .pricing-card:hover {
+            transform: translateY(-10px);
             border-color: var(--shape3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
         }
 
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
+        /* Highlighted/Featured Card */
+        .pricing-card.featured {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid var(--shape1);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
         }
 
-        .feature-title {
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
             font-weight: 600;
-            font-size: 1.1rem;
             color: var(--text-color);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .feature-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* Pricing & Fiverr CTA */
-        .pricing-box {
-            margin-bottom: 30px;
-        }
-
-        .price-amount {
-            font-size: 3.5rem;
+        .card-price {
+            font-size: 3rem;
             font-weight: 700;
             color: var(--shape1);
-            line-height: 1;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
         }
 
-        .price-label {
-            font-size: 0.95rem;
+        .price-prefix {
+            font-size: 1.2rem;
             color: var(--text-muted);
-            margin-top: 5px;
+            margin-right: 5px;
         }
 
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            min-height: 40px;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        /* Buttons */
         .btn-fiverr {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            background: #1dbf73; /* Fiverr Green */
+            gap: 8px;
+            background: #1dbf73;
             color: #fff;
             text-decoration: none;
-            padding: 16px 45px;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(29, 191, 115, 0.3);
-            border: none;
-            cursor: pointer;
+            width: 100%;
         }
 
         .btn-fiverr:hover {
             background: #19a463;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(29, 191, 115, 0.4);
+            box-shadow: 0 8px 20px rgba(29, 191, 115, 0.3);
             color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--shape1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .secure-note {
             margin-top: 15px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
 
-        @media (max-width: 768px) {
-            .tester-container h2 { font-size: 2rem; }
-            .features-grid { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .pricing-card.featured { transform: scale(1); }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
         }
     </style>
 </head>
@@ -214,7 +250,7 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="download.html">Apps</a></li>
-            <li><a href="app-tester.html">App-Tester</a></li>
+            <li><a href="app-tester.html">Services</a></li>
             <li><a href="policies.html">Policies</a></li>
             <li><a href="community.html">Global Hub</a></li>
             <li>
@@ -229,55 +265,74 @@
 
     <!-- Header Section -->
     <div class="header-text">
-        <h1>App Testing Services</h1>
-        <p>Professional Google Play closed testing solutions by developers, for developers.</p>
+        <h1>Premium App Services</h1>
+        <p>From fixing small bugs to launching full-scale mobile applications. Managed by proven developers.</p>
     </div>
 
-    <!-- VIP Tester Portal Content -->
-    <div class="tester-container glass">
-        <div class="vip-badge">Premium Developer Service</div>
+    <!-- Pricing Grid Container -->
+    <div class="services-container">
         
-        <h2>Publish Faster. Skip the 14-Day Hassle.</h2>
-        <p class="subtitle">As a developer who successfully navigated the strict Play Store review process, I know exactly what Google's algorithms look for. Stop begging for testers and let my dedicated team handle your closed testing track.</p>
+        <div class="pricing-grid">
+            
+            <!-- Package 1: Bug Fixing -->
+            <div class="pricing-card">
+                <div class="card-title">Bug Fixing & Support</div>
+                <div class="card-desc">Got a stubborn error? Let an expert troubleshoot your Flutter/Android code.</div>
+                <div class="card-price">
+                    <span class="price-prefix">Start</span>$15
+                </div>
+                
+                <ul class="feature-list">
+                    <li>🔧 <span>UI/UX Layout fixes</span></li>
+                    <li>🐛 <span>Crash & Error resolution</span></li>
+                    <li>🔗 <span>API/Firebase integration issues</span></li>
+                    <li>👨‍💻 <span>Clean & optimized code delivery</span></li>
+                </ul>
+                
+                <a href="#" class="btn-fiverr btn-secondary" target="_blank">Get a Custom Quote</a>
+                <div class="secure-note">Delivery based on complexity</div>
+            </div>
 
-        <!-- VIP Features Grid -->
-        <div class="features-grid">
-            <div class="feature-card glass">
-                <div class="feature-icon">👥</div>
-                <div class="feature-title">12 Real Testers</div>
-                <div class="feature-desc">Authentic Google accounts with genuine device history to satisfy Google's strict requirements.</div>
+            <!-- Package 2: Play Store Testing (FEATURED) -->
+            <div class="pricing-card featured">
+                <div class="featured-badge">High Demand</div>
+                <div class="card-title">Closed App Testing</div>
+                <div class="card-desc">Beat the Google Play 14-Day rule with real, active testers. Guaranteed retention.</div>
+                <div class="card-price">$10</div>
+                
+                <ul class="feature-list">
+                    <li>👥 <span>12 Real Google Accounts</span></li>
+                    <li>⏳ <span>14-Day Full Retention</span></li>
+                    <li>📱 <span>Organic app engagement</span></li>
+                    <li>✅ <span>Ready for Play Store review</span></li>
+                </ul>
+                
+                <a href="#" class="btn-fiverr" target="_blank">
+                    <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM12 17C9.2 17 7 14.8 7 12C7 9.2 9.2 7 12 7C14.8 7 17 9.2 17 12C17 14.8 14.8 17 12 17ZM12 9C10.3 9 9 10.3 9 12C9 13.7 10.3 15 12 15C13.7 15 15 13.7 15 12C15 10.3 13.7 9 12 9Z"/></svg>
+                    Order Testing on Fiverr
+                </a>
+                <div class="secure-note">🔒 Secure Escrow Payment</div>
             </div>
-            <div class="feature-card glass">
-                <div class="feature-icon">⏳</div>
-                <div class="feature-title">14-Day Retention</div>
-                <div class="feature-desc">Guaranteed full-duration opt-ins. Our team stays active for the entire mandated testing phase.</div>
-            </div>
-            <div class="feature-card glass">
-                <div class="feature-icon">📱</div>
-                <div class="feature-title">Organic Engagement</div>
-                <div class="feature-desc">Daily app opens and basic usage to ensure your testing phase is flagged as legitimate.</div>
-            </div>
-            <div class="feature-card glass">
-                <div class="feature-icon">🛡️</div>
-                <div class="feature-title">Developer Expert</div>
-                <div class="feature-desc">Managed by a published developer who understands the Play Console policies inside out.</div>
-            </div>
-        </div>
 
-        <!-- Pricing & Action -->
-        <div class="pricing-box">
-            <div class="price-amount">$10</div>
-            <div class="price-label">Complete 12-Tester Package (One-time payment)</div>
-        </div>
+            <!-- Package 3: Full App Development -->
+            <div class="pricing-card">
+                <div class="card-title">Full App Creation</div>
+                <div class="card-desc">Turn your idea into a reality. Complete app development from zero to launch.</div>
+                <div class="card-price">
+                    <span class="price-prefix">Start</span>$150
+                </div>
+                
+                <ul class="feature-list">
+                    <li>🚀 <span>Full Flutter App Development</span></li>
+                    <li>🎨 <span>Modern UI/Glassmorphism Design</span></li>
+                    <li>🔥 <span>Backend / Database (Firebase)</span></li>
+                    <li>🌍 <span>Play Store Publishing Help</span></li>
+                </ul>
+                
+                <a href="#" class="btn-fiverr btn-secondary" target="_blank">Discuss Your Project</a>
+                <div class="secure-note">Source code included</div>
+            </div>
 
-        <!-- FIVERR LINK GOES HERE -->
-        <a href="#" class="btn-fiverr" target="_blank">
-            <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24"><path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM12 17C9.2 17 7 14.8 7 12C7 9.2 9.2 7 12 7C14.8 7 17 9.2 17 12C17 14.8 14.8 17 12 17ZM12 9C10.3 9 9 10.3 9 12C9 13.7 10.3 15 12 15C13.7 15 15 13.7 15 12C15 10.3 13.7 9 12 9Z"/></svg>
-            Order Securely on Fiverr
-        </a>
-        
-        <div class="secure-note">
-            🔒 100% Secured Escrow Payment via Fiverr.com
         </div>
     </div>
 
