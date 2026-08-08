@@ -197,3 +197,11 @@ window.openAddPopup = function() { document.getElementById('addContactPopup').st
 window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
 
 window.submitAddContact = function() { alert("Use the Online List to click and chat with actual users!"); window.closeAddPopup(); }
+
+// TAB YA BROWSER CLOSE HONE PAR USER KO OFFLINE KARNE KA CODE
+window.addEventListener('beforeunload', function (e) {
+    if (currentUser) {
+        // Browser band hote hi user ka data online list se urr jayega
+        deleteDoc(doc(db, "online_users", currentUser.uid));
+    }
+});
