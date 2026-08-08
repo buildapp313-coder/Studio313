@@ -190,6 +190,13 @@ window.sendVIPMessage = async function() {
 document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') { window.sendVIPMessage(); }
 });
+// TAB YA BROWSER CLOSE HONE PAR USER KO OFFLINE KARNE KA CODE
+window.addEventListener('beforeunload', function (e) {
+    if (currentUser) {
+        // Browser band hote hi user ka data online list se urr jayega
+        deleteDoc(doc(db, "online_users", currentUser.uid));
+    }
+});
 
 // Remove old global event listener that was blocking clicks!
 document.getElementById('btnAdd').addEventListener('click', () => window.openAddPopup());
@@ -198,10 +205,4 @@ window.closeAddPopup = function() { document.getElementById('addContactPopup').s
 
 window.submitAddContact = function() { alert("Use the Online List to click and chat with actual users!"); window.closeAddPopup(); }
 
-// TAB YA BROWSER CLOSE HONE PAR USER KO OFFLINE KARNE KA CODE
-window.addEventListener('beforeunload', function (e) {
-    if (currentUser) {
-        // Browser band hote hi user ka data online list se urr jayega
-        deleteDoc(doc(db, "online_users", currentUser.uid));
-    }
-});
+
