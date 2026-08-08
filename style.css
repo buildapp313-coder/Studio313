@@ -128,57 +128,60 @@ body {
     gap: 12px !important;
 }
 
-/* Base Structure (Golai, Text aur Movement sab ke liye ek jaisi) */
-.nav-links > li > a, 
+/* Base Structure: Aapki class "btn-normal-3d" aur "quran-special-3d" ko target kiya gaya hai */
+.btn-normal-3d, 
+.quran-special-3d,
 .dropdown-btn {
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    padding: 10px 22px;
+    padding: 10px 22px !important;
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
+    font-weight: 600 !important;
     font-size: 0.95rem;
     letter-spacing: 0.3px;
-    border-radius: 50px;
+    border-radius: 50px !important;
     text-decoration: none;
     border: none;
     cursor: pointer;
     position: relative;
     top: 0;
-    color: #ffffff !important;
+    color: #ffffff !important; /* Inline color ko override karne ke liye */
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
 /* Hover Effect: Upar uthna aur chamakna */
-.nav-links > li > a:hover, 
+.btn-normal-3d:hover, 
+.quran-special-3d:hover,
 .dropdown-btn:hover {
     transform: translateY(-3px);
     filter: brightness(1.1); 
 }
 
 /* Click Effect: Real Plastic Press Effect */
-.nav-links > li > a:active, 
+.btn-normal-3d:active, 
+.quran-special-3d:active,
 .dropdown-btn:active {
     transform: translateY(2px);
     filter: brightness(0.95);
     box-shadow: 
         0 2px 4px rgba(0,0,0,0.3), 
-        inset 3px 4px 6px rgba(0,0,0,0.5), /* Andar dabne ki deep shadow */
+        inset 3px 4px 6px rgba(0,0,0,0.5), 
         inset -2px -2px 4px rgba(255,255,255,0.15) !important;
 }
 
 /* --- 1. HOME BUTTON (Royal Blue Plastic) --- */
-.nav-links > li > a[href="index.html"] {
+a.btn-normal-3d[href="index.html"] {
     background: linear-gradient(145deg, #4aa0ff, #1d4ed8) !important;
     box-shadow: 
         0 12px 24px -6px rgba(37, 99, 235, 0.7), 
-        inset 2px 3px 6px rgba(255, 255, 255, 0.7), /* Top Specular Shine */
-        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important; /* Bottom Depth */
+        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important; 
 }
 
 /* --- 2. APPS BUTTON (Magenta Plastic) --- */
-.nav-links > li > a[href="download.html"] {
+a.btn-normal-3d[href="download.html"] {
     background: linear-gradient(145deg, #f472b6, #be185d) !important;
     box-shadow: 
         0 12px 24px -6px rgba(190, 24, 93, 0.7), 
@@ -187,7 +190,7 @@ body {
 }
 
 /* --- 3. APP-TESTER BUTTON (Emerald Plastic) --- */
-.nav-links > li > a[href="app-tester.html"] {
+a.btn-normal-3d[href="app-tester.html"] {
     background: linear-gradient(145deg, #34d399, #047857) !important;
     box-shadow: 
         0 12px 24px -6px rgba(5, 150, 105, 0.7), 
@@ -196,7 +199,7 @@ body {
 }
 
 /* --- 4. POLICIES BUTTON (Slate Grey Plastic) --- */
-.nav-links > li > a[href="policies.html"] {
+a.btn-normal-3d[href="policies.html"] {
     background: linear-gradient(145deg, #94a3b8, #334155) !important;
     box-shadow: 
         0 12px 24px -6px rgba(0, 0, 0, 0.5), 
@@ -205,22 +208,19 @@ body {
 }
 
 /* --- 5. READ QURAN (Premium Glowing Gold Plastic) --- */
-.nav-links > li > a.quran-3d-btn, 
-.nav-links > li > a.quran-special-3d {
+.quran-special-3d {
     background: linear-gradient(145deg, #fde047, #b45309) !important;
-    font-weight: 700;
     box-shadow: 
         0 0 25px rgba(245, 158, 11, 0.6), /* Golden Aura */
         0 12px 24px -6px rgba(217, 119, 6, 0.8),
-        inset 2px 3px 7px rgba(255, 255, 255, 0.9), /* Extreme top shine */
+        inset 2px 3px 7px rgba(255, 255, 255, 0.9), 
         inset -3px -4px 6px rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
 
 /* --- 6. GLOBAL HUB (Vibrant Orange Plastic) --- */
-.nav-links > li > a[href*="messenger.html"] {
+a.btn-normal-3d[href*="messenger.html"] {
     background: linear-gradient(145deg, #fb923c, #c2410c) !important;
-    font-weight: 700;
     box-shadow: 
         0 12px 24px -6px rgba(234, 88, 12, 0.7), 
         inset 2px 3px 6px rgba(255, 255, 255, 0.75), 
