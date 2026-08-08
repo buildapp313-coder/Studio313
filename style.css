@@ -122,14 +122,13 @@ body {
 
 
 /* =========================================
-   EXACT 3D CLAYMORPHISM (Reference 225554 Match)
+   COLORFUL 3D CLAYMORPHISM (Har Button VIP)
    ========================================= */
-
 .nav-links {
     gap: 12px !important;
 }
 
-/* 1. Normal Menu Buttons (3D Sleek Clay Pills) */
+/* Base Structure (Golai, Text aur Movement sab ke liye ek jaisi) */
 .nav-links > li > a, 
 .dropdown-btn {
     display: inline-flex;
@@ -146,76 +145,77 @@ body {
     cursor: pointer;
     position: relative;
     top: 0;
-    
-    /* 3D Soft Light Gradient (Top-Left Light to Bottom-Dark) */
-    background: linear-gradient(145deg, #384050, #252a36) !important;
-    color: #f1f5f9 !important;
-
-    /* Multi-Layered Soft Lighting & Specular Highlights */
-    box-shadow: 
-        /* External Soft Ambient Shadow */
-        0 12px 20px -4px rgba(0, 0, 0, 0.55),
-        0 4px 6px -2px rgba(0, 0, 0, 0.3),
-        /* Top-Left Soft White Highlight (Specular Reflection) */
-        inset 2px 2px 3px rgba(255, 255, 255, 0.35),
-        /* Bottom-Right Internal Shadow (3D Depth) */
-        inset -3px -3px 6px rgba(0, 0, 0, 0.45) !important;
-
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Text ko wazeh (clear) karne ke liye */
     transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Hover & Active Press Effect */
+/* Hover Effect: Jab mouse upar aaye toh button chamak uthega */
 .nav-links > li > a:hover, 
 .dropdown-btn:hover {
     transform: translateY(-2px);
-    background: linear-gradient(145deg, #424b5e, #2b313f) !important;
-    box-shadow: 
-        0 16px 25px -4px rgba(0, 0, 0, 0.65),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -3px -3px 6px rgba(0, 0, 0, 0.45) !important;
-    color: #ffffff !important;
+    filter: brightness(1.15); /* Color ko automatically aur bright kar dega */
 }
 
-.nav-links > li > a:active,
+/* Click Effect: Button dabne ka asli feel */
+.nav-links > li > a:active, 
 .dropdown-btn:active {
     transform: translateY(2px);
+    filter: brightness(0.9);
     box-shadow: 
-        0 4px 10px -2px rgba(0, 0, 0, 0.5),
-        inset 2px 2px 4px rgba(0, 0, 0, 0.5),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.1) !important;
+        0 4px 6px rgba(0,0,0,0.4), 
+        inset 2px 2px 5px rgba(0,0,0,0.5), 
+        inset -2px -2px 4px rgba(255,255,255,0.1) !important;
 }
 
-/* 2. SPECIAL QURAN BUTTON ("Loating" Cyan Glow Exact Match) */
-.nav-links > li > a.quran-3d-btn,
+/* --- 1. HOME BUTTON (Royal Blue) --- */
+.nav-links > li > a[href="index.html"] {
+    background: linear-gradient(145deg, #3b82f6, #2563eb) !important;
+    box-shadow: 0 10px 20px -4px rgba(37, 99, 235, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- 2. APPS BUTTON (Magenta/Pink) --- */
+.nav-links > li > a[href="download.html"] {
+    background: linear-gradient(145deg, #ec4899, #be185d) !important;
+    box-shadow: 0 10px 20px -4px rgba(190, 24, 93, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- 3. APP-TESTER BUTTON (Emerald Green) --- */
+.nav-links > li > a[href="app-tester.html"] {
+    background: linear-gradient(145deg, #10b981, #059669) !important;
+    box-shadow: 0 10px 20px -4px rgba(5, 150, 105, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- 4. POLICIES BUTTON (Slate Grey - Professional) --- */
+.nav-links > li > a[href="policies.html"] {
+    background: linear-gradient(145deg, #64748b, #475569) !important;
+    box-shadow: 0 10px 20px -4px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -3px -3px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* --- 5. READ QURAN (Premium Glowing Gold) --- */
+.nav-links > li > a.quran-3d-btn, 
 .nav-links > li > a.quran-special-3d {
-    /* Vibrant Cyan/Teal Gradient */
-    background: linear-gradient(145deg, #2dd4bf, #0f766e) !important;
-    color: #ffffff !important;
+    background: linear-gradient(145deg, #fbbf24, #d97706) !important;
     font-weight: 700;
-    
-    /* Glowing Aura + Soft 3D Lighting */
     box-shadow: 
-        /* External Cyan Glow */
-        0 0 25px rgba(45, 212, 191, 0.6),
-        /* External Soft Shadow */
-        0 12px 20px -4px rgba(15, 118, 110, 0.6),
-        /* Top Specular White Highlight */
-        inset 2px 2px 4px rgba(255, 255, 255, 0.65),
-        /* Bottom Depth Shadow */
-        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
-        
-    border: 1px solid rgba(255, 255, 255, 0.35);
-}
-
-.nav-links > li > a.quran-3d-btn:hover,
-.nav-links > li > a.quran-special-3d:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, #34d399, #115e59) !important;
-    box-shadow: 
-        0 0 35px rgba(45, 212, 191, 0.85),
-        0 16px 25px -4px rgba(15, 118, 110, 0.75),
+        0 0 25px rgba(245, 158, 11, 0.5), /* Golden Aura Glow */
+        0 10px 20px -4px rgba(217, 119, 6, 0.7),
         inset 2px 2px 5px rgba(255, 255, 255, 0.8),
         inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* --- 6. GLOBAL HUB (Vibrant Orange) --- */
+.nav-links > li > a[href*="messenger.html"] {
+    background: linear-gradient(145deg, #f97316, #ea580c) !important;
+    font-weight: 700;
+    box-shadow: 0 10px 20px -4px rgba(234, 88, 12, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- 7. THEME DROPDOWN (Deep Violet/Purple) --- */
+.dropdown-btn {
+    background: linear-gradient(145deg, #8b5cf6, #6d28d9) !important;
+    box-shadow: 0 10px 20px -4px rgba(109, 40, 217, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* 3. Global Hub (Vibrant Orange "Focus" Button from Reference) */
