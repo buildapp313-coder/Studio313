@@ -42,6 +42,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* --- FIX 1: Extra Space Fix (Push Footer to Bottom) --- */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -53,6 +54,10 @@ body {
     flex-direction: column;
 }
 
+.contact-wrapper, .tester-container, .download-grid, .showcase {
+    flex: 1 0 auto; /* Pushes the footer down */
+}
+
 /* --- LIQUID GLOWING BACKGROUND SHAPES (Dynamic via JS) --- */
 .liquid-shape {
     position: absolute;
@@ -60,7 +65,7 @@ body {
     z-index: -1;
     border-radius: 50%;
     animation: moveLiquid 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    transition: opacity 2s ease, transform 2s ease; /* Smooth sun/moon shifts */
+    transition: opacity 2s ease, transform 2s ease;
 }
 
 .shape-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--shape1); }
@@ -85,27 +90,10 @@ body {
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
 }
 
-/* --- FIX FOR BUTTONS AND DROPDOWNS (White background removed) --- */
-.glass-btn {
-    background: rgba(255, 255, 255, 0.08); /* Transparent glass */
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    color: var(--text-color);
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.glass-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
 .theme-selector {
     padding: 8px 12px;
     outline: none;
-    color-scheme: dark; /* Forces OS to render dark dropdowns */
+    color-scheme: dark; 
 }
 
 /* --- NAVIGATION BAR --- */
@@ -127,22 +115,81 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.nav-links li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
+
+/* =========================================
+   3D PREMIUM BUTTONS (Inspired by 225554)
+   ========================================= */
+
+/* 1. Normal Menu Links & Theme Dropdown Button */
+.nav-links > li > a, 
+.dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 0.95rem;
-    padding: 8px 14px;
-    border-radius: 10px;
-    transition: all 0.3s;
+    color: #e2e8f0 !important; /* Forces readable white text on grey button */
+    
+    background: #475569; /* Sleek Grey 3D Base */
+    border-radius: 50px;
+    text-decoration: none;
+    position: relative;
+    top: 0;
+    border: none;
+    cursor: pointer;
+    
+    /* Grey 3D Structure */
+    box-shadow: 
+        0 5px 0 #1e293b, 
+        inset 0 4px 4px rgba(255, 255, 255, 0.15), 
+        inset 0 -4px 4px rgba(0, 0, 0, 0.2);
+        
+    transition: all 0.1s ease-in-out;
 }
 
-.nav-links li a:hover { background: var(--glass-border); }
+.nav-links > li > a:hover, 
+.dropdown-btn:hover {
+    top: 3px; 
+    background: #475569;
+    box-shadow: 
+        0 2px 0 #1e293b, 
+        inset 0 4px 4px rgba(255, 255, 255, 0.15), 
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff !important;
+}
+
+/* 2. Special Glowing Quran Button (Override) */
+.nav-links > li > a.quran-3d-btn {
+    background: #2dd4bf; /* Vibrant Cyan/Teal */
+    color: #ffffff !important;
+    font-size: 1.05rem;
+    padding: 10px 24px;
+    
+    /* Cyan Glow 3D Structure */
+    box-shadow: 
+        0 10px 20px -5px rgba(45, 212, 191, 0.5), 
+        0 5px 0 #0f766e, 
+        inset 0 4px 4px rgba(255, 255, 255, 0.4), 
+        inset 0 -4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.nav-links > li > a.quran-3d-btn:hover {
+    top: 3px;
+    background: #2dd4bf;
+    box-shadow: 
+        0 5px 15px -5px rgba(45, 212, 191, 0.4),
+        0 2px 0 #0f766e,
+        inset 0 4px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+}
+
 
 /* --- HERO HEADER --- */
 .header-text {
@@ -162,7 +209,7 @@ body {
     flex-wrap: wrap;
     padding: 20px;
     max-width: 1300px;
-    margin: 0 auto 80px;
+    margin: 20px auto 40px; /* Merged margins & syntax fix */
     z-index: 10;
     position: relative;
     flex: 1;
@@ -233,36 +280,10 @@ body {
     display: block;
 }
 
-/* --- FOOTER --- */
-footer {
-    width: 100%;
-    text-align: center;
-    padding: 30px 20px;
-    border-top: 1px solid var(--glass-border);
-    z-index: 10;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    background: var(--glass-bg);
-}
-
-.policy-links a {
-    color: var(--shape3);
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 600;
-}
-.policy-links a:hover { text-decoration: underline; }
 /* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
 .custom-dropdown {
     position: relative;
     display: inline-block;
-}
-
-.dropdown-btn {
-    padding: 8px 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .dropdown-content {
@@ -312,11 +333,11 @@ footer {
 
 @media screen and (max-width: 850px) {
     .mobile-menu-btn {
-        display: block; /* Show hamburger on mobile */
+        display: block; 
     }
     
     .nav-links {
-        display: none; /* Hide menu by default on mobile */
+        display: none; 
         flex-direction: column;
         position: absolute;
         top: 80px;
@@ -330,7 +351,7 @@ footer {
     }
     
     .nav-links.active {
-        display: flex; /* Show menu when toggled */
+        display: flex; 
     }
     
     .nav-links li {
@@ -338,15 +359,16 @@ footer {
         text-align: center;
     }
     
-    .nav-links li a {
-        display: block;
-        padding: 12px 0;
+    /* Fix Mobile Width for 3D Buttons */
+    .nav-links > li > a, .dropdown-btn {
+        width: 100%;
+        margin-bottom: 10px;
     }
     
     .custom-dropdown {
         width: 100%;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 5px;
     }
     
     .dropdown-content {
@@ -356,29 +378,11 @@ footer {
     }
 }
 
-/* Spacing Adjustments */
-.showcase {
-    /* --- FIX 1: Extra Space Fix (Push Footer to Bottom) --- */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.contact-wrapper, .tester-container, .download-grid {
-    flex: 1 0 auto; /* Pushes the footer down */
-}
-
-footer {
-    flex-shrink: 0;
-}
-
 /* --- FIX 2: Custom VIP Dropdown Arrow for Contact Form --- */
 .form-group select.form-control {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    /* Custom White SVG Arrow */
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 15px center;
@@ -386,7 +390,6 @@ footer {
     cursor: pointer;
 }
 
-/* Fix option highlight colors inside the form */
 .form-group select.form-control option {
     background-color: #1a1a24;
     color: #ffffff;
@@ -396,53 +399,24 @@ footer {
 .form-group select.form-control:focus {
     background-color: rgba(255, 255, 255, 0.08);
 }
-    margin-top: 20px; /* Push phones down */
-    margin-bottom: 40px; /* Reduce bottom space */
-}
-/* =========================================
-   3D PREMIUM CLAY BUTTON (Inspired by 225554)
-   ========================================= */
-.quran-3d-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 24px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: #ffffff;
-    
-    /* Base Color: Screenshot ke "Loating" button jaisa Teal/Cyan */
-    background: #2dd4bf; 
-    border-radius: 50px;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-    
-    /* Yahan asli 3D Magic ho raha hai */
-    box-shadow: 
-        /* 1. Outer Glow (Bahar nikalta hua cyan noor) */
-        0 15px 35px -5px rgba(45, 212, 191, 0.6),
-        /* 2. 3D Motai (Thickness - Darker Bottom Edge) */
-        0 6px 0 #115e59,
-        /* 3. Inner Top Highlight (Shine ke liye) */
-        inset 0 4px 5px rgba(255, 255, 255, 0.5),
-        /* 4. Inner Bottom Shadow (Golai/Roundness ke liye) */
-        inset 0 -4px 5px rgba(0, 0, 0, 0.15);
-        
-    transition: all 0.1s ease-in-out;
-    position: relative;
-    top: 0;
+
+/* --- FOOTER --- */
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--glass-border);
+    z-index: 10;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    background: var(--glass-bg);
 }
 
-/* Jab mouse upar aaye ya button click ho (Physical Press Effect) */
-.quran-3d-btn:hover, .quran-3d-btn:active {
-    /* Button 4 pixel neechay dabay ga */
-    top: 4px; 
-    
-    /* Motai (Thickness) 6px se 2px ho jayegi jise lagega button press hua hai */
-    box-shadow: 
-        0 8px 15px -5px rgba(45, 212, 191, 0.4),
-        0 2px 0 #115e59,
-        inset 0 4px 5px rgba(255, 255, 255, 0.5),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+.policy-links a {
+    color: var(--shape3);
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
 }
+.policy-links a:hover { text-decoration: underline; }
