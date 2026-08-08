@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, setDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, setDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
@@ -127,7 +127,8 @@ window.sendFriendRequest = async function(targetUid, targetName) {
     try {
         await addDoc(collection(db, "requests"), {
             fromUid: currentUser.uid, fromName: currentUser.displayName,
-            toUid: targetUid, toName: targetName, status: 'pending', timestamp: serverTimestamp()
+            toUid: targetUid, toName: targetName, status: 'pending', 
+            timestamp: new Date() // FAST LOCAL TIME
         });
         alert(`Chat request sent to ${targetName}! Waiting for them to accept.`);
     } catch(e) { 
@@ -150,7 +151,7 @@ window.rejectRequest = async function() {
     }
 }
 
-// Universal Chat System (Handles Both Hubs and Private)
+// Universal Chat System
 window.openChatWindow = function(targetName, targetId, chatType) {
     document.getElementById('chatTargetName').innerText = targetName;
     document.getElementById('chatTargetStatus').innerText = chatType === 'hub' ? "Global Public Room" : "Secure Private Connection";
@@ -172,7 +173,14 @@ window.openChatWindow = function(targetName, targetId, chatType) {
         snapshot.forEach((doc) => {
             const data = doc.data();
             const isMe = data.senderUid === currentUser.uid;
-            const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
+            
+            // Format time safely
+            let timeStr = 'Just now';
+            if (data.timestamp) {
+                // Check if it's a Firestore Timestamp object or already a Date
+                const dateObj = data.timestamp.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
+                timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
             
             const nameTag = (!isMe && chatType === 'hub') ? `<div style="font-size:0.6rem; color:#fde047; margin-bottom:2px;">${data.senderName}</div>` : '';
 
@@ -202,6 +210,7 @@ window.addEmoji = function(emoji) {
     input.focus();
 }
 
+// SUPER FAST Sending Message Logic
 window.sendVIPMessage = async function() {
     const input = document.getElementById('chatInputMsg');
     const msg = input.value.trim();
@@ -216,11 +225,11 @@ window.sendVIPMessage = async function() {
                 senderUid: currentUser.uid,
                 senderName: currentUser.displayName,
                 text: msg,
-                timestamp: serverTimestamp() 
+                timestamp: new Date() // FAST LOCAL TIME (0 Second Delay)
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Database Error! Firestore rules ko Console mein 'allow read, write: if true;' karein.");
+            alert("Database Error! Firestore rules ko Console mein check karein.");
         }
     }
 };
