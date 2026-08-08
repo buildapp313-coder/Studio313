@@ -159,7 +159,7 @@ window.addEmoji = function(emoji) {
     input.focus();
 }
 
-// SUPER FAST Sending Message Logic
+// SUPER FAST Sending Message Logic with 24-Hour Auto-Delete
 window.sendVIPMessage = async function() {
     const input = document.getElementById('chatInputMsg');
     const msg = input.value.trim();
@@ -168,16 +168,21 @@ window.sendVIPMessage = async function() {
         input.value = '';
         document.getElementById('emoticonPanel').style.display = 'none'; 
         
+        // Expiry time set ho raha hai (Current Time + 24 Hours)
+        let expireTime = new Date();
+        expireTime.setHours(expireTime.getHours() + 24);
+
         try {
             await addDoc(collection(db, "chat_rooms", currentRoomID, "messages"), {
                 senderUid: currentUser.uid,
                 senderName: currentUser.displayName,
                 text: msg,
-                timestamp: new Date() 
+                timestamp: new Date(), 
+                expireAt: expireTime // Firebase isko dekh kar khud delete karega!
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Database Error! Please check your internet or Firebase Rules.");
+            alert("Database Error! Firestore rules check karein.");
         }
     }
 };
