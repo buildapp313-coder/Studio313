@@ -400,30 +400,49 @@ footer {
     margin-bottom: 40px; /* Reduce bottom space */
 }
 /* =========================================
-   PREMIUM GOLDEN QURAN BUTTON
+   3D PREMIUM CLAY BUTTON (Inspired by 225554)
    ========================================= */
-.quran-vip-btn {
+.quran-3d-btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 22px;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 30px;
-    background: transparent;
-    color: var(--text-color); 
-    border: 2px solid #d4af37; 
-    box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    gap: 8px;
+    padding: 10px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #ffffff;
+    
+    /* Base Color: Screenshot ke "Loating" button jaisa Teal/Cyan */
+    background: #2dd4bf; 
+    border-radius: 50px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    
+    /* Yahan asli 3D Magic ho raha hai */
+    box-shadow: 
+        /* 1. Outer Glow (Bahar nikalta hua cyan noor) */
+        0 15px 35px -5px rgba(45, 212, 191, 0.6),
+        /* 2. 3D Motai (Thickness - Darker Bottom Edge) */
+        0 6px 0 #115e59,
+        /* 3. Inner Top Highlight (Shine ke liye) */
+        inset 0 4px 5px rgba(255, 255, 255, 0.5),
+        /* 4. Inner Bottom Shadow (Golai/Roundness ke liye) */
+        inset 0 -4px 5px rgba(0, 0, 0, 0.15);
+        
+    transition: all 0.1s ease-in-out;
+    position: relative;
+    top: 0;
 }
 
-.quran-vip-btn:hover {
-    background: linear-gradient(90deg, #d4af37, #ffdf00); 
-    color: #000; 
-    border-color: transparent;
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
-    transform: translateY(-3px); 
+/* Jab mouse upar aaye ya button click ho (Physical Press Effect) */
+.quran-3d-btn:hover, .quran-3d-btn:active {
+    /* Button 4 pixel neechay dabay ga */
+    top: 4px; 
+    
+    /* Motai (Thickness) 6px se 2px ho jayegi jise lagega button press hua hai */
+    box-shadow: 
+        0 8px 15px -5px rgba(45, 212, 191, 0.4),
+        0 2px 0 #115e59,
+        inset 0 4px 5px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
 }
