@@ -30,10 +30,11 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('loginPanel').style.display = 'none';
         document.getElementById('loadingPanel').style.display = 'block';
         
-        // 1. Mark User as Online in DB
-        await setDoc(doc(db, "online_users", user.uid), {
-            uid: user.uid, name: user.displayName, email: user.email, status: "Online"
-        });
+        try {
+            await setDoc(doc(db, "online_users", user.uid), {
+                uid: user.uid, name: user.displayName, email: user.email, status: "Online"
+            });
+        } catch(e) { console.error("Firestore Rules check karo!"); }
 
         setTimeout(() => {
             document.getElementById('authScreen').style.display = 'none';
@@ -42,17 +43,16 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
         }, 1200);
 
-        // 2. Listen to who else is Online
         onSnapshot(collection(db, "online_users"), (snapshot) => {
             const list = document.getElementById('onlineUsersList');
             list.innerHTML = '';
             let count = 0;
             snapshot.forEach(doc => {
                 const data = doc.data();
-                if(data.uid !== user.uid) { // Khud ko list mein nahi dikhana
+                if(data.uid !== user.uid) { 
                     count++;
                     list.innerHTML += `
-                        <li class="list-item" onclick="sendFriendRequest('${data.uid}', '${data.name}')">
+                        <li class="list-item" onclick="window.sendFriendRequest('${data.uid}', '${data.name}')">
                             <div class="item-icon icon-online"></div>
                             <div>
                                 <div class="item-name">${data.name}</div>
@@ -66,7 +66,6 @@ onAuthStateChanged(auth, async (user) => {
             if(count === 0) list.innerHTML = `<div style="padding: 15px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem;">No one is online right now.</div>`;
         });
 
-        // 3. Listen for Incoming Chat Requests
         onSnapshot(query(collection(db, "requests"), where("toUid", "==", user.uid), where("status", "==", "pending")), (snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
@@ -79,7 +78,6 @@ onAuthStateChanged(auth, async (user) => {
             });
         });
 
-        // 4. Listen for Accepted Requests (For the Sender)
         onSnapshot(query(collection(db, "requests"), where("fromUid", "==", user.uid)), (snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "modified") {
@@ -100,7 +98,6 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// UI Basics
 document.getElementById('btnGoogleLogin').addEventListener('click', () => signInWithPopup(auth, provider));
 const performSignOut = () => signOut(auth);
 document.getElementById('btnLogout').addEventListener('click', performSignOut);
@@ -134,7 +131,7 @@ window.sendFriendRequest = async function(targetUid, targetName) {
         });
         alert(`Chat request sent to ${targetName}! Waiting for them to accept.`);
     } catch(e) { 
-        alert("Failed to send request. Is Firestore Rules set to allow write?"); 
+        alert("Failed to send request. Check Firestore Rules!"); 
     }
 }
 
@@ -177,7 +174,6 @@ window.openChatWindow = function(targetName, targetId, chatType) {
             const isMe = data.senderUid === currentUser.uid;
             const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
             
-            // In Global Hubs, show the sender's name on top of the bubble
             const nameTag = (!isMe && chatType === 'hub') ? `<div style="font-size:0.6rem; color:#fde047; margin-bottom:2px;">${data.senderName}</div>` : '';
 
             msgArea.innerHTML += `
@@ -206,7 +202,6 @@ window.addEmoji = function(emoji) {
     input.focus();
 }
 
-// Asli Sending Message Logic
 window.sendVIPMessage = async function() {
     const input = document.getElementById('chatInputMsg');
     const msg = input.value.trim();
@@ -233,3 +228,11 @@ window.sendVIPMessage = async function() {
 document.getElementById('chatInputMsg').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') { window.sendVIPMessage(); }
 });
+
+document.getElementById('btnAdd').addEventListener('click', () => window.openAddPopup());
+window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
+window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
+
+window.submitAddContact = function() { alert("Use the Online List to add actual users!"); window.closeAddPopup(); }
+document.getElementById('btnChat').addEventListener('click', () => alert("Click on any user in the Online List to start chatting."));
+document.getElementById('btnRooms').addEventListener('click', () => alert("Use the Regional Hubs section above to join Rooms."));
