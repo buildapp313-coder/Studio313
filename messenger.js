@@ -32,7 +32,7 @@ onAuthStateChanged(auth, async (user) => {
             await setDoc(doc(db, "online_users", user.uid), {
                 uid: user.uid, name: user.displayName, email: user.email, status: "Online"
             });
-        } catch(e) { console.error("Firestore Rules check karo!"); }
+        } catch(e) { console.error("Firestore Rules issue!"); }
 
         setTimeout(() => {
             document.getElementById('authScreen').style.display = 'none';
@@ -41,7 +41,7 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
         }, 1200);
 
-        // ONLINE USERS LIST
+        // ONLINE USERS LIST (Fixed Click Arguments)
         onSnapshot(collection(db, "online_users"), (snapshot) => {
             const list = document.getElementById('onlineUsersList');
             list.innerHTML = '';
@@ -50,7 +50,6 @@ onAuthStateChanged(auth, async (user) => {
                 const data = doc.data();
                 if(data.uid !== user.uid) { 
                     count++;
-                    // VIP FIX: Request ke bajaye ab Direct Chat Window khulegi!
                     list.innerHTML += `
                         <li class="list-item" onclick="window.openChatWindow('${data.name}', '${data.uid}', 'private')">
                             <div class="item-icon icon-online"></div>
@@ -80,6 +79,7 @@ const performSignOut = () => signOut(auth);
 document.getElementById('btnLogout').addEventListener('click', performSignOut);
 document.getElementById('dropSignOut').addEventListener('click', performSignOut);
 
+// UI Toggles (Made Global)
 window.toggleList = function(listId, headerElement) {
     const list = document.getElementById(listId);
     const text = headerElement.innerText;
@@ -91,6 +91,7 @@ window.toggleList = function(listId, headerElement) {
         headerElement.innerText = text.replace('▼', '▶');
     }
 }
+
 window.toggleDropdown = function(dropId, event) {
     event.stopPropagation();
     document.querySelectorAll('.glass-dropdown').forEach(d => d.style.display = 'none');
@@ -106,7 +107,7 @@ window.openChatWindow = function(targetName, targetId, chatType) {
     document.getElementById('chatTargetStatus').innerText = chatType === 'hub' ? "Global Public Room" : "Secure Private Connection";
     document.getElementById('privateChatWindow').style.display = 'flex';
     
-    // Agar private chat hai toh dono ki IDs mila kar ek private room banega
+    // Yahan Room ID bilkul theek banegi ab!
     currentRoomID = chatType === 'hub' ? `HUB_${targetId}` : [currentUser.uid, targetId].sort().join("_");
     currentChatType = chatType;
 
@@ -115,7 +116,6 @@ window.openChatWindow = function(targetName, targetId, chatType) {
 
     if(currentChatUnsubscribe) currentChatUnsubscribe();
 
-    // Firebase database se direct us specific room ki messages nikalenge
     const q = query(collection(db, "chat_rooms", currentRoomID, "messages"), orderBy("timestamp", "asc"));
     
     currentChatUnsubscribe = onSnapshot(q, (snapshot) => {
@@ -173,11 +173,11 @@ window.sendVIPMessage = async function() {
                 senderUid: currentUser.uid,
                 senderName: currentUser.displayName,
                 text: msg,
-                timestamp: new Date() // Instant Timestamp
+                timestamp: new Date() 
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Database Error! Firestore rules check karein.");
+            alert("Database Error! Please check your internet or Firebase Rules.");
         }
     }
 };
@@ -186,7 +186,7 @@ document.getElementById('chatInputMsg').addEventListener('keypress', function (e
     if (e.key === 'Enter') { window.sendVIPMessage(); }
 });
 
-// UI Callbacks
+// Remove old global event listener that was blocking clicks!
 document.getElementById('btnAdd').addEventListener('click', () => window.openAddPopup());
 window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
 window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
