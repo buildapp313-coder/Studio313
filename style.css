@@ -122,7 +122,7 @@ body {
 
 
 /* =========================================
-   COLORFUL 3D CLAYMORPHISM (Har Button VIP)
+   PREMIUM PLASTIC 3D CLAYMORPHISM (VIP Buttons)
    ========================================= */
 .nav-links {
     gap: 12px !important;
@@ -146,88 +146,96 @@ body {
     position: relative;
     top: 0;
     color: #ffffff !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Text ko wazeh (clear) karne ke liye */
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Hover Effect: Jab mouse upar aaye toh button chamak uthega */
+/* Hover Effect: Upar uthna aur chamakna */
 .nav-links > li > a:hover, 
 .dropdown-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.15); /* Color ko automatically aur bright kar dega */
+    transform: translateY(-3px);
+    filter: brightness(1.1); 
 }
 
-/* Click Effect: Button dabne ka asli feel */
+/* Click Effect: Real Plastic Press Effect */
 .nav-links > li > a:active, 
 .dropdown-btn:active {
     transform: translateY(2px);
-    filter: brightness(0.9);
+    filter: brightness(0.95);
     box-shadow: 
-        0 4px 6px rgba(0,0,0,0.4), 
-        inset 2px 2px 5px rgba(0,0,0,0.5), 
-        inset -2px -2px 4px rgba(255,255,255,0.1) !important;
+        0 2px 4px rgba(0,0,0,0.3), 
+        inset 3px 4px 6px rgba(0,0,0,0.5), /* Andar dabne ki deep shadow */
+        inset -2px -2px 4px rgba(255,255,255,0.15) !important;
 }
 
-/* --- 1. HOME BUTTON (Royal Blue) --- */
+/* --- 1. HOME BUTTON (Royal Blue Plastic) --- */
 .nav-links > li > a[href="index.html"] {
-    background: linear-gradient(145deg, #3b82f6, #2563eb) !important;
-    box-shadow: 0 10px 20px -4px rgba(37, 99, 235, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(145deg, #4aa0ff, #1d4ed8) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(37, 99, 235, 0.7), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.7), /* Top Specular Shine */
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important; /* Bottom Depth */
 }
 
-/* --- 2. APPS BUTTON (Magenta/Pink) --- */
+/* --- 2. APPS BUTTON (Magenta Plastic) --- */
 .nav-links > li > a[href="download.html"] {
-    background: linear-gradient(145deg, #ec4899, #be185d) !important;
-    box-shadow: 0 10px 20px -4px rgba(190, 24, 93, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(145deg, #f472b6, #be185d) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(190, 24, 93, 0.7), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* --- 3. APP-TESTER BUTTON (Emerald Green) --- */
+/* --- 3. APP-TESTER BUTTON (Emerald Plastic) --- */
 .nav-links > li > a[href="app-tester.html"] {
-    background: linear-gradient(145deg, #10b981, #059669) !important;
-    box-shadow: 0 10px 20px -4px rgba(5, 150, 105, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(145deg, #34d399, #047857) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(5, 150, 105, 0.7), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* --- 4. POLICIES BUTTON (Slate Grey - Professional) --- */
+/* --- 4. POLICIES BUTTON (Slate Grey Plastic) --- */
 .nav-links > li > a[href="policies.html"] {
-    background: linear-gradient(145deg, #64748b, #475569) !important;
-    box-shadow: 0 10px 20px -4px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -3px -3px 6px rgba(0, 0, 0, 0.4) !important;
+    background: linear-gradient(145deg, #94a3b8, #334155) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(0, 0, 0, 0.5), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.6), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.45) !important;
 }
 
-/* --- 5. READ QURAN (Premium Glowing Gold) --- */
+/* --- 5. READ QURAN (Premium Glowing Gold Plastic) --- */
 .nav-links > li > a.quran-3d-btn, 
 .nav-links > li > a.quran-special-3d {
-    background: linear-gradient(145deg, #fbbf24, #d97706) !important;
+    background: linear-gradient(145deg, #fde047, #b45309) !important;
     font-weight: 700;
     box-shadow: 
-        0 0 25px rgba(245, 158, 11, 0.5), /* Golden Aura Glow */
-        0 10px 20px -4px rgba(217, 119, 6, 0.7),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.8),
-        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+        0 0 25px rgba(245, 158, 11, 0.6), /* Golden Aura */
+        0 12px 24px -6px rgba(217, 119, 6, 0.8),
+        inset 2px 3px 7px rgba(255, 255, 255, 0.9), /* Extreme top shine */
+        inset -3px -4px 6px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* --- 6. GLOBAL HUB (Vibrant Orange) --- */
+/* --- 6. GLOBAL HUB (Vibrant Orange Plastic) --- */
 .nav-links > li > a[href*="messenger.html"] {
-    background: linear-gradient(145deg, #f97316, #ea580c) !important;
+    background: linear-gradient(145deg, #fb923c, #c2410c) !important;
     font-weight: 700;
-    box-shadow: 0 10px 20px -4px rgba(234, 88, 12, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(234, 88, 12, 0.7), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.75), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* --- 7. THEME DROPDOWN (Deep Violet/Purple) --- */
+/* --- 7. THEME DROPDOWN (Deep Violet Plastic) --- */
 .dropdown-btn {
-    background: linear-gradient(145deg, #8b5cf6, #6d28d9) !important;
-    box-shadow: 0 10px 20px -4px rgba(109, 40, 217, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(145deg, #a78bfa, #5b21b6) !important;
+    box-shadow: 
+        0 12px 24px -6px rgba(109, 40, 217, 0.7), 
+        inset 2px 3px 6px rgba(255, 255, 255, 0.7), 
+        inset -3px -4px 6px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* 3. Global Hub (Vibrant Orange "Focus" Button from Reference) */
-.nav-links > li > a[href*="messenger.html"] {
-    background: linear-gradient(145deg, #f97316, #ea580c) !important;
-    color: #ffffff !important;
-    font-weight: 700;
-    box-shadow: 
-        0 10px 22px -4px rgba(249, 115, 22, 0.5),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
-}
 
 /* --- HERO HEADER --- */
 .header-text {
@@ -247,7 +255,7 @@ body {
     flex-wrap: wrap;
     padding: 20px;
     max-width: 1300px;
-    margin: 20px auto 40px; /* Merged margins & syntax fix */
+    margin: 20px auto 40px; 
     z-index: 10;
     position: relative;
     flex: 1;
