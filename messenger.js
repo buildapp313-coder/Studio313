@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, setDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, setDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
@@ -20,8 +20,6 @@ let currentUser = null;
 let currentChatUnsubscribe = null;
 let currentRoomID = null;
 let currentChatType = null;
-window.currentRequestDoc = null;
-window.currentRequestSender = null;
 
 // Auth & Real-time Online Tracking
 onAuthStateChanged(auth, async (user) => {
@@ -43,6 +41,7 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById('myAvatar').innerText = user.displayName.substring(0,2).toUpperCase();
         }, 1200);
 
+        // ONLINE USERS LIST
         onSnapshot(collection(db, "online_users"), (snapshot) => {
             const list = document.getElementById('onlineUsersList');
             list.innerHTML = '';
@@ -51,8 +50,9 @@ onAuthStateChanged(auth, async (user) => {
                 const data = doc.data();
                 if(data.uid !== user.uid) { 
                     count++;
+                    // VIP FIX: Request ke bajaye ab Direct Chat Window khulegi!
                     list.innerHTML += `
-                        <li class="list-item" onclick="window.sendFriendRequest('${data.uid}', '${data.name}')">
+                        <li class="list-item" onclick="window.openChatWindow('${data.name}', '${data.uid}', 'private')">
                             <div class="item-icon icon-online"></div>
                             <div>
                                 <div class="item-name">${data.name}</div>
@@ -106,6 +106,7 @@ window.openChatWindow = function(targetName, targetId, chatType) {
     document.getElementById('chatTargetStatus').innerText = chatType === 'hub' ? "Global Public Room" : "Secure Private Connection";
     document.getElementById('privateChatWindow').style.display = 'flex';
     
+    // Agar private chat hai toh dono ki IDs mila kar ek private room banega
     currentRoomID = chatType === 'hub' ? `HUB_${targetId}` : [currentUser.uid, targetId].sort().join("_");
     currentChatType = chatType;
 
@@ -114,7 +115,7 @@ window.openChatWindow = function(targetName, targetId, chatType) {
 
     if(currentChatUnsubscribe) currentChatUnsubscribe();
 
-    // MASTER FIX: Firebase ko uljhane ke bajaye direct room ke andar messages dhondenge (No index required)
+    // Firebase database se direct us specific room ki messages nikalenge
     const q = query(collection(db, "chat_rooms", currentRoomID, "messages"), orderBy("timestamp", "asc"));
     
     currentChatUnsubscribe = onSnapshot(q, (snapshot) => {
@@ -168,7 +169,6 @@ window.sendVIPMessage = async function() {
         document.getElementById('emoticonPanel').style.display = 'none'; 
         
         try {
-            // MASTER FIX: Message seedha us room ke folder mein jayega
             await addDoc(collection(db, "chat_rooms", currentRoomID, "messages"), {
                 senderUid: currentUser.uid,
                 senderName: currentUser.displayName,
@@ -177,7 +177,7 @@ window.sendVIPMessage = async function() {
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Database Error! Firestore rules mein 'allow read, write: if true;' lazmi karein.");
+            alert("Database Error! Firestore rules check karein.");
         }
     }
 };
@@ -191,4 +191,4 @@ document.getElementById('btnAdd').addEventListener('click', () => window.openAdd
 window.openAddPopup = function() { document.getElementById('addContactPopup').style.display = 'flex'; }
 window.closeAddPopup = function() { document.getElementById('addContactPopup').style.display = 'none'; document.getElementById('newContactInput').value = ''; }
 
-window.submitAddContact = function() { alert("Use the Online List to add actual users!"); window.closeAddPopup(); }
+window.submitAddContact = function() { alert("Use the Online List to click and chat with actual users!"); window.closeAddPopup(); }
