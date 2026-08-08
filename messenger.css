@@ -1,114 +1,19 @@
-/* Base Resets */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body { 
-    font-family: 'Poppins', sans-serif; 
-    height: 100vh; 
-    overflow: hidden; 
-    background: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed !important;
-    background-size: cover !important;
-    display: flex; justify-content: center; align-items: center; gap: 20px; 
-}
-
-/* Panels Shared Style */
-.messenger-app, .chat-panel {
-    background: rgba(30, 41, 59, 0.4); 
-    backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-    display: flex; flex-direction: column; position: relative;
-    color: #ffffff;
-    width: 340px; 
-    height: 650px;
-}
-
-/* App Header */
-.app-header { background: rgba(0, 0, 0, 0.2); padding: 10px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600; flex-shrink: 0; }
-.app-title { display: flex; align-items: center; gap: 8px; }
-.smile-icon { width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
-
-/* Menu Bar */
-.menu-bar { background: rgba(255, 255, 255, 0.05); padding: 6px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); display: flex; gap: 12px; flex-shrink: 0; }
-.menu-bar span { cursor: pointer; transition: 0.2s; padding: 2px 5px; border-radius: 4px; } 
-.menu-bar span:hover { color: #fff; background: rgba(255,255,255,0.1); }
-
-/* User Profile Area */
-.my-profile-area { padding: 15px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
-.my-avatar { width: 50px; height: 50px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-.my-info { flex: 1; }
-.my-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
-.my-status { font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); background: transparent; border: 1px solid transparent; width: 100%; outline: none; padding: 2px 4px; border-radius: 4px; }
-
-/* Monetization */
-.ad-banner { margin: 10px; height: 60px; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.75rem; color: #fde047; font-weight: 600; cursor: pointer; flex-shrink: 0; }
-
 /* FIX: Lists & Scrolling */
-#mainInterface { min-height: 0; overflow: hidden; } /* Added min-height: 0 for scroll fix */
+#mainInterface { 
+    flex: 1 1 0 !important; /* Yeh 0 magic fix hai */
+    flex-direction: column;
+    overflow: hidden; 
+    min-height: 0; 
+} 
 
-.list-container { flex: 1; overflow-y: auto; background: transparent; padding-bottom: 10px; min-height: 0; } /* Added min-height: 0 for scroll fix */
+.list-container { 
+    flex: 1 1 0; /* Yeh 0 magic fix hai */
+    height: 100%;
+    overflow-y: auto; 
+    background: transparent; 
+    padding-bottom: 10px; 
+    min-height: 0; 
+} 
+
 .list-container::-webkit-scrollbar { width: 4px; }
 .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
-.list-group { margin-bottom: 5px; }
-.group-header { background: rgba(0, 0, 0, 0.2); padding: 6px 15px; font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: pointer; display: flex; justify-content: space-between; }
-.list-items { list-style: none; padding: 0; margin: 0; }
-.list-item { padding: 10px 15px 10px 25px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02); }
-.list-item:hover { background: rgba(255, 255, 255, 0.1); }
-
-.item-icon { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.icon-online { background: #10b981; box-shadow: 0 0 8px #10b981; }
-.icon-room { background: #3b82f6; border-radius: 3px; box-shadow: 0 0 8px #3b82f6; }
-.item-name { font-size: 0.85rem; font-weight: 500; color: #fff; }
-.item-sub { font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
-
-/* Bottom Toolbar */
-.bottom-toolbar { background: rgba(0, 0, 0, 0.2); padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-around; flex-shrink: 0; }
-.tool-btn { background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: rgba(255, 255, 255, 0.7); transition: 0.2s; }
-.tool-btn:hover { transform: scale(1.15); color: #fff; }
-
-/* Buttons & Inputs */
-.btn-primary { width: 100%; background: rgba(59, 130, 246, 0.5); border: 1px solid rgba(59, 130, 246, 0.8); color: white; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px; }
-.glass-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 8px; color: #fff; outline: none; font-family: 'Poppins'; }
-
-/* Dropdowns & Popups */
-#authScreen { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; }
-.glass-dropdown { position: absolute; top: 100%; left: 0; margin-top: 5px; background: rgba(30, 41, 59, 0.85); border-radius: 8px; padding: 5px 0; min-width: 150px; display: none; z-index: 100; }
-.dropdown-item { padding: 8px 15px; color: #fff; font-size: 0.8rem; cursor: pointer; }
-.dropdown-item:hover { background: rgba(255, 255, 255, 0.1); }
-.glass-popup-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 200; }
-.glass-popup-box { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); padding: 25px; border-radius: 16px; width: 85%; text-align: center; }
-
-/* VIP CHAT UI UPDATES */
-.chat-panel { display: none; width: 360px; } 
-.chat-status-bar { background: rgba(255, 255, 255, 0.05); padding: 8px 15px; font-size: 0.75rem; color: rgba(255,255,255,0.7); display: flex; gap: 8px; flex-shrink: 0; }
-.chat-area { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; } /* Added min-height: 0 for scroll fix */
-.message-row { display: flex; flex-direction: column; margin-bottom: 15px; }
-.message-row.sent { align-items: flex-end; }
-.message-row.received { align-items: flex-start; }
-.chat-bubble { padding: 10px 15px; max-width: 80%; font-size: 0.85rem; line-height: 1.4; }
-.message-row.sent .chat-bubble { background: rgba(59, 130, 246, 0.6); border-radius: 16px 16px 0 16px; }
-.message-row.received .chat-bubble { background: rgba(255, 255, 255, 0.1); border-radius: 16px 16px 16px 0; }
-.chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
-.emoticon-panel { background: rgba(30, 41, 59, 0.9); padding: 15px; display: none; grid-template-columns: repeat(6, 1fr); gap: 10px; max-height: 150px; overflow-y: auto; flex-shrink: 0; }
-.emoticon-btn { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; }
-
-/* --- MOBILE RESPONSIVENESS (Ye mobile par patla hone se bachayega) --- */
-@media (max-width: 800px) {
-    body {
-        flex-direction: column; /* Mobile pe dabbe oopar neechay aayenge */
-        justify-content: flex-start;
-        padding: 20px 0;
-        overflow-y: auto;
-        height: auto;
-    }
-    .messenger-app, .chat-panel {
-        width: 92vw; /* Mobile screen ka 92% hissa gheray ga */
-        max-width: 400px;
-        height: 85vh;
-        margin: 0 auto;
-        flex-shrink: 0;
-    }
-}
