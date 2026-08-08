@@ -128,7 +128,7 @@ window.sendFriendRequest = async function(targetUid, targetName) {
         await addDoc(collection(db, "requests"), {
             fromUid: currentUser.uid, fromName: currentUser.displayName,
             toUid: targetUid, toName: targetName, status: 'pending', 
-            timestamp: new Date() // FAST LOCAL TIME
+            timestamp: new Date()
         });
         alert(`Chat request sent to ${targetName}! Waiting for them to accept.`);
     } catch(e) { 
@@ -161,35 +161,36 @@ window.openChatWindow = function(targetName, targetId, chatType) {
     currentChatType = chatType;
 
     const msgArea = document.getElementById('chatMessagesArea');
-    msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Fetching secure messages...</div>`;
+    
+    // Sirf chat open hotay waqt ek dafa screen saaf hogi aur Connection message aayega
+    msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Connected to ${targetName}</div>`;
 
     if(currentChatUnsubscribe) currentChatUnsubscribe();
 
     const q = query(collection(db, "messages"), where("roomID", "==", currentRoomID), orderBy("timestamp", "asc"));
     
     currentChatUnsubscribe = onSnapshot(q, (snapshot) => {
-        msgArea.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 15px; margin-bottom: 20px;">Connected to ${targetName}</div>`;
-        
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            const isMe = data.senderUid === currentUser.uid;
-            
-            // Format time safely
-            let timeStr = 'Just now';
-            if (data.timestamp) {
-                // Check if it's a Firestore Timestamp object or already a Date
-                const dateObj = data.timestamp.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
-                timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            }
-            
-            const nameTag = (!isMe && chatType === 'hub') ? `<div style="font-size:0.6rem; color:#fde047; margin-bottom:2px;">${data.senderName}</div>` : '';
+        // VIP SPEED FIX: Ab database sirf naye add hone wale message ko direct screen par draw karega
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+                const data = change.doc.data();
+                const isMe = data.senderUid === currentUser.uid;
+                
+                let timeStr = 'Just now';
+                if (data.timestamp) {
+                    const dateObj = data.timestamp.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
+                    timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+                
+                const nameTag = (!isMe && chatType === 'hub') ? `<div style="font-size:0.6rem; color:#fde047; margin-bottom:2px;">${data.senderName}</div>` : '';
 
-            msgArea.innerHTML += `
-                <div class="message-row ${isMe ? 'sent' : 'received'}">
-                    <div class="chat-bubble">${nameTag}${data.text}</div>
-                    <div class="chat-time">${timeStr}</div>
-                </div>
-            `;
+                msgArea.innerHTML += `
+                    <div class="message-row ${isMe ? 'sent' : 'received'}">
+                        <div class="chat-bubble">${nameTag}${data.text}</div>
+                        <div class="chat-time">${timeStr}</div>
+                    </div>
+                `;
+            }
         });
         msgArea.scrollTop = msgArea.scrollHeight;
     });
@@ -225,11 +226,11 @@ window.sendVIPMessage = async function() {
                 senderUid: currentUser.uid,
                 senderName: currentUser.displayName,
                 text: msg,
-                timestamp: new Date() // FAST LOCAL TIME (0 Second Delay)
+                timestamp: new Date() // Instant Timestamp
             });
         } catch(error) {
             console.error("Error sending message:", error);
-            alert("Database Error! Firestore rules ko Console mein check karein.");
+            alert("Database Error! Firestore rules check karein.");
         }
     }
 };
