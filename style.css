@@ -399,3 +399,31 @@ footer {
     margin-top: 20px; /* Push phones down */
     margin-bottom: 40px; /* Reduce bottom space */
 }
+/* =========================================
+   PREMIUM GOLDEN QURAN BUTTON
+   ========================================= */
+.quran-vip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 22px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 30px;
+    background: transparent;
+    color: var(--text-color); 
+    border: 2px solid #d4af37; 
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quran-vip-btn:hover {
+    background: linear-gradient(90deg, #d4af37, #ffdf00); 
+    color: #000; 
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    transform: translateY(-3px); 
+}
