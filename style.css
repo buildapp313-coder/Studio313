@@ -122,74 +122,112 @@ body {
 
 
 /* =========================================
-   3D PREMIUM BUTTONS (Inspired by 225554)
+   EXACT 3D CLAYMORPHISM (Reference 225554 Match)
    ========================================= */
 
-/* 1. Normal Menu Links & Theme Dropdown Button */
+.nav-links {
+    gap: 12px !important;
+}
+
+/* 1. Normal Menu Buttons (3D Sleek Clay Pills) */
 .nav-links > li > a, 
 .dropdown-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 20px;
+    padding: 10px 22px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
-    color: #e2e8f0 !important; /* Forces readable white text on grey button */
-    
-    background: #475569; /* Sleek Grey 3D Base */
+    letter-spacing: 0.3px;
     border-radius: 50px;
     text-decoration: none;
-    position: relative;
-    top: 0;
     border: none;
     cursor: pointer;
+    position: relative;
+    top: 0;
     
-    /* Grey 3D Structure */
+    /* 3D Soft Light Gradient (Top-Left Light to Bottom-Dark) */
+    background: linear-gradient(145deg, #384050, #252a36) !important;
+    color: #f1f5f9 !important;
+
+    /* Multi-Layered Soft Lighting & Specular Highlights */
     box-shadow: 
-        0 5px 0 #1e293b, 
-        inset 0 4px 4px rgba(255, 255, 255, 0.15), 
-        inset 0 -4px 4px rgba(0, 0, 0, 0.2);
-        
-    transition: all 0.1s ease-in-out;
+        /* External Soft Ambient Shadow */
+        0 12px 20px -4px rgba(0, 0, 0, 0.55),
+        0 4px 6px -2px rgba(0, 0, 0, 0.3),
+        /* Top-Left Soft White Highlight (Specular Reflection) */
+        inset 2px 2px 3px rgba(255, 255, 255, 0.35),
+        /* Bottom-Right Internal Shadow (3D Depth) */
+        inset -3px -3px 6px rgba(0, 0, 0, 0.45) !important;
+
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Hover & Active Press Effect */
 .nav-links > li > a:hover, 
 .dropdown-btn:hover {
-    top: 3px; 
-    background: #475569;
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #424b5e, #2b313f) !important;
     box-shadow: 
-        0 2px 0 #1e293b, 
-        inset 0 4px 4px rgba(255, 255, 255, 0.15), 
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        0 16px 25px -4px rgba(0, 0, 0, 0.65),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.45) !important;
     color: #ffffff !important;
 }
 
-/* 2. Special Glowing Quran Button (Override) */
-.nav-links > li > a.quran-3d-btn {
-    background: #2dd4bf; /* Vibrant Cyan/Teal */
+.nav-links > li > a:active,
+.dropdown-btn:active {
+    transform: translateY(2px);
+    box-shadow: 
+        0 4px 10px -2px rgba(0, 0, 0, 0.5),
+        inset 2px 2px 4px rgba(0, 0, 0, 0.5),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 2. SPECIAL QURAN BUTTON ("Loating" Cyan Glow Exact Match) */
+.nav-links > li > a.quran-3d-btn,
+.nav-links > li > a.quran-special-3d {
+    /* Vibrant Cyan/Teal Gradient */
+    background: linear-gradient(145deg, #2dd4bf, #0f766e) !important;
     color: #ffffff !important;
-    font-size: 1.05rem;
-    padding: 10px 24px;
+    font-weight: 700;
     
-    /* Cyan Glow 3D Structure */
+    /* Glowing Aura + Soft 3D Lighting */
     box-shadow: 
-        0 10px 20px -5px rgba(45, 212, 191, 0.5), 
-        0 5px 0 #0f766e, 
-        inset 0 4px 4px rgba(255, 255, 255, 0.4), 
-        inset 0 -4px 4px rgba(0, 0, 0, 0.15);
+        /* External Cyan Glow */
+        0 0 25px rgba(45, 212, 191, 0.6),
+        /* External Soft Shadow */
+        0 12px 20px -4px rgba(15, 118, 110, 0.6),
+        /* Top Specular White Highlight */
+        inset 2px 2px 4px rgba(255, 255, 255, 0.65),
+        /* Bottom Depth Shadow */
+        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+        
+    border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-.nav-links > li > a.quran-3d-btn:hover {
-    top: 3px;
-    background: #2dd4bf;
+.nav-links > li > a.quran-3d-btn:hover,
+.nav-links > li > a.quran-special-3d:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #34d399, #115e59) !important;
     box-shadow: 
-        0 5px 15px -5px rgba(45, 212, 191, 0.4),
-        0 2px 0 #0f766e,
-        inset 0 4px 4px rgba(255, 255, 255, 0.4),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+        0 0 35px rgba(45, 212, 191, 0.85),
+        0 16px 25px -4px rgba(15, 118, 110, 0.75),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* 3. Global Hub (Vibrant Orange "Focus" Button from Reference) */
+.nav-links > li > a[href*="messenger.html"] {
+    background: linear-gradient(145deg, #f97316, #ea580c) !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    box-shadow: 
+        0 10px 22px -4px rgba(249, 115, 22, 0.5),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.3) !important;
+}
 
 /* --- HERO HEADER --- */
 .header-text {
