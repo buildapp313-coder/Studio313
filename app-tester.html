@@ -1,222 +1,215 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Tester Program | Studio313</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Google Play Tester Service | VIP Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        .tester-container {
-            max-width: 900px;
-            margin: 0 auto 80px;
-            padding: 40px;
-            border-radius: 30px;
-            z-index: 10;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .tester-container h2 {
-            font-size: 2.5rem;
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* VIP Glowing Orbs in Background */
+        .bg-orb-1 {
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+        }
+        .bg-orb-2 {
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(245, 158, 11, 0.2); /* Gold glow */
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+        }
+
+        /* Main Glass Card */
+        .vip-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            z-index: 1;
+            position: relative;
+        }
+
+        .badge {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            color: #000;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
             margin-bottom: 15px;
-            background: linear-gradient(to right, var(--text-color), var(--shape3));
+            background: linear-gradient(to right, #fff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .tester-container p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.7;
+        p.subtitle {
+            font-size: 1rem;
+            color: #cbd5e1;
             margin-bottom: 30px;
-            max-width: 700px;
+            line-height: 1.6;
         }
 
-        .tester-stats {
+        /* Features Box */
+        .features {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-item {
             display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+        }
+        .feature-item:last-child { margin-bottom: 0; }
+        .feature-icon {
+            font-size: 1.2rem;
         }
 
-        .stat-box {
-            padding: 20px 30px;
-            border-radius: 20px;
-            min-width: 150px;
-        }
-
-        .stat-number {
+        /* Pricing & CTA */
+        .price-tag {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--shape1);
+            color: #fff;
             margin-bottom: 5px;
         }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .price-sub {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 25px;
         }
-        
-        .progress-bar-bg {
+
+        /* Fiverr Button */
+        .btn-fiverr {
+            display: inline-block;
+            background: #1dbf73; /* Official Fiverr Green */
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(29, 191, 115, 0.3);
             width: 100%;
-            max-width: 500px;
-            height: 12px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
         }
 
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(to right, var(--shape3), var(--shape1));
-            width: 66%; /* Representing 8 out of 12 testers */
-            border-radius: 10px;
+        .btn-fiverr:hover {
+            background: #19a463;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(29, 191, 115, 0.4);
+        }
+
+        .secure-tag {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .vip-card { padding: 40px 20px; }
         }
     </style>
 </head>
-    <!-- Real Firebase Visitor Counter -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-    // Aapki Firebase Keys
-    const firebaseConfig = {
-        apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
-        authDomain: "studio313-hq.firebaseapp.com",
-        projectId: "studio313-hq",
-        storageBucket: "studio313-hq.firebasestorage.app",
-        messagingSenderId: "328116481829",
-        appId: "1:328116481829:web:6cba13235e85ea76e174cc"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    async function updateRealCounter() {
-        const countEl = document.getElementById('visitor-count');
-        if (!countEl) return;
-
-        // Firebase mein 'stats' collection aur 'views' document ka reference
-        const docRef = doc(db, "stats", "views");
-        
-        try {
-            // Check karega ke user naya hai ya purana (Browser Storage se)
-            const hasVisited = localStorage.getItem('studio313_real_visitor');
-            const docSnap = await getDoc(docRef);
-
-            if (!docSnap.exists()) {
-                // Agar database mein counter nahi hai, toh 1 se shuru karega
-                await setDoc(docRef, { count: 1 });
-                countEl.innerText = "1";
-                localStorage.setItem('studio313_real_visitor', 'yes');
-            } else {
-                if (!hasVisited) {
-                    // Agar naya user hai, toh Firebase mein +1 karega
-                    await updateDoc(docRef, { count: increment(1) });
-                    localStorage.setItem('studio313_real_visitor', 'yes');
-                    
-                    // Naya updated count layega
-                    const updatedSnap = await getDoc(docRef);
-                    countEl.innerText = updatedSnap.data().count.toLocaleString();
-                } else {
-                    // Agar purana user refresh kar raha hai, toh count nahi barhayega sirf show karega
-                    countEl.innerText = docSnap.data().count.toLocaleString();
-                }
-            }
-        } catch (error) {
-            console.error("Counter Error:", error);
-            countEl.innerText = "Active";
-        }
-    }
-
-    updateRealCounter();
-</script>
 <body>
 
-    <!-- Liquid Background Elements -->
-    <div class="liquid-shape shape-1"></div>
-    <div class="liquid-shape shape-2"></div>
-    <div class="liquid-shape shape-3"></div>
+    <!-- Background Glows -->
+    <div class="bg-orb-1"></div>
+    <div class="bg-orb-2"></div>
 
-    <!-- Glass Navbar -->
-    <nav class="navbar glass">
-        <div class="logo">Studio313</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="download.html">Apps</a></li>
-            <li><a href="app-tester.html">App-Tester</a></li>
-            <li><a href="policies.html">Policies</a></li>
-            <li><a href="community.html">Global Hub</a></li>
-            <li>
-                <select class="theme-selector glass-btn" onchange="changeTheme(this.value)">
-                    <option value="dark"> Dark Liquid</option>
-                    <option value="light"> Light Glass</option>
-                    <option value="vip"> VIP Gold</option>
-                </select>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Header Section -->
-    <div class="header-text">
-        <h1>Exclusive Beta Testing</h1>
-        <p>Help us shape the future of mobile utilities. Join our closed testing group before the official Play Store release.</p>
-    </div>
-
-    <!-- Tester Portal Content -->
-    <div class="tester-container glass">
-        <div style="font-size: 4rem; margin-bottom: 20px;">🧪</div>
-        <h2>Vip Notification Beta</h2>
-        <p>We are currently conducting a closed testing phase for "Vip Notification" as per Google Play Console requirements. We are looking for dedicated testers to opt-in and provide feedback over a 14-day period.</p>
-
-        <!-- Testing Progress -->
-        <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px;">
-            <div style="margin-bottom: 10px; font-weight: 600;">Current Opt-in Progress</div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill"></div>
-            </div>
-            <div style="color: var(--text-muted); font-size: 0.9rem;">8 / 12 Required Testers Confirmed</div>
-        </div>
-
-        <div class="tester-stats">
-            <div class="stat-box glass">
-                <div class="stat-number">14</div>
-                <div class="stat-label">Days Required</div>
-            </div>
-            <div class="stat-box glass">
-                <div class="stat-number">04</div>
-                <div class="stat-label">Slots Remaining</div>
-            </div>
-        </div>
-
-        <p style="font-size: 0.95rem; margin-bottom: 30px;">By joining, you get early access to premium features and direct input into the app's final polish. To proceed, please contact us with your Google Play email address.</p>
+    <!-- Main Content -->
+    <div class="vip-card">
+        <div class="badge">Premium Developer Service</div>
         
-        <a href="contact.html" class="action-btn glass-btn" style="padding: 15px 40px; font-size: 1.1rem;">Opt-in as a Tester</a>
+        <h1>Beat the Google Play 14-Day Testing Rule.</h1>
+        <p class="subtitle">I know the struggle. I'm a developer who just passed the strict 25-day review process. Stop begging for testers and let my dedicated team handle it for you.</p>
+
+        <div class="features">
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span><strong>12 Real, Active Testers</strong> with authentic Google Accounts.</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⏳</span>
+                <span><strong>14-Day Full Retention</strong> guaranteed. No drop-offs.</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <span><strong>Organic Engagement</strong> (App opens & basic usage) for the algorithm.</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">👨‍💻</span>
+                <span><strong>By a Developer, For Developers.</strong> I know exactly what Google wants.</span>
+            </div>
+        </div>
+
+        <div class="price-tag">$10</div>
+        <div class="price-sub">One-time payment for the complete 12-Tester Package</div>
+
+        <!-- YAHAN APNE FIVERR GIG KA LINK DAALNA HAI '#' KI JAGAH -->
+        <a href="#" class="btn-fiverr" target="_blank">Order Securely on Fiverr</a>
+
+        <div class="secure-tag">
+            🔒 100% Secured Escrow Payment via Fiverr.com
+        </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Studio313. All rights reserved. Built for elite performance.</p>
-        <div class="policy-links" style="margin-top: 8px;">
-            <span>Legal: </span>
-            <a href="gatepass-policy.html">Gatepass Policy</a> | 
-            <a href="vip-policy.html">Vip Notification Policy</a>
-        </div>
-        <div style="margin-top: 15px; font-size: 0.85rem; color: var(--shape3);">
-            👁️ Page Views: <span id="visitor-count" style="font-weight: 700; color: var(--text-color);">Loading...</span>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
 
 </body>
 </html>
