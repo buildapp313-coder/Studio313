@@ -35,6 +35,32 @@
     --phone-frame: #3b2f00;
 }
 
+/* --- NAYA THEME 1: CYBER NEON --- */
+[data-theme="cyber"] {
+    --bg-color: #050914; 
+    --shape1: #00ffcc; 
+    --shape2: #ff00ff; 
+    --shape3: #7000ff; 
+    --text-color: #e2e8f0;
+    --text-muted: rgba(226, 232, 240, 0.6);
+    --glass-bg: rgba(0, 255, 204, 0.02);
+    --glass-border: rgba(0, 255, 204, 0.2);
+    --phone-frame: #0a1128;
+}
+
+/* --- NAYA THEME 2: PEARL MATTE --- */
+[data-theme="pearl"] {
+    --bg-color: #eaddd7; 
+    --shape1: #f38054; 
+    --shape2: #bbaea8; 
+    --shape3: #6ee7b7; 
+    --text-color: #38312e; 
+    --text-muted: rgba(56, 49, 46, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --phone-frame: #d6ceca;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -120,7 +146,6 @@ body {
     flex-wrap: wrap;
 }
 
-
 /* =========================================
    ULTRA PREMIUM 3D CLAY & NEON CORNERS 
    (Exact Matte Detail + Hover Magic)
@@ -199,7 +224,7 @@ a.btn-normal-3d[href="index.html"] {
     --btn-color: #3b3531;
     --btn-light: rgba(255, 255, 255, 0.9);
     --btn-dark: rgba(184, 172, 162, 0.95);
-    --btn-neon: rgba(255, 255, 255, 0.5); /* White Corner Glow */
+    --btn-neon: rgba(255, 255, 255, 0.5); 
 }
 
 /* APPS (Like 'hoter' - Matte Taupe/Brownish) */
@@ -217,7 +242,7 @@ a.btn-normal-3d[href="app-tester.html"] {
     --btn-color: #ffffff;
     --btn-light: rgba(255, 255, 255, 0.5);
     --btn-dark: rgba(186, 75, 33, 0.95);
-    --btn-neon: rgba(242, 124, 82, 0.5); /* Orange Corner Glow */
+    --btn-neon: rgba(242, 124, 82, 0.5); 
 }
 
 /* POLICIES (Dark Slate Clay) */
@@ -235,7 +260,7 @@ a.btn-normal-3d[href="policies.html"] {
     --btn-color: #ffffff;
     --btn-light: rgba(255, 255, 255, 0.7);
     --btn-dark: rgba(161, 98, 7, 0.95);
-    --btn-neon: rgba(253, 224, 71, 0.6); /* Golden Corner Glow */
+    --btn-neon: rgba(253, 224, 71, 0.6); 
 }
 
 /* GLOBAL HUB (Like 'Success' - Vibrant Light Orange) */
@@ -253,9 +278,8 @@ a.btn-normal-3d[href*="messenger.html"] {
     --btn-color: #5eead4;
     --btn-light: rgba(255, 255, 255, 0.2);
     --btn-dark: rgba(13, 29, 29, 0.95);
-    --btn-neon: rgba(94, 234, 212, 0.4); /* Cyan Corner Glow */
+    --btn-neon: rgba(94, 234, 212, 0.4); 
 }
-
 
 /* --- HERO HEADER --- */
 .header-text {
