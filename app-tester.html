@@ -186,57 +186,6 @@
         }
     </style>
 </head>
-
-<!-- Real Firebase Visitor Counter -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
-        authDomain: "studio313-hq.firebaseapp.com",
-        projectId: "studio313-hq",
-        storageBucket: "studio313-hq.firebasestorage.app",
-        messagingSenderId: "328116481829",
-        appId: "1:328116481829:web:6cba13235e85ea76e174cc"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    async function updateRealCounter() {
-        const countEl = document.getElementById('visitor-count');
-        if (!countEl) return;
-
-        const docRef = doc(db, "stats", "views");
-        
-        try {
-            const hasVisited = localStorage.getItem('studio313_real_visitor');
-            const docSnap = await getDoc(docRef);
-
-            if (!docSnap.exists()) {
-                await setDoc(docRef, { count: 1 });
-                countEl.innerText = "1";
-                localStorage.setItem('studio313_real_visitor', 'yes');
-            } else {
-                if (!hasVisited) {
-                    await updateDoc(docRef, { count: increment(1) });
-                    localStorage.setItem('studio313_real_visitor', 'yes');
-                    const updatedSnap = await getDoc(docRef);
-                    countEl.innerText = updatedSnap.data().count.toLocaleString();
-                } else {
-                    countEl.innerText = docSnap.data().count.toLocaleString();
-                }
-            }
-        } catch (error) {
-            console.error("Counter Error:", error);
-            countEl.innerText = "Active";
-        }
-    }
-
-    updateRealCounter();
-</script>
-
 <body>
 
     <!-- Liquid Background Elements -->
@@ -248,18 +197,30 @@
     <nav class="navbar glass">
         <div class="logo">Studio313</div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="download.html">Apps</a></li>
-            <li><a href="app-tester.html">Services</a></li>
-            <li><a href="policies.html">Policies</a></li>
-              <li><a href="https://read.quranmajeed.com/" target="_blank" class="quran-3d-btn"><span></span> Read Quran </a></li>
-            <li><a href="messenger.html" style="color: var(--shape3); font-weight: 700;">Global Hub</a></li>
+            <li><a href="index.html" class="btn-normal-3d">Home</a></li>
+            <li><a href="download.html" class="btn-normal-3d">Apps</a></li>
+            <li><a href="app-tester.html" class="btn-normal-3d">Services</a></li>
+            <li><a href="policies.html" class="btn-normal-3d">Policies</a></li>
             <li>
-                <select class="theme-selector glass-btn" onchange="changeTheme(this.value)">
-                    <option value="dark"> Dark Liquid</option>
-                    <option value="light"> Light Glass</option>
-                    <option value="vip"> VIP Gold</option>
-                </select>
+                <a href="https://read.quranmajeed.com/" target="_blank" class="quran-special-3d">
+                    <span></span> Read Quran
+                </a>
+            </li>
+            <li><a href="messenger.html" class="btn-normal-3d" style="color: var(--shape1); font-weight: 700;">Global Hub</a></li>
+            <li>
+                <!-- Naya Theme Dropdown Laga Diya -->
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn btn-normal-3d" onclick="toggleDropdown()" style="border: none; cursor: pointer;">
+                        <span id="dropdownBtnText"> Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', ' Dark Liquid')"> Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', ' Light Glass')"> Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', ' VIP Gold')"> VIP Gold</a>
+                        <a href="#" onclick="setCustomTheme('cyber', '🚀 Cyber Neon')">🚀 Cyber Neon</a>
+                        <a href="#" onclick="setCustomTheme('pearl', '☁️ Pearl Matte')">☁️ Pearl Matte</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </nav>
@@ -290,7 +251,7 @@
                     <li>👨‍💻 <span>Clean & optimized code delivery</span></li>
                 </ul>
                 
-                <a href="#" class="btn-fiverr btn-secondary" target="_blank">Get a Custom Quote</a>
+                <a href="#" class="btn-fiverr btn-secondary vip-action-btn" target="_blank">Get a Custom Quote</a>
                 <div class="secure-note">Delivery based on complexity</div>
             </div>
 
@@ -308,7 +269,7 @@
                     <li>✅ <span>Ready for Play Store review</span></li>
                 </ul>
                 
-                <a href="#" class="btn-fiverr" target="_blank">
+                <a href="#" class="btn-fiverr vip-action-btn" target="_blank">
                     <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM12 17C9.2 17 7 14.8 7 12C7 9.2 9.2 7 12 7C14.8 7 17 9.2 17 12C17 14.8 14.8 17 12 17ZM12 9C10.3 9 9 10.3 9 12C9 13.7 10.3 15 12 15C13.7 15 15 13.7 15 12C15 10.3 13.7 9 12 9Z"/></svg>
                     Order Testing on Fiverr
                 </a>
@@ -330,7 +291,7 @@
                     <li>🌍 <span>Play Store Publishing Help</span></li>
                 </ul>
                 
-                <a href="#" class="btn-fiverr btn-secondary" target="_blank">Discuss Your Project</a>
+                <a href="#" class="btn-fiverr btn-secondary vip-action-btn" target="_blank">Discuss Your Project</a>
                 <div class="secure-note">Source code included</div>
             </div>
 
@@ -352,5 +313,54 @@
 
     <script src="script.js"></script>
 
+    <!-- Real Firebase Visitor Counter (Fixed Position) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+            authDomain: "studio313-hq.firebaseapp.com",
+            projectId: "studio313-hq",
+            storageBucket: "studio313-hq.firebasestorage.app",
+            messagingSenderId: "328116481829",
+            appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function updateRealCounter() {
+            const countEl = document.getElementById('visitor-count');
+            if (!countEl) return;
+
+            const docRef = doc(db, "stats", "views");
+            
+            try {
+                const hasVisited = localStorage.getItem('studio313_real_visitor');
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    await setDoc(docRef, { count: 1 });
+                    countEl.innerText = "1";
+                    localStorage.setItem('studio313_real_visitor', 'yes');
+                } else {
+                    if (!hasVisited) {
+                        await updateDoc(docRef, { count: increment(1) });
+                        localStorage.setItem('studio313_real_visitor', 'yes');
+                        const updatedSnap = await getDoc(docRef);
+                        countEl.innerText = updatedSnap.data().count.toLocaleString();
+                    } else {
+                        countEl.innerText = docSnap.data().count.toLocaleString();
+                    }
+                }
+            } catch (error) {
+                console.error("Counter Error:", error);
+                countEl.innerText = "Active";
+            }
+        }
+
+        updateRealCounter();
+    </script>
 </body>
 </html>
