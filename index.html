@@ -9,108 +9,52 @@
     <!-- Nayi Ticker File Link (For Animations) -->
     <link rel="stylesheet" href="ticker.css">
 </head>
-    <!-- Real Firebase Visitor Counter -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-    // Aapki Firebase Keys
-    const firebaseConfig = {
-        apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
-        authDomain: "studio313-hq.firebaseapp.com",
-        projectId: "studio313-hq",
-        storageBucket: "studio313-hq.firebasestorage.app",
-        messagingSenderId: "328116481829",
-        appId: "1:328116481829:web:6cba13235e85ea76e174cc"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    async function updateRealCounter() {
-        const countEl = document.getElementById('visitor-count');
-        if (!countEl) return;
-
-        // Firebase mein 'stats' collection aur 'views' document ka reference
-        const docRef = doc(db, "stats", "views");
-        
-        try {
-            // Check karega ke user naya hai ya purana (Browser Storage se)
-            const hasVisited = localStorage.getItem('studio313_real_visitor');
-            const docSnap = await getDoc(docRef);
-
-            if (!docSnap.exists()) {
-                // Agar database mein counter nahi hai, toh 1 se shuru karega
-                await setDoc(docRef, { count: 1 });
-                countEl.innerText = "1";
-                localStorage.setItem('studio313_real_visitor', 'yes');
-            } else {
-                if (!hasVisited) {
-                    // Agar naya user hai, toh Firebase mein +1 karega
-                    await updateDoc(docRef, { count: increment(1) });
-                    localStorage.setItem('studio313_real_visitor', 'yes');
-                    
-                    // Naya updated count layega
-                    const updatedSnap = await getDoc(docRef);
-                    countEl.innerText = updatedSnap.data().count.toLocaleString();
-                } else {
-                    // Agar purana user refresh kar raha hai, toh count nahi barhayega sirf show karega
-                    countEl.innerText = docSnap.data().count.toLocaleString();
-                }
-            }
-        } catch (error) {
-            console.error("Counter Error:", error);
-            countEl.innerText = "Active";
-        }
-    }
-
-    updateRealCounter();
-</script>
 <body>
 
-   <!-- Dynamic Sun/Moon Liquid Background Elements -->
-<div class="liquid-shape shape-1"></div>
-<div class="liquid-shape shape-2"></div>
-<div class="liquid-shape shape-3"></div>
+    <!-- Dynamic Sun/Moon Liquid Background Elements -->
+    <div class="liquid-shape shape-1"></div>
+    <div class="liquid-shape shape-2"></div>
+    <div class="liquid-shape shape-3"></div>
 
-<!-- Glass Navbar with Mobile Hamburger -->
-<nav class="navbar glass">
-    <div class="logo">Studio313</div>
-    
-    <!-- Mobile Menu Button (RESTORED) -->
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <!-- Glass Navbar with Mobile Hamburger -->
+    <nav class="navbar glass">
+        <div class="logo">Studio313</div>
+        
+        <!-- Mobile Menu Button (RESTORED) -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
 
-    <ul class="nav-links" id="navLinks" style="align-items: center; gap: 10px;">
-        <li><a href="index.html" class="btn-normal-3d">Home</a></li>
-        <li><a href="download.html" class="btn-normal-3d">Apps</a></li>
-        <li><a href="app-tester.html" class="btn-normal-3d">App-Tester</a></li>
-        <li><a href="policies.html" class="btn-normal-3d">Policies</a></li>
-        
-        <!-- SPECIAL QURAN 3D BUTTON -->
-        <li>
-            <a href="https://read.quranmajeed.com/" target="_blank" class="quran-special-3d">
-                <span></span> Read Quran
-            </a>
-        </li>
-        
-        <li><a href="messenger.html" class="btn-normal-3d" style="color: var(--shape1); font-weight: 700;">Global Hub</a></li>
-        
-        <li>
-            <!-- Naya Custom VIP Theme Switcher (RESTORED) -->
-            <div class="custom-dropdown">
-                <!-- Theme button ko bhi 3D de diya -->
-                <button class="dropdown-btn btn-normal-3d" onclick="toggleDropdown()" style="border: none; cursor: pointer;">
-                    <span id="dropdownBtnText"> Dark Liquid</span> ▼
-                </button>
-                <div class="dropdown-content glass" id="themeDropdown">
-                    <a href="#" onclick="setCustomTheme('dark', ' Dark Liquid')"> Dark Liquid</a>
-                    <a href="#" onclick="setCustomTheme('light', ' Light Glass')"> Light Glass</a>
-                    <a href="#" onclick="setCustomTheme('vip', ' VIP Gold')"> VIP Gold</a>
+        <ul class="nav-links" id="navLinks" style="align-items: center; gap: 10px;">
+            <li><a href="index.html" class="btn-normal-3d">Home</a></li>
+            <li><a href="download.html" class="btn-normal-3d">Apps</a></li>
+            <li><a href="app-tester.html" class="btn-normal-3d">App-Tester</a></li>
+            <li><a href="policies.html" class="btn-normal-3d">Policies</a></li>
+            
+            <!-- SPECIAL QURAN 3D BUTTON -->
+            <li>
+                <a href="https://read.quranmajeed.com/" target="_blank" class="quran-special-3d">
+                    <span></span> Read Quran
+                </a>
+            </li>
+            
+            <li><a href="messenger.html" class="btn-normal-3d" style="color: var(--shape1); font-weight: 700;">Global Hub</a></li>
+            
+            <li>
+                <!-- Custom VIP Theme Switcher -->
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn btn-normal-3d" onclick="toggleDropdown()" style="border: none; cursor: pointer;">
+                        <span id="dropdownBtnText"> Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', ' Dark Liquid')"> Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', ' Light Glass')"> Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', ' VIP Gold')"> VIP Gold</a>
+                        <a href="#" onclick="setCustomTheme('cyber', '🚀 Cyber Neon')">🚀 Cyber Neon</a>
+                        <a href="#" onclick="setCustomTheme('pearl', '☁️ Pearl Matte')">☁️ Pearl Matte</a>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-</nav>
+            </li>
+        </ul>
+    </nav>
 
     <!-- Header Section -->
     <div class="header-text">
@@ -157,7 +101,8 @@
             </div>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
                 <a href="gatepass-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
-                <a href="https://gatepass-lite.web.app" target="_blank" class="action-btn glass-btn">Launch Web App</a>
+                <!-- YAHAN VIP BUTTON LAGA DIYA -->
+                <a href="https://gatepass-lite.web.app" target="_blank" class="vip-action-btn" style="width: 100%;">Launch Web App</a>
             </div>
         </div>
 
@@ -181,7 +126,8 @@
             </div>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
                 <a href="vip-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
-                <a href="app-tester.html" class="action-btn glass-btn">Join Tester Program</a>
+                <!-- YAHAN VIP BUTTON LAGA DIYA -->
+                <a href="app-tester.html" class="vip-action-btn" style="width: 100%;">Join Tester Program</a>
             </div>
         </div>
 
@@ -192,8 +138,9 @@
         <h2 style="margin-bottom: 15px;">Need Assistance?</h2>
         <p style="color: var(--text-muted); margin-bottom: 20px;">We are dedicated to providing secure and flawless mobile experiences.</p>
         <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            <a href="contact.html" class="glass-btn" style="padding: 10px 20px; text-decoration: none; display: inline-block;">✉️ Contact Support</a>
-            <a href="studio-policy.html" class="glass-btn" style="padding: 10px 20px; text-decoration: none; display: inline-block;">⚖️ Studio Privacy Policy</a>
+            <!-- IN DONO PAR BHI VIP BUTTON LAGA DIYA -->
+            <a href="contact.html" class="vip-action-btn">✉️ Contact Support</a>
+            <a href="studio-policy.html" class="vip-action-btn">⚖️ Studio Privacy Policy</a>
         </div>
     </div>
 
@@ -213,6 +160,62 @@
     <!-- JS File Link -->
     <script src="script.js"></script>
 
-    
+    <!-- Real Firebase Visitor Counter (Moved inside body for proper loading) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+        // Aapki Firebase Keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb_IjN3EtsHuhMP8b5U6_xUEfYf80Gaoc",
+            authDomain: "studio313-hq.firebaseapp.com",
+            projectId: "studio313-hq",
+            storageBucket: "studio313-hq.firebasestorage.app",
+            messagingSenderId: "328116481829",
+            appId: "1:328116481829:web:6cba13235e85ea76e174cc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function updateRealCounter() {
+            const countEl = document.getElementById('visitor-count');
+            if (!countEl) return;
+
+            // Firebase mein 'stats' collection aur 'views' document ka reference
+            const docRef = doc(db, "stats", "views");
+            
+            try {
+                // Check karega ke user naya hai ya purana (Browser Storage se)
+                const hasVisited = localStorage.getItem('studio313_real_visitor');
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    // Agar database mein counter nahi hai, toh 1 se shuru karega
+                    await setDoc(docRef, { count: 1 });
+                    countEl.innerText = "1";
+                    localStorage.setItem('studio313_real_visitor', 'yes');
+                } else {
+                    if (!hasVisited) {
+                        // Agar naya user hai, toh Firebase mein +1 karega
+                        await updateDoc(docRef, { count: increment(1) });
+                        localStorage.setItem('studio313_real_visitor', 'yes');
+                        
+                        // Naya updated count layega
+                        const updatedSnap = await getDoc(docRef);
+                        countEl.innerText = updatedSnap.data().count.toLocaleString();
+                    } else {
+                        // Agar purana user refresh kar raha hai, toh count nahi barhayega sirf show karega
+                        countEl.innerText = docSnap.data().count.toLocaleString();
+                    }
+                }
+            } catch (error) {
+                console.error("Counter Error:", error);
+                countEl.innerText = "Active";
+            }
+        }
+
+        updateRealCounter();
+    </script>
 </body>
 </html>
