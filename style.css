@@ -1,488 +1,57 @@
-/* --- THEME VARIABLES --- */
-:root {
-    --bg-color: #0b0914;
-    --shape1: #4f46e5;
-    --shape2: #ec4899;
-    --shape3: #06b6d4;
-    --text-color: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.7);
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --phone-frame: #1a1a24;
-}
-
-[data-theme="light"] {
-    --bg-color: #f0f4f8;
-    --shape1: #a5b4fc;
-    --shape2: #f9a8d4;
-    --shape3: #67e8f9;
-    --text-color: #1e293b;
-    --text-muted: rgba(30, 41, 59, 0.7);
-    --glass-bg: rgba(255, 255, 255, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.8);
-    --phone-frame: #cbd5e1;
-}
-
-[data-theme="vip"] {
-    --bg-color: #120000;
-    --shape1: #fbbf24;
-    --shape2: #d97706;
-    --shape3: #78350f;
-    --text-color: #ffd700;
-    --text-muted: rgba(255, 215, 0, 0.7);
-    --glass-bg: rgba(255, 215, 0, 0.03);
-    --glass-border: rgba(255, 215, 0, 0.3);
-    --phone-frame: #3b2f00;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* --- FIX 1: Extra Space Fix (Push Footer to Bottom) --- */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-    transition: background 0.5s ease, color 0.5s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-wrapper, .tester-container, .download-grid, .showcase {
-    flex: 1 0 auto; /* Pushes the footer down */
-}
-
-/* --- LIQUID GLOWING BACKGROUND SHAPES (Dynamic via JS) --- */
-.liquid-shape {
-    position: absolute;
-    filter: blur(100px);
-    z-index: -1;
-    border-radius: 50%;
-    animation: moveLiquid 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    transition: opacity 2s ease, transform 2s ease;
-}
-
-.shape-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--shape1); }
-.shape-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--shape2); animation-delay: -5s; }
-.shape-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: var(--shape3); animation-delay: -10s; }
-
-@keyframes moveLiquid {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(5%, 10%) scale(1.1); }
-    100% { transform: translate(-5%, -5%) scale(0.9); }
-}
-
-/* --- GLASSMORPHISM EFFECT --- */
-.glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-top: 1px solid var(--glass-border);
-    border-left: 1px solid var(--glass-border);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
-}
-
-.theme-selector {
-    padding: 8px 12px;
-    outline: none;
-    color-scheme: dark; 
-}
-
-/* --- NAVIGATION BAR --- */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1300px;
-    border-radius: 20px;
-    z-index: 100;
-    position: relative;
-}
-
-.logo { font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; }
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-
 /* =========================================
-   ULTRA PREMIUM 3D CLAY & NEON CORNERS 
-   (Exact Matte Detail + Hover Magic)
+   UNIVERSAL VIP ACTION BUTTON (For All Pages)
    ========================================= */
-.nav-links {
-    gap: 16px !important;
-}
-
-/* 1. MASTER CLAY STRUCTURE (Applies to all buttons) */
-.btn-normal-3d, 
-.quran-special-3d,
-.dropdown-btn {
+.vip-action-btn {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    padding: 12px 24px !important;
+    padding: 14px 32px !important;
     font-family: 'Poppins', sans-serif;
-    font-weight: 600 !important;
-    font-size: 0.95rem;
+    font-weight: 700 !important;
+    font-size: 1.1rem;
     letter-spacing: 0.5px;
-    border-radius: 20px !important; /* Premium App Golaai */
+    border-radius: 22px !important;
     text-decoration: none;
     border: none;
     cursor: pointer;
     position: relative;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
     
-    /* Variables ko CSS mein call kar liya (Neechay define kiye gaye hain) */
+    /* VIP Universal Color (Indigo/Blue) */
+    --btn-bg: #4f46e5; 
+    --btn-color: #ffffff;
+    --btn-light: rgba(255, 255, 255, 0.4);
+    --btn-dark: rgba(49, 42, 140, 0.95);
+    --btn-neon: rgba(79, 70, 229, 0.5); /* Indigo Neon Glow */
+
     background: var(--btn-bg) !important;
     color: var(--btn-color) !important;
     
-    /* Asli Clay Detail: Top Chamak (Light) + Bottom Gehrai (Dark) */
+    /* 3D Matte Clay Structure */
     box-shadow: 
         inset 0 3px 5px var(--btn-light),
         inset 0 -6px 8px var(--btn-dark),
         0 8px 15px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* 2. MOUSE HOVER: CORNER NEON MAGIC */
-.btn-normal-3d:hover, 
-.quran-special-3d:hover,
-.dropdown-btn:hover {
+/* Hover: Corner Neon Magic */
+.vip-action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 
-        /* Yeh hain wo 2 offsets jo sirf CORNERS (kono) par neon light phekenge */
         -5px -5px 15px var(--btn-neon),
          5px  5px 15px var(--btn-neon),
-        
-        /* 3D Base zinda rakhne ke liye */
         inset 0 3px 5px var(--btn-light),
         inset 0 -6px 8px var(--btn-dark),
         0 12px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* 3. MOUSE CLICK: REAL PLASTIC PRESS */
-.btn-normal-3d:active, 
-.quran-special-3d:active,
-.dropdown-btn:active {
+/* Click: Real Plastic Press */
+.vip-action-btn:active {
     transform: translateY(4px);
     box-shadow: 
-        /* Neon roshni click par thori tez hogi */
         -8px -8px 20px var(--btn-neon),
          8px  8px 20px var(--btn-neon),
-         
-        /* Motai (Volume) dab kar patli ho jayegi */
         inset 0 1px 2px var(--btn-light),
         inset 0 -1px 2px var(--btn-dark),
         0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
-
-/* --- BUTTON COLORS & LIGHTING SETTINGS --- */
-
-/* HOME (Like 'Deslant' - Matte Cream/Grey) */
-a.btn-normal-3d[href="index.html"] {
-    --btn-bg: #e5dfd8;
-    --btn-color: #3b3531;
-    --btn-light: rgba(255, 255, 255, 0.9);
-    --btn-dark: rgba(184, 172, 162, 0.95);
-    --btn-neon: rgba(255, 255, 255, 0.5); /* White Corner Glow */
-}
-
-/* APPS (Like 'hoter' - Matte Taupe/Brownish) */
-a.btn-normal-3d[href="download.html"] {
-    --btn-bg: #bbaea8;
-    --btn-color: #ffffff;
-    --btn-light: rgba(255, 255, 255, 0.5);
-    --btn-dark: rgba(135, 118, 110, 0.95);
-    --btn-neon: rgba(187, 174, 168, 0.5);
-}
-
-/* APP-TESTER (Like 'Focus' - Matte Orange) */
-a.btn-normal-3d[href="app-tester.html"] {
-    --btn-bg: #f27c52;
-    --btn-color: #ffffff;
-    --btn-light: rgba(255, 255, 255, 0.5);
-    --btn-dark: rgba(186, 75, 33, 0.95);
-    --btn-neon: rgba(242, 124, 82, 0.5); /* Orange Corner Glow */
-}
-
-/* POLICIES (Dark Slate Clay) */
-a.btn-normal-3d[href="policies.html"] {
-    --btn-bg: #475569;
-    --btn-color: #ffffff;
-    --btn-light: rgba(255, 255, 255, 0.3);
-    --btn-dark: rgba(30, 41, 59, 0.95);
-    --btn-neon: rgba(148, 163, 184, 0.4);
-}
-
-/* READ QURAN (Premium Gold Clay) */
-.quran-special-3d {
-    --btn-bg: #eab308;
-    --btn-color: #ffffff;
-    --btn-light: rgba(255, 255, 255, 0.7);
-    --btn-dark: rgba(161, 98, 7, 0.95);
-    --btn-neon: rgba(253, 224, 71, 0.6); /* Golden Corner Glow */
-}
-
-/* GLOBAL HUB (Like 'Success' - Vibrant Light Orange) */
-a.btn-normal-3d[href*="messenger.html"] {
-    --btn-bg: #faa14e;
-    --btn-color: #ffffff;
-    --btn-light: rgba(255, 255, 255, 0.6);
-    --btn-dark: rgba(204, 107, 24, 0.95);
-    --btn-neon: rgba(250, 161, 78, 0.5);
-}
-
-/* THEME DROPDOWN (Like 'Loating' - Deep Teal/Cyan) */
-.dropdown-btn {
-    --btn-bg: #223f40;
-    --btn-color: #5eead4;
-    --btn-light: rgba(255, 255, 255, 0.2);
-    --btn-dark: rgba(13, 29, 29, 0.95);
-    --btn-neon: rgba(94, 234, 212, 0.4); /* Cyan Corner Glow */
-}
-
-
-/* --- HERO HEADER --- */
-.header-text {
-    text-align: center;
-    margin: 50px 20px 40px;
-    z-index: 10;
-    position: relative;
-}
-.header-text h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; }
-.header-text p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
-
-/* --- APPS SHOWCASE GRID --- */
-.showcase {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    flex-wrap: wrap;
-    padding: 20px;
-    max-width: 1300px;
-    margin: 20px auto 40px; 
-    z-index: 10;
-    position: relative;
-    flex: 1;
-}
-
-/* --- HAND-HELD STYLE PHONE MOCKUP --- */
-.phone-frame {
-    width: 320px;
-    height: 650px;
-    border-radius: 45px;
-    border: 8px solid var(--phone-frame);
-    background: rgba(0, 0, 0, 0.3);
-    position: relative;
-    padding: 20px;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 2px rgba(255,255,255,0.05);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.phone-frame:hover { transform: translateY(-15px) scale(1.02); }
-
-.dynamic-island {
-    width: 90px;
-    height: 22px;
-    background: #000;
-    border-radius: 20px;
-    margin: 0 auto 15px;
-}
-
-.app-header { margin-bottom: 15px; }
-.app-title { font-size: 1.4rem; font-weight: 600; }
-.app-status {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 12px;
-    display: inline-block;
-    margin-top: 5px;
-    font-weight: 600;
-}
-
-.status-live { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-.status-beta { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-
-.app-widget {
-    border-radius: 20px;
-    padding: 18px;
-    margin-bottom: 15px;
-    flex-grow: 1;
-}
-.widget-title { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
-
-.ui-line {
-    height: 8px;
-    background: var(--glass-border);
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-.ui-line.short { width: 60%; }
-.ui-line.medium { width: 80%; }
-
-.action-btn {
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-    margin-top: auto;
-    display: block;
-}
-
-/* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
-.custom-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 110%;
-    min-width: 160px;
-    border-radius: 15px;
-    overflow: hidden;
-    z-index: 1000;
-}
-
-.dropdown-content.show {
-    display: block;
-    animation: fadeIn 0.2s ease;
-}
-
-.dropdown-content a {
-    color: var(--text-color);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.dropdown-content a:hover {
-    background: var(--glass-border);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- MOBILE RESPONSIVENESS (Hamburger Menu) --- */
-.mobile-menu-btn {
-    display: none;
-    font-size: 1.8rem;
-    background: none;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-}
-
-@media screen and (max-width: 850px) {
-    .mobile-menu-btn {
-        display: block; 
-    }
-    
-    .nav-links {
-        display: none; 
-        flex-direction: column;
-        position: absolute;
-        top: 80px;
-        left: 5%;
-        width: 90%;
-        background: var(--bg-color);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-    
-    .nav-links.active {
-        display: flex; 
-    }
-    
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-    
-    /* Fix Mobile Width for 3D Buttons */
-    .nav-links > li > a, .dropdown-btn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    
-    .custom-dropdown {
-        width: 100%;
-        text-align: center;
-        margin-top: 5px;
-    }
-    
-    .dropdown-content {
-        left: 50%;
-        transform: translateX(-50%);
-        right: auto;
-    }
-}
-
-/* --- FIX 2: Custom VIP Dropdown Arrow for Contact Form --- */
-.form-group select.form-control {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    padding-right: 40px;
-    cursor: pointer;
-}
-
-.form-group select.form-control option {
-    background-color: #1a1a24;
-    color: #ffffff;
-    padding: 10px;
-}
-
-.form-group select.form-control:focus {
-    background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* --- FOOTER --- */
-footer {
-    flex-shrink: 0;
-    width: 100%;
-    text-align: center;
-    padding: 30px 20px;
-    border-top: 1px solid var(--glass-border);
-    z-index: 10;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    background: var(--glass-bg);
-}
-
-.policy-links a {
-    color: var(--shape3);
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 600;
-}
-.policy-links a:hover { text-decoration: underline; }
