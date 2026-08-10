@@ -351,7 +351,7 @@ a.btn-normal-3d[href*="messenger.html"] {
 .phone-frame {
     width: 320px;
     height: 680px;
-    border-radius: 35px; /* S25 Ultra smooth corner radius */
+    border-radius: 35px; 
     background: #000;
     position: relative;
     padding: 0;
@@ -359,17 +359,17 @@ a.btn-normal-3d[href*="messenger.html"] {
     
     /* Titanium Metallic Frame & Bezel Design */
     box-shadow: 
-        inset 0 0 0 6px #000, /* Black Bezel */
-        inset 0 0 0 9px #8e959c, /* Titanium Edge */
-        inset 5px 0 15px rgba(255,255,255,0.3), /* Light Reflection */
-        0 30px 60px rgba(0,0,0,0.6); /* Outer Drop Shadow */
-    outline: 2px solid #5a5c5b; /* Sharp outer cut */
+        inset 0 0 0 6px #000, 
+        inset 0 0 0 9px #8e959c, 
+        inset 5px 0 15px rgba(255,255,255,0.3), 
+        0 30px 60px rgba(0,0,0,0.6); 
+    outline: 2px solid #5a5c5b; 
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .phone-frame:hover { transform: translateY(-10px); }
 
-/* Physical Volume and Power Buttons (Titanium) */
+/* Physical Volume and Power Buttons */
 .phone-frame::before {
     content: ''; position: absolute;
     right: -4px; top: 140px;
@@ -386,12 +386,12 @@ a.btn-normal-3d[href*="messenger.html"] {
 }
 
 /* =========================================
-   INNER SCREEN AREA (Edge-to-Edge inside Bezel)
+   INNER SCREEN AREA (Edge-to-Edge)
    ========================================= */
 .screen-area {
     position: absolute;
-    top: 6px; left: 6px; right: 6px; bottom: 6px; /* Exactly inside the 6px black bezel */
-    border-radius: 28px; /* Inner screen curvature */
+    top: 6px; left: 6px; right: 6px; bottom: 6px; 
+    border-radius: 28px; 
     overflow: hidden;
     background: #111;
     display: flex;
@@ -399,7 +399,7 @@ a.btn-normal-3d[href*="messenger.html"] {
 }
 
 .punch-hole-camera {
-    width: 13px; height: 13px;
+    width: 14px; height: 14px;
     background: #050505;
     border-radius: 50%;
     position: absolute;
@@ -409,7 +409,7 @@ a.btn-normal-3d[href*="messenger.html"] {
     box-shadow: inset 0 0 2px rgba(255,255,255,0.2), 0 0 0 2px #000;
 }
 
-/* Auto Slider (Full Screen) */
+/* Auto Slider (Full Screen Background) */
 .app-screen-slider {
     position: absolute;
     top: 0; left: 0;
@@ -423,10 +423,10 @@ a.btn-normal-3d[href*="messenger.html"] {
 }
 .slider-track img {
     width: 25%; height: 100%;
-    object-fit: cover; /* PERFECT FULL SCREEN NO BLACK BARS */
+    object-fit: cover; /* PREVENTS STRETCHING */
 }
 
-/* 4 Screens ki smooth animation */
+/* 4 Screens Animation */
 @keyframes appSlideShow {
     0%, 20% { transform: translateX(0); }             
     25%, 45% { transform: translateX(-25%); }         
@@ -442,60 +442,55 @@ a.btn-normal-3d[href*="messenger.html"] {
     position: absolute;
     top: 0; left: 0; width: 100%;
     z-index: 10;
-    padding: 40px 15px 20px; /* Space for camera */
-    display: flex; align-items: center; gap: 12px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+    padding: 40px 20px 20px; 
+    display: flex; align-items: center; gap: 15px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, transparent 100%);
 }
 
-.app-icon {
-    width: 42px; height: 42px; border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-.app-title { font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.2; }
-.status-live { background: rgba(16,185,129,0.3); color: #34d399; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
-.status-beta { background: rgba(245,158,11,0.3); color: #fbbf24; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+.app-title { font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 4px; }
+.status-live { display: inline-block; background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5); color: #34d399; font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; }
+.status-beta { display: inline-block; background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.5); color: #fbbf24; font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; }
 
 .floating-actions {
     position: absolute;
     bottom: 0; left: 0; width: 100%;
     z-index: 10;
-    padding: 40px 20px 20px; /* Thori extra width */
-    display: flex; flex-direction: column; gap: 10px;
+    padding: 40px 20px 25px; 
+    display: flex; flex-direction: column; gap: 12px;
     background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
 }
 
 .policy-link {
-    color: rgba(255,255,255,0.7); font-size: 0.75rem; text-decoration: none; text-align: center;
+    color: rgba(255,255,255,0.7); font-size: 0.8rem; text-decoration: none; text-align: center; margin-bottom: 5px;
 }
+.policy-link:hover { color: #fff; text-decoration: underline; }
 
 /* Guide Button - Sleek Premium Style */
 .btn-watch-guide {
     background: rgba(255,255,255,0.1); 
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.25);
     color: #fff; 
-    padding: 10px; 
+    padding: 12px; 
     border-radius: 14px; 
-    font-size: 0.85rem; 
+    font-size: 0.9rem; 
     cursor: pointer;
     backdrop-filter: blur(10px); 
-    transition: 0.3s;
+    transition: all 0.3s ease;
     font-weight: 500;
 }
 .btn-watch-guide:hover { 
     background: rgba(255,255,255,0.25); 
     transform: translateY(-2px); 
-    border-color: var(--shape1);
+    border-color: #fff;
 }
 
 /* Main Action Button (Launch/Join) */
 .phone-launch-btn {
-    width: 100%; text-align: center; border-radius: 14px !important; padding: 14px !important;
-    font-size: 1rem !important; margin: 0 !important;
-}
-/* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
+    width: 100%; text-align: center; border-radius: 14px !important; padding: 15px !important;
+    font-size: 1.05rem !important; margin: 0 !important;
+}/* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
 .custom-dropdown {
     position: relative;
     display: inline-block;
