@@ -80,7 +80,7 @@
         <input type="text" id="searchInput" onkeyup="searchApps()" placeholder="Search apps, features (e.g. Gatepass)..." style="width: 100%; background: transparent; border: none; color: var(--text-color); font-size: 1.05rem; outline: none; font-family: 'Poppins', sans-serif;">
     </div>
 
-    <!-- Apps Showcase inside Hand-Held Mockups -->
+   <!-- Apps Showcase inside Hand-Held Mockups -->
     <div class="showcase">
         
         <!-- App 1: Gatepass Lite -->
@@ -102,7 +102,10 @@
             </div>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
                 <a href="gatepass-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
-                <!-- YAHAN VIP BUTTON LAGA DIYA -->
+                
+                <!-- NAYA VIP GUIDE BUTTON -->
+                <button onclick="openGuideModal('gatepass')" class="guide-btn glass-btn">📺 Watch Guide</button>
+                
                 <a href="https://gatepass-lite.web.app" target="_blank" class="vip-action-btn" style="width: 100%;">Launch Web App</a>
             </div>
         </div>
@@ -127,7 +130,10 @@
             </div>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
                 <a href="vip-policy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-align: center;">🛡️ App Privacy Policy</a>
-                <!-- YAHAN VIP BUTTON LAGA DIYA -->
+                
+                <!-- NAYA VIP GUIDE BUTTON -->
+                <button onclick="openGuideModal('vipnotify')" class="guide-btn glass-btn">📺 Watch Guide</button>
+                
                 <a href="app-tester.html" class="vip-action-btn" style="width: 100%;">Join Tester Program</a>
             </div>
         </div>
@@ -217,6 +223,120 @@
         }
 
         updateRealCounter();
+    </script>
+    <!-- ========================================== -->
+    <!-- 🌍 9-LANGUAGE VIP GLASS MODAL (POP-UP)     -->
+    <!-- ========================================== -->
+    <div id="vipGuideModal" class="vip-modal-overlay">
+        <div class="vip-modal glass">
+            <button class="close-modal" onclick="closeGuideModal()">✖</button>
+            
+            <div class="modal-content">
+                <!-- LEFT SIDE: APP KI TASVEER (PICTURE) -->
+                <div class="modal-left">
+                    <img id="guideImage" src="app-screenshot.png" alt="App Screen" style="width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+                
+                <!-- RIGHT SIDE: MULTI-LANGUAGE TEXT -->
+                <div class="modal-right">
+                    <div class="lang-selector-wrapper">
+                        <!-- YAHAN HINDI AUR BENGALI BHI ADD HO GAYI HAIN -->
+                        <select id="guideLangSelect" class="glass-btn" onchange="updateGuideText()">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="ur">🇵🇰 اردو (Urdu)</option>
+                            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+                            <option value="bn">🇧🇩 বাংলা (Bengali)</option>
+                            <option value="ar">🇸🇦 العربية (Arabic)</option>
+                            <option value="es">🇪🇸 Español (Spanish)</option>
+                            <option value="fr">🇫🇷 Français (French)</option>
+                            <option value="ru">🇷🇺 Русский (Russian)</option>
+                            <option value="zh">🇨🇳 中文 (Chinese)</option>
+                        </select>
+                    </div>
+                    
+                    <h2 id="guideTitle" style="margin: 20px 0 15px; color: var(--shape1);">App Guide</h2>
+                    <ul id="guideSteps" class="guide-steps-list">
+                        <!-- Steps yahan auto-load honge -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIP Multi-Language Dictionary JS (WITH HINDI & BENGALI) -->
+    <script>
+        let currentApp = 'gatepass'; // Default
+
+        // 9 Zubanon Ki VIP Dictionary
+        const guideDictionary = {
+            'gatepass': {
+                'en': { title: "Gatepass Lite Guide", steps: ["1. Log in securely to your dashboard.", "2. Monitor real-time access logs.", "3. Approve or deny visitor requests instantly."] },
+                'ur': { title: "گیٹ پاس لائٹ گائیڈ", steps: ["1. اپنے ڈیش بورڈ میں محفوظ طریقے سے لاگ ان کریں۔", "2. ریئل ٹائم ایکسیس لاگز مانیٹر کریں۔", "3. وزیٹر کی درخواستیں فوری منظور یا مسترد کریں۔"] },
+                'hi': { title: "गेटपास लाइट गाइड", steps: ["1. अपने डैशबोर्ड में सुरक्षित रूप से लॉग इन करें।", "2. रियल-टाइम एक्सेस लॉग्स की निगरानी करें।", "3. आगंतुक के अनुरोधों को तुरंत स्वीकार या अस्वीकार करें।"] },
+                'bn': { title: "গেটপাস লাইট গাইড", steps: ["1. আপনার ড্যাশবোর্ডে নিরাপদে লগ ইন করুন।", "2. রিয়েল-টাইম অ্যাক্সেস লগ মনিটর করুন।", "3. দর্শনার্থীদের অনুরোধ সাথে সাথে অনুমোদন বা প্রত্যাখ্যান করুন।"] },
+                'ar': { title: "دليل جيت باس لايت", steps: ["1. سجل الدخول إلى لوحة القيادة بأمان.", "2. مراقبة سجلات الوصول في الوقت الفعلي.", "3. الموافقة أو الرفض لطلبات الزوار على الفور."] },
+                'es': { title: "Guía de Gatepass", steps: ["1. Inicie sesión de forma segura.", "2. Supervise los registros de acceso.", "3. Apruebe o rechace solicitudes al instante."] },
+                'fr': { title: "Guide de Gatepass", steps: ["1. Connectez-vous en toute sécurité.", "2. Surveillez les journaux d'accès.", "3. Approuvez ou refusez les demandes."] },
+                'ru': { title: "Руководство Gatepass", steps: ["1. Безопасно войдите в систему.", "2. Отслеживайте журналы доступа.", "3. Мгновенно одобряйте или отклоняйте запросы."] },
+                'zh': { title: "Gatepass 指南", steps: ["1. 安全登录到您的仪表板。", "2. 实时监控访问日志。", "3. 立即批准或拒绝请求。"] }
+            },
+            'vipnotify': {
+                'en': { title: "Vip Notify Guide", steps: ["1. Opt-in to the tester program.", "2. Receive live push notifications.", "3. Provide feedback securely."] },
+                'ur': { title: "وی آئی پی نوٹیفکیشن گائیڈ", steps: ["1. ٹیسٹر پروگرام میں شامل ہوں۔", "2. لائیو پش نوٹیفکیشنز حاصل کریں۔", "3. محفوظ طریقے سے اپنی رائے دیں۔"] },
+                'hi': { title: "वीआईपी नोटिफाई गाइड", steps: ["1. टेस्टर प्रोग्राम में शामिल हों।", "2. लाइव पुश नोटिफिकेशन प्राप्त करें।", "3. सुरक्षित रूप से अपना फीडबैक दें।"] },
+                'bn': { title: "ভিআইপি নোটিফাই গাইড", steps: ["1. টেস্টার প্রোগ্রামে যোগ দিন।", "2. লাইভ পুশ নোটিফিকেশন পান।", "3. নিরাপদে আপনার মতামত প্রদান করুন।"] },
+                'ar': { title: "دليل إشعارات VIP", steps: ["1. اشترك في برنامج الاختبار.", "2. تلقي إشعارات الدفع المباشرة.", "3. تقديم ملاحظات بأمان."] },
+                'es': { title: "Guía VIP Notify", steps: ["1. Únase al programa de pruebas.", "2. Reciba notificaciones en vivo.", "3. Proporcione comentarios de forma segura."] },
+                'fr': { title: "Guide VIP Notify", steps: ["1. Rejoignez le programme de test.", "2. Recevez des notifications en direct.", "3. Donnez votre avis en toute sécurité."] },
+                'ru': { title: "Руководство VIP Notify", steps: ["1. Присоединяйтесь к программе тестирования.", "2. Получайте push-уведомления.", "3. Оставляйте отзывы безопасно."] },
+                'zh': { title: "VIP 通知指南", steps: ["1. 加入测试计划。", "2. 接收实时推送通知。", "3. 安全地提供反馈。"] }
+            }
+        };
+
+        function openGuideModal(appId) {
+            currentApp = appId;
+            document.getElementById('vipGuideModal').classList.add('active');
+            
+            // App ke hisab se tasveer change karna
+            const imgEl = document.getElementById('guideImage');
+            if(appId === 'gatepass') {
+                imgEl.src = 'gatepass-screenshot.png'; // APNI PIC KA NAAM YAHAN DALEIN
+            } else {
+                imgEl.src = 'vipnotify-screenshot.png'; // APNI PIC KA NAAM YAHAN DALEIN
+            }
+            
+            updateGuideText(); // Text Load karo
+        }
+
+        function closeGuideModal() {
+            document.getElementById('vipGuideModal').classList.remove('active');
+        }
+
+        function updateGuideText() {
+            const lang = document.getElementById('guideLangSelect').value;
+            const data = guideDictionary[currentApp][lang];
+            
+            document.getElementById('guideTitle').innerText = data.title;
+            
+            // RTL (Right-to-Left) fix for Urdu & Arabic
+            const rightPanel = document.querySelector('.modal-right');
+            if(lang === 'ur' || lang === 'ar') {
+                rightPanel.style.textAlign = 'right';
+                rightPanel.style.direction = 'rtl';
+            } else {
+                rightPanel.style.textAlign = 'left';
+                rightPanel.style.direction = 'ltr';
+            }
+
+            // List steps
+            const ul = document.getElementById('guideSteps');
+            ul.innerHTML = '';
+            data.steps.forEach(step => {
+                let li = document.createElement('li');
+                li.innerText = step;
+                ul.appendChild(li);
+            });
+        }
     </script>
 </body>
 </html>
