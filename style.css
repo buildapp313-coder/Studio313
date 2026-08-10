@@ -346,70 +346,84 @@ a.btn-normal-3d[href*="messenger.html"] {
 .status-beta { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
 /* =========================================
-   SAMSUNG GALAXY S25 ULTRA (100% FULL EDGE-TO-EDGE SCREEN)
+   HYPER-REALISTIC S25 ULTRA CSS MOCKUP
    ========================================= */
 .phone-frame {
     width: 320px;
     height: 680px;
-    border-radius: 24px; /* Premium smooth corners */
-    border: 4px solid #8e959c; /* Titanium Edge */
-    outline: 6px solid #0b0914; /* Outer bezel */
-    background: #000; /* Pure black OLED background */
+    border-radius: 35px; /* S25 Ultra smooth corner radius */
+    background: #000;
     position: relative;
+    padding: 0;
+    margin: 20px auto;
     
-    /* MAGIC FIX: PADDING ZERO KAR DI TAQAY SCREEN FULL AAYE */
-    padding: 0 !important; 
-    
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,255,255,0.05);
-    overflow: hidden;
+    /* Titanium Metallic Frame & Bezel Design */
+    box-shadow: 
+        inset 0 0 0 6px #000, /* Black Bezel */
+        inset 0 0 0 9px #8e959c, /* Titanium Edge */
+        inset 5px 0 15px rgba(255,255,255,0.3), /* Light Reflection */
+        0 30px 60px rgba(0,0,0,0.6); /* Outer Drop Shadow */
+    outline: 2px solid #5a5c5b; /* Sharp outer cut */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.phone-frame:hover { transform: translateY(-15px) scale(1.02); }
+.phone-frame:hover { transform: translateY(-10px); }
 
-/* Punch-Hole Camera */
-.punch-hole-camera {
-    width: 14px;
-    height: 14px;
-    background: #000;
-    border-radius: 50%;
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    box-shadow: inset 0 0 3px rgba(255,255,255,0.2), 0 0 0 1px rgba(0,0,0,0.5);
+/* Physical Volume and Power Buttons (Titanium) */
+.phone-frame::before {
+    content: ''; position: absolute;
+    right: -4px; top: 140px;
+    width: 4px; height: 45px;
+    background: linear-gradient(to right, #444, #b3b6b5);
+    border-radius: 0 3px 3px 0;
+}
+.phone-frame::after {
+    content: ''; position: absolute;
+    right: -4px; top: 200px;
+    width: 4px; height: 90px;
+    background: linear-gradient(to right, #444, #b3b6b5);
+    border-radius: 0 3px 3px 0;
 }
 
 /* =========================================
-   100% FULL SCREEN AUTO-SLIDER BACKGROUND
+   INNER SCREEN AREA (Edge-to-Edge inside Bezel)
    ========================================= */
-.app-screen-slider {
-    position: absolute; /* Ab yeh poore phone ka background ban jayega */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* Sab se peechay */
-    margin: 0 !important;
-    border-radius: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
+.screen-area {
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px; /* Exactly inside the 6px black bezel */
+    border-radius: 28px; /* Inner screen curvature */
+    overflow: hidden;
+    background: #111;
+    display: flex;
+    flex-direction: column;
 }
 
+.punch-hole-camera {
+    width: 13px; height: 13px;
+    background: #050505;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.2), 0 0 0 2px #000;
+}
+
+/* Auto Slider (Full Screen) */
+.app-screen-slider {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+}
 .slider-track {
     display: flex;
-    width: 400%; /* 4 Tasveeron ke liye */
-    height: 100%;
+    width: 400%; height: 100%;
     animation: appSlideShow 16s infinite cubic-bezier(0.77, 0, 0.175, 1);
 }
-
 .slider-track img {
-    width: 25%;
-    height: 100%;
-    object-fit: cover; /* 100% Full Screen par fit hogi, chhupegi nahi */
+    width: 25%; height: 100%;
+    object-fit: cover; /* PERFECT FULL SCREEN NO BLACK BARS */
 }
 
 /* 4 Screens ki smooth animation */
@@ -422,71 +436,64 @@ a.btn-normal-3d[href*="messenger.html"] {
 }
 
 /* =========================================
-   FLOATING HEADER (Top Glass Overlay)
+   FLOATING UI OVERLAYS (Header & Footer)
    ========================================= */
-.phone-frame .app-header {
-    position: absolute; /* Tasveer ke upar aayega */
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 35px 20px 20px !important; /* Camera area chor kar */
-    margin: 0 !important;
+.floating-header {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
     z-index: 10;
-    /* Black Gradient Fade taake Icon/Text clear parha jaye */
-    background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+    padding: 40px 15px 20px; /* Space for camera */
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
 }
 
-/* =========================================
-   FLOATING BOTTOM BUTTONS (Bottom Glass Overlay)
-   ========================================= */
-.phone-actions {
-    position: absolute; /* Tasveer ke upar aayega */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px 20px 20px !important;
-    margin: 0 !important;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    /* Blur aur Black Gradient Fade */
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+.app-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* 📺 Watch Guide Button (Premium Glass Style) */
+.app-title { font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.status-live { background: rgba(16,185,129,0.3); color: #34d399; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+.status-beta { background: rgba(245,158,11,0.3); color: #fbbf24; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+
+.floating-actions {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    z-index: 10;
+    padding: 40px 20px 20px; /* Thori extra width */
+    display: flex; flex-direction: column; gap: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.policy-link {
+    color: rgba(255,255,255,0.7); font-size: 0.75rem; text-decoration: none; text-align: center;
+}
+
+/* Guide Button - Sleek Premium Style */
 .btn-watch-guide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
-    background: rgba(255,255,255,0.15); /* Premium Glass Look */
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 12px;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 600;
+    background: rgba(255,255,255,0.1); 
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; 
+    padding: 10px; 
+    border-radius: 14px; 
+    font-size: 0.85rem; 
     cursor: pointer;
-    transition: all 0.3s;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); 
+    transition: 0.3s;
+    font-weight: 500;
+}
+.btn-watch-guide:hover { 
+    background: rgba(255,255,255,0.25); 
+    transform: translateY(-2px); 
+    border-color: var(--shape1);
 }
 
-.btn-watch-guide:hover {
-    background: rgba(255,255,255,0.25);
-    border-color: rgba(255,255,255,0.6);
-    transform: translateY(-2px);
-}
-
-/* Launch App Button */
+/* Main Action Button (Launch/Join) */
 .phone-launch-btn {
-    border-radius: 12px !important; 
-    padding: 14px !important;
-    font-size: 1rem !important;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important;
+    width: 100%; text-align: center; border-radius: 14px !important; padding: 14px !important;
+    font-size: 1rem !important; margin: 0 !important;
 }
 /* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
 .custom-dropdown {
