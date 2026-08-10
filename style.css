@@ -345,29 +345,117 @@ a.btn-normal-3d[href*="messenger.html"] {
 .status-live { background: rgba(16, 185, 129, 0.2); color: #34d399; }
 .status-beta { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
-.app-widget {
-    border-radius: 20px;
-    padding: 18px;
-    margin-bottom: 15px;
+/* =========================================
+   SAMSUNG GALAXY S25 ULTRA VIP PHONE MOCKUP
+   ========================================= */
+.phone-frame {
+    width: 320px;
+    height: 680px;
+    border-radius: 14px; /* S-Ultra Sharp Corners */
+    border: 3px solid #8e959c; /* Titanium Grey Frame */
+    outline: 6px solid #0b0914; /* Outer Dark Bezel */
+    background: #09080e; /* Deep OLED Black Screen */
+    position: relative;
+    padding: 18px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,255,255,0.05);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.phone-frame:hover { transform: translateY(-15px) scale(1.02); }
+
+/* S25 Ultra Punch-Hole Camera */
+.punch-hole-camera {
+    width: 14px;
+    height: 14px;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    box-shadow: inset 0 0 3px rgba(255,255,255,0.2), 0 0 0 1px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   AUTO-SLIDING APP SCREENS (ANIMATION)
+   ========================================= */
+.app-screen-slider {
     flex-grow: 1;
+    margin: 15px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background: #1a1a24;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
 }
-.widget-title { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
 
-.ui-line {
-    height: 8px;
-    background: var(--glass-border);
-    border-radius: 4px;
-    margin-bottom: 10px;
+.slider-track {
+    display: flex;
+    width: 400%; /* Kyunke 4 tasveerein hain */
+    height: 100%;
+    /* 16 Seconds ki smooth animation, ruk ruk kar chalegi */
+    animation: appSlideShow 16s infinite cubic-bezier(0.77, 0, 0.175, 1);
 }
-.ui-line.short { width: 60%; }
-.ui-line.medium { width: 80%; }
 
-.action-btn {
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
+.slider-track img {
+    width: 25%; /* Har tasveer track ka 25% (1/4) hissa legi */
+    height: 100%;
+    object-fit: cover; /* Screen mein perfectly fit hone ke liye */
+}
+
+/* 4 Screens ki Animation Keyframes */
+@keyframes appSlideShow {
+    0%, 20% { transform: translateX(0); }             /* Screen 1 */
+    25%, 45% { transform: translateX(-25%); }         /* Screen 2 */
+    50%, 70% { transform: translateX(-50%); }         /* Screen 3 */
+    75%, 95% { transform: translateX(-75%); }         /* Screen 4 */
+    100% { transform: translateX(0); }                /* Wapis Screen 1 */
+}
+
+/* =========================================
+   PREMIUM BOTTOM BUTTONS (Sleek UI)
+   ========================================= */
+.phone-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: auto;
-    display: block;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-watch-guide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: #a1a1aa; /* Premium light grey text */
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-watch-guide:hover {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.3);
+}
+
+.phone-launch-btn {
+    border-radius: 12px !important; /* Phone ke andar gol nahi, boxy button acha lagta hai */
+    padding: 12px !important;
+    font-size: 0.95rem !important;
+    width: 100%;
 }
 
 /* --- CUSTOM VIP DROPDOWN (Fix for White Background) --- */
