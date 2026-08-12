@@ -153,8 +153,23 @@
             </li>
             
             <li><a href="messenger.html" class="btn-normal-3d" style="color: var(--shape1); font-weight: 700;">Global Hub</a></li>
-            
             <li>
+                <!-- Naya Theme Dropdown Laga Diya -->
+                <div class="custom-dropdown">
+                    <button class="dropdown-btn btn-normal-3d" onclick="toggleDropdown()" style="border: none; cursor: pointer;">
+                        <span id="dropdownBtnText"> Dark Liquid</span> ▼
+                    </button>
+                    <div class="dropdown-content glass" id="themeDropdown">
+                        <a href="#" onclick="setCustomTheme('dark', ' Dark Liquid')"> Dark Liquid</a>
+                        <a href="#" onclick="setCustomTheme('light', ' Light Glass')"> Light Glass</a>
+                        <a href="#" onclick="setCustomTheme('vip', ' VIP Gold')"> VIP Gold</a>
+                        <a href="#" onclick="setCustomTheme('cyber', ' Cyber Neon')"> Cyber Neon</a>
+                        <a href="#" onclick="setCustomTheme('pearl', ' Pearl Matte')"> Pearl Matte</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
            </nav>
     <!-- Header Section -->
     <div class="header-text">
